@@ -1,0 +1,11 @@
+@import "../../assets/styles/_global.scss";
+
+.button {
+  padding: 14px 0px;
+  &__item {
+    &.primary-color {
+      background-color: $primary;
+      color: $white;
+    }
+  }
+}

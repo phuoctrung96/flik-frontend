@@ -1,0 +1,78 @@
+@import "../../assets/styles/_global.scss";
+
+.payment {
+  background-color: $primary;
+  display: flex;
+  flex-direction: column;
+
+  &__shopContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 24px 20px;
+    background-color: $white;
+    border-radius: 16px;
+    padding: 0px 16px;
+
+    &-left {
+      display: flex;
+      align-items: center;
+
+      &-title {
+        font-size: 12px;
+        line-height: 18px;
+        color: $black;
+        text-transform: uppercase;
+        margin-left: 12px;
+      }
+    }
+
+    &-right {
+      display: flex;
+      align-items: center;
+
+      &-title {
+        font-size: 12px;
+        line-height: 18px;
+        color: $black;
+        margin-right: 12px;
+      }
+    }
+  }
+
+  &__formInfor {
+    background-color: #f8f8f8;
+    flex: 1;
+  }
+
+  &__confirmButtonContainer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+
+    &-button {
+      margin: 16px 20px 0px 16px;
+      padding-bottom: 0px !important;
+    }
+
+    &-buttonItem {
+      font-size: 16px;
+      line-height: 20px;
+    }
+
+    &-info {
+      margin: 0px 20px 16px 20px;
+      padding: 0px 30px;
+      font-size: 10px;
+      line-height: 12px;
+      color: $grey-003;
+      padding: 0px 65px;
+
+      a {
+        text-decoration: none;
+        color: $cornflowerBlue;
+      }
+    }
+  }
+}
