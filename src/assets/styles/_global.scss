@@ -1,0 +1,62 @@
+@import './fonts';
+@import './mixins';
+@import './colors';
+@import './constants';
+@import './main-classes';
+// @import "~react-image-gallery/styles/scss/image-gallery.scss";
+
+* {
+  box-sizing: border-box;
+  // font-family: $base-font-family;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+}
+
+html,
+body,
+#root {
+  position: relative;
+  width: 100%;
+  // font-family: $base-font-family;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-size: $base-font-size;
+  margin: 0px;
+  min-height: 100vh;
+  background-color: $alabaster;
+}
+
+.container {
+  width: calc(100% - 24px);
+  margin: auto;
+
+  @media screen and (min-width: $sm) {
+    width: 540px;
+  }
+
+  @media screen and (min-width: $md) {
+    width: 720px;
+  }
+
+  @media screen and (min-width: $lg) {
+    width: 960px;
+  }
+
+  @media screen and (min-width: $xl) {
+    width: 1140px;
+  }
+
+  @media screen and (min-width: $xxl) {
+    width: 1520px;
+  }
+}
+
+.p-component {
+  font-family: $base-font-family;
+}
+
+.p-dialog-mask {
+  padding: 0px 12px;
+}
+
+.lock-scroll {
+  overflow: hidden;
+}

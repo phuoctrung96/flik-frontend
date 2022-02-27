@@ -1,0 +1,22 @@
+// font
+$base-font-size: 16px;
+$base-font-family: SegoeUI-Regular;
+
+// breakpoints
+$xxl: 1400px;
+$xl: 1200px;
+$lg: 992px;
+$md: 768px;
+$sm: 576px;
+
+// animations
+$fast-animation: 0.1s ease;
+$medium-animation: 0.3s ease;
+$slow-animation: 0.5s ease;
+$slowest-animation: 1s ease;
+
+// shadow
+$shadow: $black-35alpha 0px 5px 15px;;
+$paper-shadow: 0px 15px 20px $black-12alpha;
+$input-shadow: 0 0 0 0.2rem $sail;
+$action-shadow: $black-30alpha 0px 1px 4px -1px;
