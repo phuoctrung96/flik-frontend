@@ -14,11 +14,9 @@ export const Button = ({
     <div className={classNames("button", className)}>
       <ButtonLibrary
         {...rest}
-        className={classNames(
-          "button__item",
-          { "primary-color": isPrimary },
-          buttonClassName
-        )}
+        className={classNames("item", buttonClassName, {
+          "primary-color": isPrimary,
+        })}
       >
         {children}
       </ButtonLibrary>

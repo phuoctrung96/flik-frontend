@@ -1,0 +1,42 @@
+@import "../../../../assets/styles/_global.scss";
+
+.rowInfo {
+  padding-bottom: 24px;
+  border-bottom: 1px solid $grey-005;
+  &__mr-12 {
+    margin-right: 12px;
+  }
+  &__title {
+    color: $black;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: bold;
+  }
+
+  &__content {
+    &-title {
+      color: $black;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: bold;
+      margin-bottom: 0px;
+    }
+
+    &-phone {
+      font-size: 14px;
+      letter-spacing: 0.01em;
+      line-height: 18px;
+      color: $grey-002;
+      margin: 1px 0px;
+    }
+
+    &-address {
+      font-size: 14px;
+      letter-spacing: 0.01em;
+      line-height: 18px;
+      color: $black;
+      margin: 1px 0px;
+      letter-spacing: 0.01em;
+    }
+  }
+}
