@@ -1,0 +1,39 @@
+@import "../../../../assets/styles/_global.scss";
+
+.addressModalContainer {
+  top: 230px !important;
+}
+
+.addressModal {
+  position: relative;
+  padding: 44px 20px 24px 20px;
+  min-width: 312px;
+  min-height: 332px;
+  border-radius: 16px;
+
+  &__closeIcon {
+    position: absolute;
+    top: 24px;
+    right: 18px;
+  }
+
+  &__addressItem {
+    color: $black;
+    font-size: 14px;
+    line-height: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid $grey-005;
+    margin-bottom: 16px;
+
+    &-title {
+      font-family: "Arial Rounded MT Bold";
+      margin-top: 0px;
+      margin-bottom: 10px;
+    }
+
+    &-description {
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+  }
+}

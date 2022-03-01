@@ -1,0 +1,34 @@
+@import "../../../../assets/styles/_global.scss";
+
+.courierItem {
+  border-bottom: 1px solid $grey-005;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+
+  &__image {
+    margin-right: 17px;
+  }
+
+  &__title {
+    font-size: 14px;
+    line-height: 18px;
+    color: $black;
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+
+  &__description {
+    margin-top: 0;
+    color: $grey-002;
+    font-size: 13px;
+    line-height: 15px;
+  }
+
+  &__price {
+    color: $black;
+    font-size: 14px;
+    line-height: 16px;
+    font-family: Arial Rounded MT Bold;
+  }
+}

@@ -1,4 +1,88 @@
 @import "../../../../assets/styles/_global.scss";
 
-.Summary {
+.summary {
+  border: 0;
+  &__header {
+    margin: 0px 0px 20px 0px;
+    font-family: "Arial Rounded MT Bold";
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  &__productContainer {
+    border-bottom: 1px solid $grey-004;
+  }
+  &__productInfo {
+    margin-bottom: 24px;
+    &-image {
+      margin-right: 12px;
+    }
+
+    &-product {
+      color: $black;
+      &-title {
+        margin: 0;
+        font-size: 14px;
+        margin-bottom: 2px;
+      }
+      &-amount {
+        margin: 0;
+        font-size: 12px;
+        margin-bottom: 10px;
+        color: $grey-002;
+      }
+      &-quantity {
+        margin: 0;
+        font-size: 12px;
+      }
+    }
+  }
+
+  &__price {
+    color: $black;
+    font-size: 14px;
+    line-height: 18px;
+    font-family: "Arial Rounded MT Bold";
+  }
+
+  &__transactionText {
+    font-family: "Open Sans";
+    font-size: 10px;
+    line-height: 14px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &__paymentInfo {
+    padding-bottom: 24px;
+    border-bottom: 1px solid $grey-004;
+    &-text {
+      margin-bottom: 0;
+      font-family: "Open Sans";
+      font-size: 12px;
+      font-weight: $grey-002;
+      line-height: 18px;
+    }
+
+    &-totalLabel {
+      font-size: 14px;
+      color: $black;
+    }
+
+    &-totalValue {
+      font-size: 14px;
+      color: $black;
+      font-family: "Arial Rounded MT Bold";
+      font-weight: 400;
+    }
+  }
+
+  &__checkoutText {
+    margin: 32px 0px 12px 0px;
+    text-align: center;
+    font-family: "Arial";
+    font-size: 12px;
+    line-height: 18px;
+    color: $grey-002;
+  }
 }

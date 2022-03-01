@@ -1,0 +1,39 @@
+@import "../../../../assets/styles/_global.scss";
+
+.paymentItem {
+  padding-bottom: 16px;
+  border-bottom: 1px solid $grey-005;
+  margin-bottom: 16px;
+  &__image {
+  }
+  &__button {
+    background-color: rgba(0, 133, 255, 0.1) !important;
+    border-radius: 14px !important;
+    color: $secondary-blue !important;
+    font-size: 14px !important;
+    line-height: 16px !important;
+    width: 95px;
+    height: 28px;
+  }
+
+  &__infoContainer {
+    flex: 1;
+  }
+
+  &__title {
+    font-size: 14px;
+    line-height: 16px;
+    margin-bottom: 3px;
+    color: $black;
+    margin-top: 0;
+  }
+
+  &__description {
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 11px;
+    color: $grey-002;
+    margin-top: 0px;
+    margin-bottom: 0;
+  }
+}
