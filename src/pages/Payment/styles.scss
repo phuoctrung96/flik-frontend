@@ -1,0 +1,87 @@
+@import "../../assets/styles/_global.scss";
+
+.payment {
+  background-color: $primary;
+  display: flex;
+  flex-direction: column;
+
+  &__row {
+    display: flex;
+    align-items: center;
+  }
+
+  &__shopContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 24px 20px;
+    background-color: $white;
+    border-radius: 16px;
+    padding: 0px 16px;
+
+    &-left {
+      display: flex;
+      align-items: center;
+
+      &-title {
+        font-size: 12px;
+        line-height: 18px;
+        color: $black;
+        text-transform: uppercase;
+        margin-left: 12px;
+      }
+    }
+
+    &-right {
+      display: flex;
+      align-items: center;
+
+      &-title {
+        font-size: 12px;
+        line-height: 18px;
+        color: $black;
+        margin-right: 12px;
+      }
+    }
+  }
+
+  &__formInfor {
+    background-color: $white;
+    flex: 1;
+    border-radius: 32px 32px 0px 0px;
+    padding: 32px 20px;
+  }
+
+  &__orderSummary {
+    background-color: $grey-006;
+    padding: 24px 20px;
+  }
+
+  &__confirmButtonContainer {
+    background-color: $white;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+
+    &-button {
+      margin: 16px 20px 0px 16px;
+    }
+
+    &-buttonItem {
+    }
+
+    &-info {
+      margin: 0px 20px 16px 20px;
+      padding: 0px 30px;
+      font-size: 10px;
+      line-height: 12px;
+      color: $grey-003;
+      padding: 0px 65px;
+
+      a {
+        text-decoration: none;
+        color: $cornflowerBlue;
+      }
+    }
+  }
+}

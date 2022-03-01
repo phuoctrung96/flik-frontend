@@ -1,0 +1,19 @@
+@import "../../assets/styles/_global.scss";
+
+.button {
+  .item {
+    font-size: 16px;
+    line-height: 20px;
+    padding: 14px 0px;
+    border-radius: 12px;
+    text-transform: none;
+  }
+  .primary-color {
+    background-color: $primary;
+    color: $white;
+
+    &:hover {
+      background-color: $primary;
+    }
+  }
+}
