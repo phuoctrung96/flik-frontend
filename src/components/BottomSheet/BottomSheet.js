@@ -9,7 +9,7 @@ import "./styles.scss";
 export const BottomSheet = ({
   onClose,
   isVisibled,
-  onClick,
+  onSave,
   className,
   children,
   minHeight,
@@ -37,7 +37,7 @@ export const BottomSheet = ({
           isPrimary
           fullWidth
           className="bottomSheet__button"
-          onClick={onClick}
+          onClick={onSave}
         >
           Save
         </Button>

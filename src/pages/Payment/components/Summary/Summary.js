@@ -1,13 +1,17 @@
 import { Box } from "@mui/material";
 import classNames from "classnames";
 import React from "react";
+import { Button, Input } from "../../../../components";
 import { Images, RootStyles } from "../../../../utils";
 import "./styles.scss";
 
-export const Summary = ({ data, className }) => {
+export const Summary = ({ data, className, isEdit }) => {
   return (
     <div className={classNames("summary", className)}>
-      <p className="summary__header">Order Summary</p>
+      <Box sx={{ ...RootStyles.rowBetween }}>
+        <p className="summary__header">Order Summary</p>
+        <Button>Edit</Button>
+      </Box>
       <Box className="summary__productContainer">
         {data?.products.map((item) => (
           <Box
@@ -34,9 +38,27 @@ export const Summary = ({ data, className }) => {
                   ({item.amount}
                   {item.type}, {item.category})
                 </p>
-                <p className="summary__productInfo-product-quantity">
-                  Quantity: {item.quantity}
-                </p>
+                {!isEdit && (
+                  <p className="summary__productInfo-product-quantity">
+                    Quantity: {item.quantity}
+                  </p>
+                )}
+                {isEdit && (
+                  <Box className="summary__productInfo-product-buttonGroupContainer">
+                    <div className="summary__productInfo-product-buttonGroupContainer-minus">
+                      -
+                    </div>
+                    <p className="summary__productInfo-product-buttonGroupContainer-quantity">
+                      {item.quantity}
+                    </p>
+                    <div className="summary__productInfo-product-buttonGroupContainer-plus">
+                      +
+                    </div>
+                    <p className="summary__productInfo-product-stock">
+                      80 in Stock
+                    </p>
+                  </Box>
+                )}
               </Box>
               <p style={{ margin: 0 }} className="summary__price">
                 Rp {item.price}
@@ -47,6 +69,16 @@ export const Summary = ({ data, className }) => {
       </Box>
 
       <p className="summary__transactionText">TRANSACTION ID #FC12345</p>
+
+      <Box>
+        <p>Enter Voucher Code</p>
+        <div className="summary__voucherCode">
+          <input className="summary__voucherCode-input" />
+          <Button isPrimary buttonClassName="summary__voucherCode-button">
+            Apply
+          </Button>
+        </div>
+      </Box>
 
       <Box className="summary__paymentInfo">
         <Box sx={{ ...RootStyles.rowBetween }}>

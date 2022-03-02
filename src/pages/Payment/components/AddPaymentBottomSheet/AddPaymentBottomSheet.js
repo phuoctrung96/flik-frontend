@@ -7,13 +7,23 @@ export const AddPaymentBottomSheet = ({
   isVisibled,
   onClose,
   data,
-  onClick,
+  onActiveClick,
+  onSave,
 }) => {
   return (
-    <BottomSheet isVisibled={isVisibled} onClose={onClose} title="Add Payment">
+    <BottomSheet
+      isVisibled={isVisibled}
+      onClose={onClose}
+      onSave={onSave}
+      title="Add Payment"
+    >
       <Box>
         {data.map((item) => (
-          <PaymentItem key={item.id} data={item} />
+          <PaymentItem
+            key={item.id}
+            data={item}
+            onActiveClick={() => onActiveClick(item)}
+          />
         ))}
       </Box>
     </BottomSheet>

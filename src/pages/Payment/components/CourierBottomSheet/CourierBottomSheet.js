@@ -11,7 +11,7 @@ export const CourierBottomSheet = ({
   onClose,
   isVisibled,
   courierList,
-  onClick,
+  onSave,
   className,
 }) => {
   return (
@@ -29,7 +29,12 @@ export const CourierBottomSheet = ({
         </Box>
       </Box>
       <div className="courier__buttonContainer">
-        <Button isPrimary fullWidth className="courier__button">
+        <Button
+          isPrimary
+          fullWidth
+          className="courier__button"
+          onClick={onSave}
+        >
           Save
         </Button>
       </div>

@@ -18,7 +18,9 @@ export const Modal = ({
       className={classNames("modal", className)}
       {...rest}
     >
-      <LibraryIcons.CloseIcon className="modal__closeIcon" onClick={onClose} />
+      <div className="modal__closeIcon" onClick={onClose}>
+        <LibraryIcons.CloseIcon />
+      </div>
       {children}
     </Dialog>
   );
