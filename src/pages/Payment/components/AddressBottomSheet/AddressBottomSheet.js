@@ -4,13 +4,15 @@ import { BottomSheet } from "react-spring-bottom-sheet";
 import "react-spring-bottom-sheet/dist/style.css";
 import { Button, Input } from "../../../../components";
 import { Icons, Images, LibraryIcons, RootStyles } from "../../../../utils";
+import { fieldNames } from "../../Payment.data";
 import "./styles.scss";
 
 export const AddressBottomSheet = ({
   onClose,
   isVisibled,
-  onClick,
+  onSave,
   className,
+  form,
 }) => {
   const renderShippingAddress = () => {
     return (
@@ -42,54 +44,74 @@ export const AddressBottomSheet = ({
       />
       <Box className="addressBottomSheet__container">
         <Input
-          id="standard-basic"
           label="Shipping Address"
           variant="standard"
           sx={{ mt: "16px" }}
           startInput={renderShippingAddress()}
           inputClass="addressBottomSheet__container-input"
+          name={fieldNames.shippingAddress}
+          value={form.values.shippingAddress}
+          onChange={form.handleChange}
+          multiline
         />
         <Input
-          id="standard-basic"
           label="Apartment, Unit, Floor, etc. (Optional)"
           variant="standard"
           sx={{ mt: "16px" }}
           inputClass="addressBottomSheet__container-input"
+          name={fieldNames.addressOptional}
+          value={form.values.addressOptional}
+          onChange={form.handleChange}
         />
         <Input
-          id="standard-basic"
           label="City"
           variant="standard"
           sx={{ mt: "16px" }}
+          name={fieldNames.city}
+          value={form.values.city}
+          onChange={form.handleChange}
         />
         <Input
-          id="standard-basic"
           label="Province (Optional)"
           variant="standard"
           sx={{ mt: "16px" }}
+          name={fieldNames.province}
+          value={form.values.province}
+          onChange={form.handleChange}
         />
         <Input
-          id="standard-basic"
           label="Postal Code"
           variant="standard"
           sx={{ mt: "16px" }}
+          name={fieldNames.postalCode}
+          value={form.values.postalCode}
+          onChange={form.handleChange}
         />
         <Input
-          id="standard-basic"
           label="Recipient's Name"
           variant="standard"
           sx={{ mt: "16px" }}
+          name={fieldNames.recipientName}
+          value={form.values.recipientName}
+          onChange={form.handleChange}
         />
         <Input
-          id="standard-basic"
           label="Phone Number"
           variant="standard"
           startInput={renderStartPhoneInput()}
           sx={{ mt: "16px" }}
+          name={fieldNames.phone}
+          onChange={form.handleChange}
+          value={form.values.phone}
         />
       </Box>
       <div className="addressBottomSheet__buttonContainer">
-        <Button isPrimary fullWidth className="addressBottomSheet__button">
+        <Button
+          isPrimary
+          fullWidth
+          className="addressBottomSheet__button"
+          onClick={onSave}
+        >
           Save
         </Button>
       </div>

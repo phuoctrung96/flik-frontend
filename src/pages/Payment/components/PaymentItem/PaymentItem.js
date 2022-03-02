@@ -4,7 +4,7 @@ import { Button } from "../../../../components";
 import { RootStyles } from "../../../../utils";
 import "./styles.scss";
 
-export const PaymentItem = ({ data }) => {
+export const PaymentItem = ({ data, onActiveClick }) => {
   return (
     <Box className="paymentItem" sx={{ ...RootStyles.row }}>
       <div style={{ width: 45, marginRight: 10 }}>
@@ -14,7 +14,9 @@ export const PaymentItem = ({ data }) => {
         <h5 className="paymentItem__title">{data.title}</h5>
         <p className="paymentItem__description">{data.description}</p>
       </Box>
-      <Button buttonClassName="paymentItem__button">Activate</Button>
+      <Button buttonClassName="paymentItem__button" onClick={onActiveClick}>
+        Activate
+      </Button>
     </Box>
   );
 };

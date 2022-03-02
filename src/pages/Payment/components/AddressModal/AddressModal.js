@@ -21,7 +21,11 @@ export const AddressModal = ({
       <Box className="addressModal">
         <Box>
           {data.map((item) => (
-            <Box className="addressModal__addressItem" key={item.id}>
+            <Box
+              className="addressModal__addressItem"
+              key={item.id}
+              onClick={() => onClick(item)}
+            >
               <p className="addressModal__addressItem-title">{item.title}</p>
               <p className="addressModal__addressItem-description">
                 {item.address}

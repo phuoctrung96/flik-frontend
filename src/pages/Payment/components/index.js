@@ -5,3 +5,4 @@ export * from "./AddressModal";
 export * from "./CourierBottomSheet";
 export * from "./CourierItem";
 export * from "./AddPaymentBottomSheet";
+export * from "./AddCardBottomSheet";

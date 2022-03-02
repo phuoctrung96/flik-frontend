@@ -4,16 +4,52 @@ import * as yup from "yup";
 export const initialValues = {
   phone: "",
   email: "",
+  phoneOtp: "",
+  emailOtp: "",
+  firstName: "",
+  lastName: "",
+  shippingAddress: "",
+  addressOptional: "",
+  city: "",
+  province: "",
+  postalCode: "",
+  recipientName: "",
+  courier: false,
+  payment: false,
 };
 
 export const fieldPlaceholders = {
   phone: "Phone Number",
   email: "Email",
+  phoneOtp: "Phone OTP",
+  emailOtp: "Email OTP",
+  firstName: "First Name",
+  lastName: "Last Name",
+  shippingAddress: "Shipping Address",
+  addressOptional: "Address Optional",
+  city: "City",
+  province: "Province",
+  postalCode: "Postal Code",
+  recipientName: "Recipient's Name",
+  courier: "Courier",
+  payment: "Payment",
 };
 
 export const fieldNames = {
   phone: "phone",
   email: "email",
+  phoneOtp: "phoneOtp",
+  emailOtp: "Email OTP",
+  firstName: "firstName",
+  lastName: "lastName",
+  shippingAddress: "shippingAddress",
+  addressOptional: "addressOptional",
+  city: "city",
+  province: "province",
+  postalCode: "postalCode",
+  recipientName: "recipientName",
+  courier: "courier",
+  payment: "payment",
 };
 
 export const validationSchema = yup.object().shape({
@@ -104,6 +140,7 @@ export const cardList = [
     title: "Debit/Credit Card",
     description: "Link your Credit Card Account",
     image: Images.creditCard,
+    phone: "123 123",
   },
   {
     id: 1,
@@ -111,12 +148,14 @@ export const cardList = [
     description: "Link your GoPay Account",
     image: Images.goPay,
     voucher: "50k",
+    phone: "123 123",
   },
   {
     id: 2,
     title: "ShopeePay",
     description: "Link your ShopeePay Account",
     image: Images.shopeePay,
+    phone: "123 123",
   },
   {
     id: 3,
@@ -124,11 +163,13 @@ export const cardList = [
     description: "Link your OVO Account",
     image: Images.ovo,
     promo: "10%",
+    phone: "123 123",
   },
   {
     id: 4,
     title: "DANA",
     description: "Link your DANA Account",
     image: Images.dana,
+    phone: "123 123",
   },
 ];
