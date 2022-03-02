@@ -1,0 +1,53 @@
+@import "../../assets/styles/_global.scss";
+
+.otpModal {
+  padding: 64px 28px 34px 28px;
+  min-width: 312px;
+  text-align: center;
+  position: relative;
+  border-radius: 16px;
+
+  &__closeIcon {
+    position: absolute;
+    top: 24px;
+    right: 18px;
+  }
+
+  &__title {
+    font-family: "Arial Rounded MT Bold";
+    font-size: 16px;
+    line-height: 18px;
+    color: $black;
+    font-weight: normal;
+    margin-bottom: 32px;
+    margin-top: 0px;
+  }
+
+  &__description {
+    font-size: 14px;
+    line-height: 20px;
+    color: $black;
+    margin: 0px;
+    font-family: "Open Sans";
+  }
+
+  &__input {
+    width: 36px;
+    height: 40px;
+    background-color: $white;
+    border: 1px solid $grey-005;
+    border-radius: 4px;
+    padding: 11px 13px;
+    font-size: 16px;
+    line-height: 18px;
+    color: $black;
+    font-weight: 600;
+  }
+
+  &__footer {
+    font-family: "Open Sans";
+    font-size: 12px;
+    line-height: 18px;
+    color: $grey-002;
+  }
+}

@@ -1,0 +1,10 @@
+@import "../../assets/styles/_global.scss";
+
+.modal {
+  border-radius: 16px;
+  &__closeIcon {
+    position: absolute;
+    top: 24px;
+    right: 18px;
+  }
+}

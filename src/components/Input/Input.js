@@ -4,7 +4,13 @@ import classNames from "classnames";
 import React from "react";
 import "./styles.scss";
 
-export const Input = ({ startInput, className, inputClass, ...rest }) => {
+export const Input = ({
+  onKeyUp,
+  startInput,
+  className,
+  inputClass,
+  ...rest
+}) => {
   return (
     <div className={classNames("input", className)}>
       <TextField
