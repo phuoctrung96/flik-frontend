@@ -2,6 +2,7 @@
 
 .summary {
   border: 0;
+  padding-bottom: 100px;
   &__header {
     margin: 20px 0px 20px 0px;
     font-family: "Arial Rounded MT Bold";
@@ -99,7 +100,7 @@
     border-bottom: 1px solid $grey-004;
     &-text {
       margin-bottom: 0;
-      font-family: "Open Sans";
+      font-family: Arial;
       font-size: 12px;
       font-weight: $grey-002;
       line-height: 18px;
@@ -139,6 +140,7 @@
     &-input {
       border: 0;
       height: 32px;
+      width: 100%;
       padding: 13px 16px;
 
       &:focus-visible {

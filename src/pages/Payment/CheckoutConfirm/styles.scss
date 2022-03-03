@@ -1,0 +1,164 @@
+@import "../../../assets/styles/_global.scss";
+
+.checkoutConfirm {
+  background-color: $primary;
+  display: flex;
+  flex-direction: column;
+
+  &__container {
+    padding-top: 24px;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+  }
+
+  &__shopContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px 20px 24px 20px;
+    background-color: $white;
+    border-radius: 16px;
+    padding: 0px 16px;
+    &-left {
+      display: flex;
+      align-items: center;
+
+      &-title {
+        font-size: 12px;
+        line-height: 18px;
+        color: $black;
+        text-transform: uppercase;
+        margin-left: 12px;
+      }
+    }
+
+    &-right {
+      display: flex;
+      align-items: center;
+
+      &-title {
+        font-size: 12px;
+        line-height: 18px;
+        color: $black;
+        margin-right: 12px;
+      }
+    }
+  }
+
+  &__formInfor {
+    background-color: $grey-006;
+    border-radius: 32px 32px 0px 0px;
+
+    &-cardInfoContainer {
+      text-align: center;
+      padding: 32px 20px 16px 20px;
+      background-color: $white;
+      border-radius: 32px 32px 0px 0px;
+      margin-bottom: 12px;
+
+      &-title {
+        font-size: 18px;
+        line-height: 28px;
+        font-family: Arial Rounded MT Bold;
+        letter-spacing: -0.55px;
+        font-weight: normal;
+        padding: 0px 50px;
+        color: $black;
+      }
+
+      &-descriptionContainer {
+        background-color: $grey-006;
+        border-radius: 8px;
+        padding: 8px 16px;
+      }
+
+      &-descriptionText {
+        color: $black;
+        font-size: 12px;
+        line-height: 18px;
+      }
+
+      &-confirmText {
+        letter-spacing: -0.55px;
+        color: $grey-002;
+        font-size: 14px;
+        line-height: 24px;
+        font-family: Arial Rounded MT Bold;
+      }
+    }
+
+    &-detailContainer {
+      padding: 16px 20px;
+      background-color: $white;
+      padding-bottom: 200px;
+
+      &-label {
+        color: $black;
+        font-size: 12px;
+        line-height: 18px;
+        flex: 1;
+        margin: 0;
+      }
+
+      &-value {
+        flex: 1;
+        font-family: Arial Rounded MT Bold;
+        font-size: 12px;
+        line-height: 18px;
+        margin: 0;
+      }
+
+      &-input {
+        flex: 1;
+      }
+
+      &-tag {
+        color: $grey-003;
+        font-size: 12px;
+        line-height: 18px;
+        text-align: center;
+        margin-top: 24px;
+      }
+    }
+  }
+
+  &__buttonContainer {
+    background-color: $white;
+    padding: 20px 16px;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+
+    &-button {
+      flex: 1;
+      margin-left: 6px;
+    }
+
+    &-buttonCancel {
+      flex: 1;
+      margin-right: 8px;
+    }
+
+    &-buttonCancelItem {
+      border-color: $primary !important;
+      color: $primary !important;
+    }
+
+    &-info {
+      margin: 0px 20px 16px 20px;
+      padding: 0px 30px;
+      font-size: 10px;
+      line-height: 12px;
+      color: $grey-003;
+      padding: 0px 65px;
+
+      a {
+        text-decoration: none;
+        color: $cornflowerBlue;
+      }
+    }
+  }
+}

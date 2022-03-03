@@ -1,16 +1,16 @@
 import { Box } from "@mui/material";
 import classNames from "classnames";
 import React from "react";
-import { Button, Input } from "../../../../components";
-import { Images, RootStyles } from "../../../../utils";
+import { Button } from "../../../../components";
+import { RootStyles } from "../../../../utils";
 import "./styles.scss";
 
-export const Summary = ({ data, className, isEdit }) => {
+export const Summary = ({ data, className, isEdit, onEditClick }) => {
   return (
     <div className={classNames("summary", className)}>
       <Box sx={{ ...RootStyles.rowBetween }}>
         <p className="summary__header">Order Summary</p>
-        <Button>Edit</Button>
+        <Button onClick={onEditClick}>Edit</Button>
       </Box>
       <Box className="summary__productContainer">
         {data?.products.map((item) => (
@@ -70,15 +70,17 @@ export const Summary = ({ data, className, isEdit }) => {
 
       <p className="summary__transactionText">TRANSACTION ID #FC12345</p>
 
-      <Box>
-        <p>Enter Voucher Code</p>
-        <div className="summary__voucherCode">
-          <input className="summary__voucherCode-input" />
-          <Button isPrimary buttonClassName="summary__voucherCode-button">
-            Apply
-          </Button>
-        </div>
-      </Box>
+      {isEdit && (
+        <Box>
+          <p>Enter Voucher Code</p>
+          <div className="summary__voucherCode">
+            <input className="summary__voucherCode-input" />
+            <Button isPrimary buttonClassName="summary__voucherCode-button">
+              Apply
+            </Button>
+          </div>
+        </Box>
+      )}
 
       <Box className="summary__paymentInfo">
         <Box sx={{ ...RootStyles.rowBetween }}>

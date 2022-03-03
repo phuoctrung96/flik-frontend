@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { MainLayout } from "../components/layouts/MainLayout";
-import { Home, MainRoute, Payment } from "./constants";
+import { Home, MainRoute, Payment, CheckoutConfirm } from "./constants";
 
 const AuthRouter = () => {
   return (
@@ -19,6 +19,14 @@ const PaymentRouter = () => {
         element={
           <Suspense fallback={<>...</>}>
             <Payment />
+          </Suspense>
+        }
+      ></Route>
+      <Route
+        path={MainRoute.CheckoutConfirm}
+        element={
+          <Suspense fallback={<>...</>}>
+            <CheckoutConfirm />
           </Suspense>
         }
       ></Route>
