@@ -61,7 +61,6 @@ export const OtpModal = ({
           {OtpInputArr.map((otpItem, index) => (
             <input
               key={otpItem.id.toString()}
-              type="number"
               name={`otp${index}`}
               ref={otpItem.ref}
               value={otp[index]}

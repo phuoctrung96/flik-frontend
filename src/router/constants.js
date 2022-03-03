@@ -6,6 +6,7 @@ import { lazy } from "react";
 //Main
 const Payment = lazy(() => import("../pages/Payment"));
 const Home = lazy(() => import("../pages/Home"));
+const CheckoutConfirm = lazy(() => import("../pages/Payment/CheckoutConfirm"));
 
 export {
   //Auth
@@ -14,13 +15,16 @@ export {
   //Main
   Home,
   Payment,
+  CheckoutConfirm,
 };
 
 export const MainRoute = {
   Home: "/",
-  Payment: "payment",
+
+  Payment: "/payment",
+  CheckoutConfirm: "/payment/confirm",
 };
 
 export const AuthRoute = {
-  Login: "login",
+  Login: "/login",
 };

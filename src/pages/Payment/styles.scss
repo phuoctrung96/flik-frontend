@@ -2,11 +2,8 @@
 
 .payment {
   background-color: $primary;
-  display: flex;
-  flex-direction: column;
 
   &__container {
-    padding-bottom: 100px;
     overflow-y: auto;
   }
 

@@ -11,6 +11,7 @@ import ovo from "../assets/images/payment/card/ovo.png";
 import dana from "../assets/images/payment/card/dana.png";
 import masterCard from "../assets/images/payment/card/mastercard-logo.png";
 import visa from "../assets/images/payment/card/visa.png";
+import visa2x from "../assets/images/payment/card/visa-2x.png";
 
 export const Images = {
   bodyShopIcon,
@@ -26,4 +27,5 @@ export const Images = {
   dana,
   masterCard,
   visa,
+  visa2x,
 };

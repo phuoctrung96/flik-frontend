@@ -29,6 +29,8 @@ import {
   fieldPlaceholders,
   fieldNames,
 } from "./Payment.data";
+import { useNavigate } from "react-router-dom";
+import { MainRoute } from "../../router/constants";
 
 const PHONE_OTP = "PHONE_MODAL";
 const EMAIL_OTP = "EMAIL_OTP";
@@ -46,6 +48,9 @@ export default function Payment() {
   const [isCourierBottomSheet, setIsCourierBottomSheet] = useState(false);
   const [isAddPaymentBottomSheet, setIsAddPaymentBottomSheet] = useState(false);
   const [isAddCardBottomSheet, setIsAddCardBottomSheet] = useState(false);
+  const [isEditOtherSummary, setIsEditOtherSummary] = useState(false);
+
+  const navigation = useNavigate();
 
   const formik = useFormik({ initialValues, validationSchema });
 
@@ -137,6 +142,14 @@ export default function Payment() {
   const handleOnSaveCardBottomSheet = () => {
     setIsAddCardBottomSheet(false);
     formik.setFieldValue(fieldNames.payment, true);
+  };
+
+  const handleConfirmAndPay = () => {
+    navigation(MainRoute.CheckoutConfirm);
+  };
+
+  const handleEditSummary = () => {
+    setIsEditOtherSummary(true);
   };
 
   return (
@@ -242,7 +255,11 @@ export default function Payment() {
         </div>
 
         <div className="payment__orderSummary">
-          <Summary isEdit data={orderSummaryData} />
+          <Summary
+            isEdit={isEditOtherSummary}
+            data={orderSummaryData}
+            onEditClick={handleEditSummary}
+          />
         </div>
       </div>
 
@@ -261,6 +278,7 @@ export default function Payment() {
             />
           }
           buttonClassName="payment__confirmButtonContainer-buttonItem"
+          onClick={handleConfirmAndPay}
         >
           Confirm & Pay
         </Button>
