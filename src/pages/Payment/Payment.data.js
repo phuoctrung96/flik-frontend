@@ -54,7 +54,7 @@ export const fieldNames = {
 
 export const validationSchema = yup.object().shape({
   phone: yup.string().required(),
-  email: yup.string().required(),
+  email: yup.string().required().email(),
 });
 
 export const mockAddressData = {

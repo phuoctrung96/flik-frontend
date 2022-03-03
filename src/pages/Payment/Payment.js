@@ -90,8 +90,9 @@ export default function Payment() {
 
   const handleChangeEmail = (e) => {
     formik.handleChange(e);
-
-    updateModal(e.target.value, () => setIsEmailModal(true));
+    if (!formik.errors.email) {
+      updateModal(e.target.value, () => setIsEmailModal(true));
+    }
   };
 
   const handleChangeOTPPhone = (e) => {
