@@ -159,7 +159,7 @@ export default function Payment() {
   useState(() => {
     setTimeout(() => {
       setIsSplashScreen(false);
-    }, 1000);
+    }, 2000);
   }, []);
 
   return (
