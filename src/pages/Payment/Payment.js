@@ -2,7 +2,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { Images, Icons, RootStyles } from "../../utils";
 import "./styles.scss";
-import { Button, Input } from "../../components";
+import { Button, Input, Loading } from "../../components";
 import { Box } from "@mui/material";
 import {
   AddCardBottomSheet,
@@ -49,6 +49,7 @@ export default function Payment() {
   const [isAddPaymentBottomSheet, setIsAddPaymentBottomSheet] = useState(false);
   const [isAddCardBottomSheet, setIsAddCardBottomSheet] = useState(false);
   const [isEditOtherSummary, setIsEditOtherSummary] = useState(false);
+  const [isSplashScreen, setIsSplashScreen] = useState(true);
 
   const navigation = useNavigate();
 
@@ -117,12 +118,15 @@ export default function Payment() {
   };
 
   const handleClickAddressModalItem = (item) => {
-    formik.setFieldValue(
-      fieldNames.shippingAddress,
-      item.title + ", " + item.address
-    );
     setIsAddressModal(false);
-    setIsAddressBottomSheet(true);
+
+    setTimeout(() => {
+      formik.setFieldValue(
+        fieldNames.shippingAddress,
+        item.title + ", " + item.address
+      );
+      setIsAddressBottomSheet(true);
+    }, 500);
   };
 
   const handleSaveAddressModal = () => {
@@ -152,191 +156,205 @@ export default function Payment() {
     setIsEditOtherSummary(true);
   };
 
+  useState(() => {
+    setTimeout(() => {
+      setIsSplashScreen(false);
+    }, 1000);
+  }, []);
+
   return (
-    <div className="payment">
-      <div className="payment__container">
-        <div className="payment__shopContainer">
-          <div className="payment__shopContainer-left">
-            <img src={Images.bodyShopIcon} alt="" width={24} height={24} />
-            <p className="payment__shopContainer-left-title">THE BODY SHOP</p>
-          </div>
-          <div className="payment__shopContainer-right">
-            <p className="payment__shopContainer-right-title">Rp 270.600</p>
-            <img src={Icons.chevronDown} alt="" width={24} height={24} />
-          </div>
-        </div>
+    <>
+      {isSplashScreen ? (
+        <Loading />
+      ) : (
+        <div className="payment">
+          <div className="payment__container">
+            <div className="payment__shopContainer">
+              <div className="payment__shopContainer-left">
+                <img src={Images.bodyShopIcon} alt="" width={24} height={24} />
+                <p className="payment__shopContainer-left-title">
+                  THE BODY SHOP
+                </p>
+              </div>
+              <div className="payment__shopContainer-right">
+                <p className="payment__shopContainer-right-title">Rp 270.600</p>
+                <img src={Icons.chevronDown} alt="" width={24} height={24} />
+              </div>
+            </div>
 
-        <div className="payment__formInfor">
-          <Input
-            id="standard-basic"
-            label={fieldPlaceholders.phone}
-            variant="standard"
-            type="phone"
-            startInput={renderStartPhoneInput()}
-            name={fieldNames.phone}
-            onChange={handleChangePhone}
-            value={formik.values.phone}
-            placeholder={fieldPlaceholders.phone}
-          />
-          {formik.values.phoneOtp && (
-            <Input
-              id="standard-basic"
-              label="Email"
-              variant="standard"
-              inputClass="payment__mt-16"
-              sx={{ mt: "16px" }}
-              name={fieldNames.email}
-              onChange={handleChangeEmail}
-              value={formik.values.email}
-            />
-          )}
-          {formik.values.email && (
-            <Box sx={{ mt: "16px", ...RootStyles.rowBetween }}>
-              <Input
-                label="First Name"
-                variant="standard"
-                name={fieldNames.firstName}
-                onChange={formik.handleChange}
-                value={formik.values.firstName}
-              />
-              <Input
-                label="Last Name"
-                variant="standard"
-                name={fieldNames.lastName}
-                onChange={formik.handleChange}
-                value={formik.values.lastName}
-              />
-            </Box>
-          )}
-          {(!!!formik.values.firstName || !!!formik.values.lastName) && (
-            <RowInfo label="Shipping Address" sx={{ mt: "16px" }} />
-          )}
-
-          {!formik.values.shippingAddress &&
-            !!formik.values.firstName &&
-            !!formik.values.lastName && (
+            <div className="payment__formInfor">
               <Input
                 id="standard-basic"
-                label="Shipping Address"
+                label={fieldPlaceholders.phone}
                 variant="standard"
-                sx={{ mt: "16px" }}
-                startInput={renderShippingAddress()}
-                placeholder="Shipping Address"
-                onClick={() => setIsAddressModal(true)}
+                type="phone"
+                startInput={renderStartPhoneInput()}
+                name={fieldNames.phone}
+                onChange={handleChangePhone}
+                value={formik.values.phone}
+                placeholder={fieldPlaceholders.phone}
               />
-            )}
+              {formik.values.phoneOtp && (
+                <Input
+                  id="standard-basic"
+                  label="Email"
+                  variant="standard"
+                  inputClass="payment__mt-16"
+                  sx={{ mt: "16px" }}
+                  name={fieldNames.email}
+                  onChange={handleChangeEmail}
+                  value={formik.values.email}
+                />
+              )}
+              {formik.values.email && (
+                <Box sx={{ mt: "16px", ...RootStyles.rowBetween }}>
+                  <Input
+                    label="First Name"
+                    variant="standard"
+                    name={fieldNames.firstName}
+                    onChange={formik.handleChange}
+                    value={formik.values.firstName}
+                  />
+                  <Input
+                    label="Last Name"
+                    variant="standard"
+                    name={fieldNames.lastName}
+                    onChange={formik.handleChange}
+                    value={formik.values.lastName}
+                  />
+                </Box>
+              )}
+              {(!!!formik.values.firstName || !!!formik.values.lastName) && (
+                <RowInfo label="Shipping Address" sx={{ mt: "16px" }} />
+              )}
 
-          {formik.values.shippingAddress && (
-            <RowInfo
-              label="Address"
-              data={mockAddressData}
-              isEdit
-              sx={{ mt: "16px" }}
-            />
-          )}
-          <RowInfo
-            label="Courier"
-            isChoose={!formik.values.courier}
-            sx={{ mt: "16px" }}
-            onChooseClick={() => setIsCourierBottomSheet(true)}
-            data={courierList[0]}
-            isSeccondContentView
-            isEdit={formik.values.courier}
+              {!formik.values.shippingAddress &&
+                !!formik.values.firstName &&
+                !!formik.values.lastName && (
+                  <Input
+                    id="standard-basic"
+                    label="Shipping Address"
+                    variant="standard"
+                    sx={{ mt: "16px" }}
+                    startInput={renderShippingAddress()}
+                    placeholder="Shipping Address"
+                    onClick={() => setIsAddressModal(true)}
+                  />
+                )}
+
+              {formik.values.shippingAddress && (
+                <RowInfo
+                  label="Address"
+                  data={mockAddressData}
+                  isEdit
+                  sx={{ mt: "16px" }}
+                />
+              )}
+              <RowInfo
+                label="Courier"
+                isChoose={!formik.values.courier}
+                sx={{ mt: "16px" }}
+                onChooseClick={() => setIsCourierBottomSheet(true)}
+                data={courierList[0]}
+                isSeccondContentView
+                isEdit={formik.values.courier}
+              />
+              <RowInfo
+                label="Payment"
+                sx={{ mt: "16px" }}
+                onChooseClick={() => setIsAddPaymentBottomSheet(true)}
+                data={cardList[0]}
+                isSeccondContentView
+                isEdit={formik.values.payment}
+                isChoose={!formik.values.payment}
+              />
+            </div>
+
+            <div className="payment__orderSummary">
+              <Summary
+                isEdit={isEditOtherSummary}
+                data={orderSummaryData}
+                onEditClick={handleEditSummary}
+              />
+            </div>
+          </div>
+
+          <div className="payment__confirmButtonContainer">
+            <Button
+              isPrimary
+              fullWidth
+              className="payment__confirmButtonContainer-button"
+              startIcon={
+                <img
+                  src={Icons.lock}
+                  width={18}
+                  height={18}
+                  alt=""
+                  style={{ marginBottom: 2 }}
+                />
+              }
+              buttonClassName="payment__confirmButtonContainer-buttonItem"
+              onClick={handleConfirmAndPay}
+            >
+              Confirm & Pay
+            </Button>
+            <div className="payment__confirmButtonContainer-info">
+              <p>
+                By clicking the button above, you agreeFlik's{" "}
+                <a href="$">Terms & Conditions</a> and{" "}
+                <a href="$">Privacy Policy</a>
+              </p>
+            </div>
+          </div>
+
+          <OtpModal
+            isVisibled={isPhoneModal}
+            onClose={() => handleClose(PHONE_OTP)}
+            onChange={handleChangeOTPPhone}
           />
-          <RowInfo
-            label="Payment"
-            sx={{ mt: "16px" }}
-            onChooseClick={() => setIsAddPaymentBottomSheet(true)}
-            data={cardList[0]}
-            isSeccondContentView
-            isEdit={formik.values.payment}
-            isChoose={!formik.values.payment}
+
+          <OtpModal
+            isVisibled={isEmailModal}
+            onClose={() => handleClose(EMAIL_OTP)}
+            onChange={handleChangeOTPEmail}
+          />
+
+          <AddressModal
+            isVisibled={isAddressModal}
+            data={addressListData}
+            onClose={() => handleClose(ADDRESS_MODAL)}
+            onClick={handleClickAddressModalItem}
+          />
+
+          <AddressBottomSheet
+            isVisibled={isAddressBottomSheet}
+            onClose={() => handleClose(ADDRESS_BOTTOM_SHEET)}
+            form={formik}
+            onSave={handleSaveAddressModal}
+          />
+
+          <CourierBottomSheet
+            isVisibled={isCourierBottomSheet}
+            onClose={() => handleClose(COURIER_BOTTOM_SHEET)}
+            courierList={courierList}
+            onSave={handleOnSaveCourierBottomSheet}
+          />
+
+          <AddPaymentBottomSheet
+            isVisibled={isAddPaymentBottomSheet}
+            onClose={() => handleClose(ADD_PAYMENT_BOTTOM_SHEET)}
+            data={cardList}
+            onSave={() => {}}
+            onActiveClick={handleActiveClickPaymentCard}
+          />
+
+          <AddCardBottomSheet
+            isVisibled={isAddCardBottomSheet}
+            onClose={() => handleClose(ADD_CARD_BOTTOM_SHEET)}
+            onSave={handleOnSaveCardBottomSheet}
           />
         </div>
-
-        <div className="payment__orderSummary">
-          <Summary
-            isEdit={isEditOtherSummary}
-            data={orderSummaryData}
-            onEditClick={handleEditSummary}
-          />
-        </div>
-      </div>
-
-      <div className="payment__confirmButtonContainer">
-        <Button
-          isPrimary
-          fullWidth
-          className="payment__confirmButtonContainer-button"
-          startIcon={
-            <img
-              src={Icons.lock}
-              width={18}
-              height={18}
-              alt=""
-              style={{ marginBottom: 2 }}
-            />
-          }
-          buttonClassName="payment__confirmButtonContainer-buttonItem"
-          onClick={handleConfirmAndPay}
-        >
-          Confirm & Pay
-        </Button>
-        <div className="payment__confirmButtonContainer-info">
-          <p>
-            By clicking the button above, you agreeFlik's{" "}
-            <a href="$">Terms & Conditions</a> and{" "}
-            <a href="$">Privacy Policy</a>
-          </p>
-        </div>
-      </div>
-
-      <OtpModal
-        isVisibled={isPhoneModal}
-        onClose={() => handleClose(PHONE_OTP)}
-        onChange={handleChangeOTPPhone}
-      />
-
-      <OtpModal
-        isVisibled={isEmailModal}
-        onClose={() => handleClose(EMAIL_OTP)}
-        onChange={handleChangeOTPEmail}
-      />
-
-      <AddressModal
-        isVisibled={isAddressModal}
-        data={addressListData}
-        onClose={() => handleClose(ADDRESS_MODAL)}
-        onClick={handleClickAddressModalItem}
-      />
-
-      <AddressBottomSheet
-        isVisibled={isAddressBottomSheet}
-        onClose={() => handleClose(ADDRESS_BOTTOM_SHEET)}
-        form={formik}
-        onSave={handleSaveAddressModal}
-      />
-
-      <CourierBottomSheet
-        isVisibled={isCourierBottomSheet}
-        onClose={() => handleClose(COURIER_BOTTOM_SHEET)}
-        courierList={courierList}
-        onSave={handleOnSaveCourierBottomSheet}
-      />
-
-      <AddPaymentBottomSheet
-        isVisibled={isAddPaymentBottomSheet}
-        onClose={() => handleClose(ADD_PAYMENT_BOTTOM_SHEET)}
-        data={cardList}
-        onSave={() => {}}
-        onActiveClick={handleActiveClickPaymentCard}
-      />
-
-      <AddCardBottomSheet
-        isVisibled={isAddCardBottomSheet}
-        onClose={() => handleClose(ADD_CARD_BOTTOM_SHEET)}
-        onSave={handleOnSaveCardBottomSheet}
-      />
-    </div>
+      )}
+    </>
   );
 }

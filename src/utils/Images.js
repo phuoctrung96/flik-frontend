@@ -12,6 +12,7 @@ import dana from "../assets/images/payment/card/dana.png";
 import masterCard from "../assets/images/payment/card/mastercard-logo.png";
 import visa from "../assets/images/payment/card/visa.png";
 import visa2x from "../assets/images/payment/card/visa-2x.png";
+import logo from "../assets/images/logo.png";
 
 export const Images = {
   bodyShopIcon,
@@ -28,4 +29,5 @@ export const Images = {
   masterCard,
   visa,
   visa2x,
+  logo,
 };
