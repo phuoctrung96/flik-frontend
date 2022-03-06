@@ -85,15 +85,30 @@ export const Summary = ({ data, className, isEdit, onEditClick }) => {
       <Box className="summary__paymentInfo">
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text">Subtotal</p>
-          <p className="summary__paymentInfo-text">Rp {data.subtotal}</p>
+          <p
+            className="summary__paymentInfo-text"
+            style={{ fontFamily: "Arial Rounded MT Bold" }}
+          >
+            Rp {data.subtotal}
+          </p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text">Shipping Costs</p>
-          <p className="summary__paymentInfo-text">Rp {data.shippingCosts}</p>
+          <p
+            className="summary__paymentInfo-text"
+            style={{ fontFamily: "Arial Rounded MT Bold" }}
+          >
+            Rp {data.shippingCosts}
+          </p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text">Admin Fee</p>
-          <p className="summary__paymentInfo-text">Rp {data.adminFee}</p>
+          <p
+            className="summary__paymentInfo-text"
+            style={{ fontFamily: "Arial Rounded MT Bold" }}
+          >
+            Rp {data.adminFee}
+          </p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text summary__paymentInfo-totalLabel">

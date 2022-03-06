@@ -5,7 +5,9 @@ import "./styles.scss";
 export const MainLayout = () => {
   return (
     <div className="mainLayout">
-      <Outlet />
+      <div className="mainLayout__layoutContainer">
+        <Outlet />
+      </div>
     </div>
   );
 };

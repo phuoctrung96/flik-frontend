@@ -2,9 +2,6 @@
 
 .payment {
   background-color: $primary;
-  // display: flex;
-  // flex: 1;
-  // flex-direction: column;
 
   &__container {
     overflow-y: auto;
@@ -32,6 +29,8 @@
         font-size: 12px;
         line-height: 18px;
         color: $black;
+        font-family: Arial Rounded MT Bold;
+        font-weight: 400;
         text-transform: uppercase;
         margin-left: 12px;
       }
@@ -44,6 +43,8 @@
       &-title {
         font-size: 12px;
         line-height: 18px;
+        font-family: Arial Rounded MT Bold;
+        font-weight: 400;
         color: $black;
         margin-right: 12px;
       }
@@ -65,7 +66,6 @@
   &__confirmButtonContainer {
     background-color: $white;
     bottom: 0px;
-    width: 100%;
     text-align: center;
     position: fixed;
     &-button {
