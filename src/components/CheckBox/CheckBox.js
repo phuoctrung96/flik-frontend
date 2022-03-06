@@ -18,7 +18,7 @@ export const CheckBox = ({
 
   const handleChangeCheckBox = () => {
     setIsCheckedState(!isCheckedState);
-    onChange(isCheckedState);
+    onChange(!isCheckedState);
   };
 
   useEffect(() => {

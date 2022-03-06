@@ -2,7 +2,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { Images, Icons, RootStyles } from "../../utils";
 import "./styles.scss";
-import { Button, Input, Loading } from "../../components";
+import { Button, Input, InputMask, Loading } from "../../components";
 import { Box } from "@mui/material";
 import {
   AddCardBottomSheet,
@@ -86,7 +86,7 @@ export default function Payment() {
   const handleChangePhone = (e) => {
     formik.handleChange(e);
 
-    updateModal(e.target.value, () => setIsPhoneModal(true));
+    // updateModal(e.target.value, () => setIsPhoneModal(true));
   };
 
   const updateModal = useCallback(
@@ -96,9 +96,9 @@ export default function Payment() {
 
   const handleChangeEmail = (e) => {
     formik.handleChange(e);
-    if (!formik.errors.email) {
-      updateModal(e.target.value, () => setIsEmailModal(true));
-    }
+    // if (!formik.errors.email) {
+    //   updateModal(e.target.value, () => setIsEmailModal(true));
+    // }
   };
 
   const handleChangeOTPPhone = (e) => {
@@ -191,8 +191,10 @@ export default function Payment() {
                 startInput={renderStartPhoneInput()}
                 name={fieldNames.phone}
                 onChange={handleChangePhone}
+                onBlur={() => !!!formik.errors.phone && setIsPhoneModal(true)}
                 value={formik.values.phone}
                 placeholder={fieldPlaceholders.phone}
+                inputComponent={InputMask}
               />
               {formik.values.phoneOtp && (
                 <Input
@@ -203,6 +205,11 @@ export default function Payment() {
                   sx={{ mt: "16px" }}
                   name={fieldNames.email}
                   onChange={handleChangeEmail}
+                  onBlur={() => {
+                    if (!formik.errors.email) {
+                      setIsEmailModal(true);
+                    }
+                  }}
                   value={formik.values.email}
                 />
               )}
@@ -311,12 +318,15 @@ export default function Payment() {
             isVisibled={isPhoneModal}
             onClose={() => handleClose(PHONE_OTP)}
             onChange={handleChangeOTPPhone}
+            value={formik.values.phone}
           />
 
           <OtpModal
             isVisibled={isEmailModal}
             onClose={() => handleClose(EMAIL_OTP)}
             onChange={handleChangeOTPEmail}
+            label="email"
+            value={formik.values.email}
           />
 
           <AddressModal
@@ -352,6 +362,7 @@ export default function Payment() {
             isVisibled={isAddCardBottomSheet}
             onClose={() => handleClose(ADD_CARD_BOTTOM_SHEET)}
             onSave={handleOnSaveCardBottomSheet}
+            formik={formik}
           />
         </div>
       )}

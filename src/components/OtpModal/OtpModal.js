@@ -9,7 +9,7 @@ export const OtpModal = ({
   isVisibled,
   onClose,
   title,
-  label,
+  label = 'phone',
   value,
   onChange,
   ...rest
@@ -55,7 +55,7 @@ export const OtpModal = ({
         <h4 className="otpModal__title">Confirm OTP</h4>
         <p className="otpModal__description">
           This is the first time you have authorized this device. Please confirm
-          the OTP we sent to your phone number <span>+62 821 2345 6789</span>
+          the OTP we sent to your {label} <span>{value}</span>
         </p>
         <Box sx={{ ...RootStyles.rowBetween, mt: "24px", mb: "16px" }}>
           {OtpInputArr.map((otpItem, index) => (
