@@ -16,6 +16,12 @@ export const initialValues = {
   recipientName: "",
   courier: false,
   payment: false,
+
+  //Creadit card
+  cardNumber: "",
+  cardExpiry: "",
+  cardCVC: "",
+  cardPostCode: "",
 };
 
 export const fieldPlaceholders = {
@@ -33,6 +39,12 @@ export const fieldPlaceholders = {
   recipientName: "Recipient's Name",
   courier: "Courier",
   payment: "Payment",
+
+  //Creadit card
+  cardNumber: "Card Number",
+  cardExpiry: "Expiry (MM/YY)",
+  cardCVC: "CVC",
+  cardPostCode: "Card Postcode",
 };
 
 export const fieldNames = {
@@ -50,11 +62,25 @@ export const fieldNames = {
   recipientName: "recipientName",
   courier: "courier",
   payment: "payment",
+  //Creadit card
+  cardNumber: "cardNumber",
+  cardExpiry: "cardExpiry",
+  cardCVC: "cardCVC",
+  cardPostCode: "cardPostCode",
 };
 
 export const validationSchema = yup.object().shape({
-  phone: yup.string().required(),
+  phone: yup.string().required().min(11),
   email: yup.string().required().email(),
+  phoneOtp: yup.string().required().min(6),
+  emailOtp: yup.string().required().min(6),
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
+  shippingAddress: yup.string().required(),
+  cardNumber: yup.string().required().min(16),
+  cardExpiry: yup.string().required(),
+  cardCVC: yup.string().required().min(3),
+  cardPostCode: yup.string().required(),
 });
 
 export const mockAddressData = {

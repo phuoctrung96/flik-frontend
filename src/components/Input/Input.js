@@ -1,7 +1,7 @@
 import { InputAdornment } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import classNames from "classnames";
-import React, { useMemo } from "react";
+import React from "react";
 import "./styles.scss";
 
 export const Input = ({
@@ -12,6 +12,8 @@ export const Input = ({
   endInput,
   value,
   label,
+  inputComponent,
+  inputProps,
   ...rest
 }) => {
   const checkLabel = () => {
@@ -30,6 +32,7 @@ export const Input = ({
         label={checkLabel()}
         value={value}
         className={classNames("item", inputClass)}
+        inputProps={inputProps}
         InputProps={{
           startAdornment: startInput && (
             <InputAdornment position="start" sx={{ marginRight: "16px" }}>
@@ -39,6 +42,7 @@ export const Input = ({
           endAdornment: endInput && (
             <InputAdornment position="end">{endInput}</InputAdornment>
           ),
+          inputComponent: inputComponent,
         }}
       />
     </div>
