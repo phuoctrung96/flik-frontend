@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../../../components";
-import { MainRoute } from "../../../router/constants";
 import { Icons, Images, RootStyles } from "../../../utils";
 import "./styles.scss";
 
