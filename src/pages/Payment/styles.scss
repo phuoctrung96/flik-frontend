@@ -2,6 +2,9 @@
 
 .payment {
   background-color: $primary;
+  // display: flex;
+  // flex: 1;
+  // flex-direction: column;
 
   &__container {
     overflow-y: auto;

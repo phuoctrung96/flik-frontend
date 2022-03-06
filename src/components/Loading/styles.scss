@@ -1,0 +1,18 @@
+@import "../../assets/styles/_global.scss";
+
+.loading {
+  width: 100vw;
+  height: 100vh;
+  background-color: $primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  &__circle {
+    position: absolute;
+    width: 150px !important;
+    height: 150px !important;
+    color: $blue-002 !important;
+  }
+}

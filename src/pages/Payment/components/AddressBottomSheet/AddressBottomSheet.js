@@ -1,8 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { BottomSheet } from "react-spring-bottom-sheet";
 import "react-spring-bottom-sheet/dist/style.css";
-import { Button, Input } from "../../../../components";
+import { BottomSheet, Button, Input } from "../../../../components";
 import { Icons, Images, LibraryIcons, RootStyles } from "../../../../utils";
 import { fieldNames } from "../../Payment.data";
 import "./styles.scss";
@@ -34,14 +33,11 @@ export const AddressBottomSheet = ({
 
   return (
     <BottomSheet
-      open={isVisibled}
+      isVisibled={isVisibled}
       className="addressBottomSheet"
-      onDismiss={onClose}
+      onClose={onClose}
+      onSave={onSave}
     >
-      <LibraryIcons.CloseIcon
-        className="addressBottomSheet__closeIcon"
-        onClick={onClose}
-      />
       <Box className="addressBottomSheet__container">
         <Input
           label="Shipping Address"
@@ -105,16 +101,6 @@ export const AddressBottomSheet = ({
           value={form.values.phone}
         />
       </Box>
-      <div className="addressBottomSheet__buttonContainer">
-        <Button
-          isPrimary
-          fullWidth
-          className="addressBottomSheet__button"
-          onClick={onSave}
-        >
-          Save
-        </Button>
-      </div>
     </BottomSheet>
   );
 };
