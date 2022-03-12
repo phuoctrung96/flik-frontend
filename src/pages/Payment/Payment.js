@@ -2,13 +2,14 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { Images, Icons, RootStyles } from "../../utils";
 import "./styles.scss";
-import { Button, Input, InputMask, Loading } from "../../components";
+import { Button, CheckBox, Input, InputMask, Loading } from "../../components";
 import { Box } from "@mui/material";
 import {
   AddCardBottomSheet,
   AddPaymentBottomSheet,
   AddressBottomSheet,
   CourierBottomSheet,
+  CourierItem,
   RowInfo,
   Summary,
 } from "./components";
@@ -31,6 +32,7 @@ import {
 } from "./Payment.data";
 import { useNavigate } from "react-router-dom";
 import { MainRoute } from "../../router/constants";
+import { PaymentItem } from "./components/PaymentItem";
 
 const PHONE_OTP = "PHONE_MODAL";
 const EMAIL_OTP = "EMAIL_OTP";
@@ -177,30 +179,27 @@ export default function Payment() {
                 </p>
               </div>
               <div className="payment__shopContainer-right">
+                <img src={Icons.shoppingCart} width={16} height={16} alt="" />
                 <p className="payment__shopContainer-right-title">Rp 270.600</p>
                 <img src={Icons.chevronDown} alt="" width={24} height={24} />
               </div>
             </div>
 
             <div className="payment__formInfor">
-              <Input
-                id="standard-basic"
-                label={fieldPlaceholders.phone}
-                variant="standard"
-                type="phone"
-                startInput={renderStartPhoneInput()}
-                name={fieldNames.phone}
-                onChange={handleChangePhone}
-                onBlur={() => !!!formik.errors.phone && setIsPhoneModal(true)}
-                value={formik.values.phone}
-                placeholder={fieldPlaceholders.phone}
-                inputComponent={InputMask}
-              />
-              {formik.values.phoneOtp && (
+              <div className="payment__formInfor-personal">
                 <Input
-                  id="standard-basic"
+                  label={fieldPlaceholders.phone}
+                  type="phone"
+                  startInput={renderStartPhoneInput()}
+                  name={fieldNames.phone}
+                  onChange={handleChangePhone}
+                  onBlur={() => !!!formik.errors.phone && setIsPhoneModal(true)}
+                  value={formik.values.phone}
+                  placeholder={fieldPlaceholders.phone}
+                  inputComponent={InputMask}
+                />
+                <Input
                   label="Email"
-                  variant="standard"
                   inputClass="payment__mt-16"
                   sx={{ mt: "16px" }}
                   name={fieldNames.email}
@@ -212,69 +211,94 @@ export default function Payment() {
                   }}
                   value={formik.values.email}
                 />
-              )}
-              {formik.values.email && (
+
                 <Box sx={{ mt: "16px", ...RootStyles.rowBetween }}>
                   <Input
                     label="First Name"
-                    variant="standard"
                     name={fieldNames.firstName}
                     onChange={formik.handleChange}
                     value={formik.values.firstName}
+                    className="payment__mr-5"
                   />
                   <Input
                     label="Last Name"
-                    variant="standard"
                     name={fieldNames.lastName}
                     onChange={formik.handleChange}
                     value={formik.values.lastName}
                   />
                 </Box>
-              )}
-              {(!!!formik.values.firstName || !!!formik.values.lastName) && (
-                <RowInfo label="Shipping Address" sx={{ mt: "16px" }} />
-              )}
+              </div>
 
-              {!formik.values.shippingAddress &&
-                !!formik.values.firstName &&
-                !!formik.values.lastName && (
+              <div className="payment__formInfor-shippingAddress">
+                <Box sx={{ ...RootStyles.rowBetween }}>
+                  <p className="payment__formInfor-shippingAddress-title">
+                    Shipping Address
+                  </p>
+                  <CheckBox isLabelFirst label="Ship to me" />
+                </Box>
+
+                <Box sx={{ flex: 1, ...RootStyles.rowBetween, mb: "8px" }}>
                   <Input
-                    id="standard-basic"
-                    label="Shipping Address"
-                    variant="standard"
-                    sx={{ mt: "16px" }}
-                    startInput={renderShippingAddress()}
-                    placeholder="Shipping Address"
-                    onClick={() => setIsAddressModal(true)}
+                    label="Recipient's Name"
+                    containerStyle={{ flex: 0.49 }}
                   />
-                )}
+                  <Input label="Phone Number" containerStyle={{ flex: 0.49 }} />
+                </Box>
 
-              {formik.values.shippingAddress && (
-                <RowInfo
-                  label="Address"
-                  data={mockAddressData}
-                  isEdit
-                  sx={{ mt: "16px" }}
+                <Input
+                  label="Shipping Address"
+                  startInput={renderShippingAddress()}
+                  placeholder="Shipping Address"
+                  onClick={() => setIsAddressModal(true)}
                 />
-              )}
-              <RowInfo
-                label="Courier"
-                isChoose={!formik.values.courier}
-                sx={{ mt: "16px" }}
-                onChooseClick={() => setIsCourierBottomSheet(true)}
-                data={courierList[0]}
-                isSeccondContentView
-                isEdit={formik.values.courier}
-              />
-              <RowInfo
-                label="Payment"
-                sx={{ mt: "16px" }}
-                onChooseClick={() => setIsAddPaymentBottomSheet(true)}
-                data={cardList[0]}
-                isSeccondContentView
-                isEdit={formik.values.payment}
-                isChoose={!formik.values.payment}
-              />
+
+                <Input
+                  label="Apartment, Unit, Floor, etc. (Optional)"
+                  containerStyle={{ marginTop: 8 }}
+                />
+
+                <Box sx={{ flex: 1, ...RootStyles.rowBetween, mt: "8px" }}>
+                  <Input label="City" containerStyle={{ flex: 0.32 }} />
+                  <Input label="Province" containerStyle={{ flex: 0.32 }} />
+                  <Input label="Postal Code" containerStyle={{ flex: 0.32 }} />
+                </Box>
+              </div>
+
+              <div className="payment__formInfor-courier">
+                <RowInfo
+                  label="Courier"
+                  buttonText="Choose Courier"
+                  sx={{ mt: "16px" }}
+                  onButtonClick={() => setIsCourierBottomSheet(true)}
+                  data={courierList[0]}
+                />
+
+                <Box>
+                  {courierList?.map((item) => (
+                    <CourierItem data={item} key={item.id} />
+                  ))}
+                </Box>
+              </div>
+
+              <div className="payment__formInfor-courier">
+                <RowInfo
+                  label="Payment"
+                  sx={{ mt: "16px" }}
+                  onChooseClick={() => setIsAddPaymentBottomSheet(true)}
+                  data={cardList[0]}
+                  isSeccondContentView
+                  isEdit={formik.values.payment}
+                  isChoose={!formik.values.payment}
+                />
+
+                {cardList.map((item) => (
+                  <PaymentItem
+                    key={item.id}
+                    data={item}
+                    onActiveClick={() => handleActiveClickPaymentCard(item)}
+                  />
+                ))}
+              </div>
             </div>
 
             <div className="payment__orderSummary">
