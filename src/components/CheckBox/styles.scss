@@ -10,4 +10,9 @@
     line-height: 14px;
     margin: 0px;
   }
+
+  &__labelFirst {
+    @extend .checkBox__label;
+    margin-right: 8px;
+  }
 }

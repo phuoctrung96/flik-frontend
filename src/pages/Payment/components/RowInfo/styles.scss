@@ -2,7 +2,6 @@
 
 .rowInfo {
   padding-bottom: 24px;
-  border-bottom: 1px solid $grey-005;
   &__mr-12 {
     margin-right: 12px;
   }
@@ -40,29 +39,6 @@
       color: $black;
       margin: 1px 0px;
       letter-spacing: 0.01em;
-    }
-  }
-
-  &__seccondContent {
-    &-image {
-      margin-right: 16px;
-    }
-
-    &-infoContainer {
-      &-title {
-        margin: 0;
-        font-weight: bold;
-        font-size: 14px;
-        line-height: 18px;
-        color: $black;
-      }
-
-      &-description {
-        margin: 0;
-        color: $grey-003;
-        font-size: 13px;
-        line-height: 15px;
-      }
     }
   }
 }

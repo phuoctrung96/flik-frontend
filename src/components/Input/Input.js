@@ -12,7 +12,9 @@ export const Input = ({
   endInput,
   value,
   label,
+  size = "small",
   inputComponent,
+  containerStyle,
   inputProps,
   ...rest
 }) => {
@@ -25,12 +27,13 @@ export const Input = ({
   };
 
   return (
-    <div className={classNames("input", className)}>
+    <div className={classNames("input", className)} style={containerStyle}>
       <TextField
         {...rest}
         fullWidth
         label={checkLabel()}
         value={value}
+        size={size}
         className={classNames("item", inputClass)}
         inputProps={inputProps}
         InputProps={{

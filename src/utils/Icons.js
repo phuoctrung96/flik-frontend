@@ -3,6 +3,11 @@ import lock from "../assets/icons/lock.svg";
 import card from "../assets/icons/payment/card.svg";
 import unChecked from "../assets/icons/un-checked.svg";
 import checked from "../assets/icons/checked.svg";
+import creditCard from "../assets/icons/payment/credit-card.svg";
+import profile from "../assets/icons/payment/gg_profile.svg";
+import mapPin from "../assets/icons/payment/map-pin.svg";
+import truck from "../assets/icons/payment/truck.svg";
+import shoppingCart from "../assets/icons/payment/shopping-cart.svg";
 
 //library
 import CloseIcon from "@mui/icons-material/Close";
@@ -13,6 +18,11 @@ export const Icons = {
   card,
   unChecked,
   checked,
+  creditCard,
+  profile,
+  mapPin,
+  truck,
+  shoppingCart,
 };
 
 export const LibraryIcons = {

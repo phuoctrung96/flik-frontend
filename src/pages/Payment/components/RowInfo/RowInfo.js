@@ -8,12 +8,9 @@ import "./styles.scss";
 export const RowInfo = ({
   label,
   data,
-  isChoose,
-  isEdit,
-  onEditClick,
-  onChooseClick,
+  buttonText,
+  onButtonClick,
   className,
-  isSeccondContentView,
   sx,
   ...rest
 }) => {
@@ -25,42 +22,14 @@ export const RowInfo = ({
     >
       <Box sx={{ ...RootStyles.row, alignItems: "flex-start" }}>
         <p className="rowInfo__title rowInfo__mr-12">{label}</p>
-        {isEdit && data && !isSeccondContentView && (
-          <Box className="rowInfo__content">
-            <p className="rowInfo__content-title">{data?.name}</p>
-            <p className="rowInfo__content-phone">({data?.phone})</p>
-            <p className="rowInfo__content-address">{data?.address}</p>
-          </Box>
-        )}
-        {isEdit && data && isSeccondContentView && (
-          <Box
-            className="rowInfo__seccondContent"
-            sx={{ ...RootStyles.rowCenter }}
-          >
-            <img
-              src={data?.image}
-              alt=""
-              className="rowInfo__seccondContent-image"
-            />
-            <Box className="rowInfo__seccondContent-infoContainer">
-              <p className="rowInfo__seccondContent-infoContainer-title">
-                {data?.title}
-              </p>
-              <p className="rowInfo__seccondContent-infoContainer-description">
-                {data?.description}
-              </p>
-            </Box>
-          </Box>
-        )}
       </Box>
-      {isEdit && (
-        <Button variant="text" onClick={onEditClick} style={{ padding: 0 }}>
-          Edit
-        </Button>
-      )}
-      {isChoose && (
-        <Button variant="text" onClick={onChooseClick} style={{ padding: 0 }}>
-          +Choose
+      {!!buttonText && (
+        <Button
+          variant="text"
+          onClick={onButtonClick}
+          style={{ padding: 0, fontSize: 12 }}
+        >
+          {buttonText}
         </Button>
       )}
     </Box>

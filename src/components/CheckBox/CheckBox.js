@@ -11,6 +11,7 @@ export const CheckBox = ({
   isChecked = false,
   label,
   size = "small",
+  isLabelFirst = false,
   onChange,
   ...rest
 }) => {
@@ -27,21 +28,22 @@ export const CheckBox = ({
 
   return (
     <Box className={classNames("checkBox", className)}>
+      {isLabelFirst && <p className="checkBox__labelFirst">{label}</p>}
       <CheckBoxLibrary
         {...labelProps}
         onClick={handleChangeCheckBox}
         checked={isCheckedState}
         sx={{
-          color: "#06B3BA",
+          color: "#0085FF",
           "&.Mui-checked": {
-            color: "#06B3BA",
+            color: "#0085FF",
           },
           marginRight: "16px",
           padding: 0,
         }}
         size={size}
       />
-      <p className="checkBox__label">{label}</p>
+      {!isLabelFirst && <p className="checkBox__label">{label}</p>}
     </Box>
   );
 };

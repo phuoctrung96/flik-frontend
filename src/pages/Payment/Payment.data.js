@@ -2,7 +2,7 @@ import { Images } from "../../utils";
 import * as yup from "yup";
 
 export const initialValues = {
-  phone: "",
+  phone: "821 2345 6789",
   email: "",
   phoneOtp: "",
   emailOtp: "",
