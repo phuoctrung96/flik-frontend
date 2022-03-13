@@ -1,8 +1,23 @@
 import { InputAdornment } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import classNames from "classnames";
 import React from "react";
 import "./styles.scss";
+
+const useStyles = makeStyles({
+  root: {
+    '& .MuiFilledInput-underline': {
+      borderRadius: '4px'
+    },
+    '& .MuiFilledInput-underline:before': {
+      borderBottom: 'none'
+    },
+    '& .MuiFilledInput-underline:hover:not(.Mui-disabled):before': {
+      borderBottom: 'none'
+    }  
+  }
+});
 
 export const Input = ({
   onKeyUp,
@@ -18,6 +33,8 @@ export const Input = ({
   inputProps,
   ...rest
 }) => {
+  const classes = useStyles();
+
   const checkLabel = () => {
     if (startInput) {
       if (!!value) return label;
@@ -34,8 +51,9 @@ export const Input = ({
         label={checkLabel()}
         value={value}
         size={size}
-        className={classNames("item", inputClass)}
+        className={classNames("item", inputClass, classes.root)}
         inputProps={inputProps}
+        variant="filled"
         InputProps={{
           startAdornment: startInput && (
             <InputAdornment position="start" sx={{ marginRight: "16px" }}>
