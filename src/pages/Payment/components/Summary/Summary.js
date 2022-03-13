@@ -87,7 +87,6 @@ export const Summary = ({ data, className, isEdit, onEditClick }) => {
           <p className="summary__paymentInfo-text">Subtotal</p>
           <p
             className="summary__paymentInfo-text"
-            style={{ fontFamily: "Arial Rounded MT Bold" }}
           >
             Rp {data.subtotal}
           </p>
@@ -96,7 +95,6 @@ export const Summary = ({ data, className, isEdit, onEditClick }) => {
           <p className="summary__paymentInfo-text">Shipping Costs</p>
           <p
             className="summary__paymentInfo-text"
-            style={{ fontFamily: "Arial Rounded MT Bold" }}
           >
             Rp {data.shippingCosts}
           </p>
@@ -105,7 +103,6 @@ export const Summary = ({ data, className, isEdit, onEditClick }) => {
           <p className="summary__paymentInfo-text">Admin Fee</p>
           <p
             className="summary__paymentInfo-text"
-            style={{ fontFamily: "Arial Rounded MT Bold" }}
           >
             Rp {data.adminFee}
           </p>

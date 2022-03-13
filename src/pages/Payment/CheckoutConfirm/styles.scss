@@ -24,7 +24,6 @@
 
       &-title {
         font-size: 12px;
-        font-family: Arial Rounded MT Bold;
         font-weight: 400;
         line-height: 18px;
         color: $black;
@@ -42,7 +41,6 @@
         line-height: 18px;
         color: $black;
         margin-right: 12px;
-        font-family: Arial Rounded MT Bold;
         font-weight: 400;
       }
     }
@@ -93,7 +91,6 @@
       &-title {
         font-size: 18px;
         line-height: 28px;
-        font-family: Arial Rounded MT Bold;
         letter-spacing: -0.55px;
         font-weight: normal;
         padding: 0px 50px;
@@ -117,7 +114,6 @@
         color: $grey-002;
         font-size: 14px;
         line-height: 24px;
-        font-family: Arial Rounded MT Bold;
       }
     }
 
@@ -137,7 +133,7 @@
       }
 
       &-value {
-        font-family: Arial Rounded MT Bold;
+        flex: 1;
         font-size: 12px;
         line-height: 18px;
         margin: 0;

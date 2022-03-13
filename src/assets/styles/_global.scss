@@ -7,7 +7,6 @@
 
 * {
   box-sizing: border-box;
-  // font-family: $base-font-family;
   font-family: "Roboto","Helvetica","Arial",sans-serif;
 }
 
@@ -16,12 +15,10 @@ body,
 #root {
   position: relative;
   width: 100%;
-  // font-family: $base-font-family;
   font-family: "Roboto","Helvetica","Arial",sans-serif;
   font-size: $base-font-size;
   margin: 0px;
   min-height: 100vh;
-  // background-color: $alabaster;
 }
 
 .container {
@@ -50,7 +47,7 @@ body,
 }
 
 .p-component {
-  font-family: $base-font-family;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
 }
 
 .p-dialog-mask {
