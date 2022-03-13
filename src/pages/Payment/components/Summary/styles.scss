@@ -5,7 +5,6 @@
   padding-bottom: 140px;
   &__header {
     margin: 20px 0px 20px 0px;
-    font-family: "Arial Rounded MT Bold";
     font-size: 14px;
     line-height: 18px;
   }
@@ -84,11 +83,9 @@
     color: $black;
     font-size: 14px;
     line-height: 18px;
-    font-family: "Arial Rounded MT Bold";
   }
 
   &__transactionText {
-    font-family: "Open Sans";
     font-size: 10px;
     line-height: 14px;
     text-align: center;
@@ -100,7 +97,6 @@
     border-bottom: 1px solid $grey-004;
     &-text {
       margin-bottom: 0;
-      font-family: Arial;
       font-size: 12px;
       color: $grey-002;
       line-height: 18px;
@@ -114,7 +110,6 @@
     &-totalValue {
       font-size: 14px;
       color: $black;
-      font-family: "Arial Rounded MT Bold";
       font-weight: 400;
     }
   }
@@ -122,7 +117,6 @@
   &__checkoutText {
     margin: 32px 0px 12px 0px;
     text-align: center;
-    font-family: "Arial";
     font-size: 12px;
     line-height: 18px;
     color: $grey-002;
