@@ -3,7 +3,7 @@ import AuthHelpers from "./AuthHelpers";
 
 // export const signalRUrl = process.env.REACT_APP_API_URL || "http://localhost:4000";
 export const signalRUrl = "http://localhost:4000";
-export const baseUrl = signalRUrl + "/api";
+export const baseUrl = signalRUrl;
 
 // Set config defaults when creating the instance
 const instance = axios.create({

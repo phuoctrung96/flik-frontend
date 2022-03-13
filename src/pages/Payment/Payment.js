@@ -53,6 +53,10 @@ export default function Payment() {
   const [isAddCardBottomSheet, setIsAddCardBottomSheet] = useState(false);
   const [isEditOtherSummary, setIsEditOtherSummary] = useState(false);
   const [isSplashScreen, setIsSplashScreen] = useState(true);
+  const [isChoosePayment, setIsChoosePayment] = useState(false);
+  const [isChooseCourier, setIsChooseCourier] = useState(false);
+
+  const [isShipToMe, setIsShipToMe] = useState(true);
 
   const navigation = useNavigate();
 
@@ -235,34 +239,54 @@ export default function Payment() {
                   <p className="payment__formInfor-shippingAddress-title">
                     Shipping Address
                   </p>
-                  <CheckBox isLabelFirst label="Ship to me" />
-                </Box>
-
-                <Box sx={{ flex: 1, ...RootStyles.rowBetween, mb: "8px" }}>
-                  <Input
-                    label="Recipient's Name"
-                    containerStyle={{ flex: 0.49 }}
+                  <CheckBox
+                    isLabelFirst
+                    label="Ship to me"
+                    onChange={setIsShipToMe}
+                    isChecked={isShipToMe}
                   />
-                  <Input label="Phone Number" containerStyle={{ flex: 0.49 }} />
                 </Box>
 
+                {!isShipToMe && (
+                  <Box sx={{ flex: 1, ...RootStyles.rowBetween, mb: "8px" }}>
+                    <Input
+                      label="Recipient's Name"
+                      containerStyle={{ flex: 0.49 }}
+                    />
+                    <Input
+                      label="Phone Number"
+                      containerStyle={{ flex: 0.49 }}
+                    />
+                  </Box>
+                )}
+
                 <Input
-                  label="Shipping Address"
+                  label={fieldPlaceholders.shippingAddress}
+                  type="text"
                   startInput={renderShippingAddress()}
-                  placeholder="Shipping Address"
-                  onClick={() => setIsAddressModal(true)}
+                  name={fieldNames.shippingAddress}
+                  onChange={formik.handleChange}
+                  value={formik.values.shippingAddress}
+                  placeholder={fieldPlaceholders.shippingAddress}
                 />
 
-                <Input
-                  label="Apartment, Unit, Floor, etc. (Optional)"
-                  containerStyle={{ marginTop: 8 }}
-                />
+                {!!formik.values.shippingAddress && (
+                  <Input
+                    label="Apartment, Unit, Floor, etc. (Optional)"
+                    containerStyle={{ marginTop: 8 }}
+                  />
+                )}
 
-                <Box sx={{ flex: 1, ...RootStyles.rowBetween, mt: "8px" }}>
-                  <Input label="City" containerStyle={{ flex: 0.32 }} />
-                  <Input label="Province" containerStyle={{ flex: 0.32 }} />
-                  <Input label="Postal Code" containerStyle={{ flex: 0.32 }} />
-                </Box>
+                {!!formik.values.shippingAddress && (
+                  <Box sx={{ flex: 1, ...RootStyles.rowBetween, mt: "8px" }}>
+                    <Input label="City" containerStyle={{ flex: 0.32 }} />
+                    <Input label="Province" containerStyle={{ flex: 0.32 }} />
+                    <Input
+                      label="Postal Code"
+                      containerStyle={{ flex: 0.32 }}
+                    />
+                  </Box>
+                )}
               </div>
 
               <div className="payment__formInfor-courier">
@@ -270,41 +294,42 @@ export default function Payment() {
                   label="Courier"
                   buttonText="Choose Courier"
                   sx={{ mt: "16px" }}
-                  onButtonClick={() => setIsCourierBottomSheet(true)}
-                  data={courierList[0]}
+                  onButtonClick={() => setIsChooseCourier(true)}
                 />
 
-                <Box>
-                  {courierList?.map((item) => (
-                    <CourierItem data={item} key={item.id} />
-                  ))}
-                </Box>
+                {isChooseCourier && (
+                  <Box>
+                    {courierList?.map((item) => (
+                      <CourierItem data={item} key={item.id} />
+                    ))}
+                  </Box>
+                )}
               </div>
 
               <div className="payment__formInfor-courier">
                 <RowInfo
                   label="Payment"
+                  buttonText="Choose Payment"
                   sx={{ mt: "16px" }}
-                  onChooseClick={() => setIsAddPaymentBottomSheet(true)}
-                  data={cardList[0]}
-                  isSeccondContentView
-                  isEdit={formik.values.payment}
-                  isChoose={!formik.values.payment}
+                  onButtonClick={() => setIsChoosePayment(true)}
                 />
 
-                <Box sx={{ mb: "32px" }}>
-                  {cardListActivated.map((item) => (
-                    <CourierItem data={item} key={item.id} />
-                  ))}
-                </Box>
+                {isChoosePayment && (
+                  <Box sx={{ mb: "32px" }}>
+                    {cardListActivated.map((item) => (
+                      <CourierItem data={item} key={item.id} />
+                    ))}
+                  </Box>
+                )}
 
-                {cardList.map((item) => (
-                  <PaymentItem
-                    key={item.id}
-                    data={item}
-                    onActiveClick={() => handleActiveClickPaymentCard(item)}
-                  />
-                ))}
+                {isChoosePayment &&
+                  cardList.map((item) => (
+                    <PaymentItem
+                      key={item.id}
+                      data={item}
+                      onActiveClick={() => handleActiveClickPaymentCard(item)}
+                    />
+                  ))}
               </div>
             </div>
 
@@ -316,7 +341,6 @@ export default function Payment() {
               />
             </div>
           </div>
-
           <div className="payment__confirmButtonContainer">
             <Button
               isPrimary
@@ -344,14 +368,12 @@ export default function Payment() {
               </p>
             </div>
           </div>
-
           <OtpModal
             isVisibled={isPhoneModal}
             onClose={() => handleClose(PHONE_OTP)}
             onChange={handleChangeOTPPhone}
             value={formik.values.phone}
           />
-
           <OtpModal
             isVisibled={isEmailModal}
             onClose={() => handleClose(EMAIL_OTP)}
@@ -359,8 +381,7 @@ export default function Payment() {
             label="email"
             value={formik.values.email}
           />
-
-          <AddressModal
+          {/* /* <AddressModal
             isVisibled={isAddressModal}
             data={addressListData}
             onClose={() => handleClose(ADDRESS_MODAL)}
@@ -379,16 +400,14 @@ export default function Payment() {
             onClose={() => handleClose(COURIER_BOTTOM_SHEET)}
             courierList={courierList}
             onSave={handleOnSaveCourierBottomSheet}
-          />
-
-          <AddPaymentBottomSheet
+          /> */}
+          {/* <AddPaymentBottomSheet
             isVisibled={isAddPaymentBottomSheet}
             onClose={() => handleClose(ADD_PAYMENT_BOTTOM_SHEET)}
             data={cardList}
             onSave={() => {}}
             onActiveClick={handleActiveClickPaymentCard}
-          />
-
+          /> */}
           <AddCardBottomSheet
             isVisibled={isAddCardBottomSheet}
             onClose={() => handleClose(ADD_CARD_BOTTOM_SHEET)}

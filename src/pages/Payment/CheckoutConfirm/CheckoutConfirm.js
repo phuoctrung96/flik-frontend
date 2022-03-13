@@ -87,7 +87,9 @@ const CheckoutConfirm = () => {
               </div>
             </div>
 
-            <Link href="#" className="checkoutConfirm__formInfor-howToPay">How to Pay</Link>
+            <Link href="#" className="checkoutConfirm__formInfor-howToPay">
+              How to Pay
+            </Link>
           </Box>
 
           <Box className="checkoutConfirm__formInfor-detailContainer">

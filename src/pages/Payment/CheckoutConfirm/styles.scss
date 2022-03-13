@@ -90,6 +90,7 @@
 
       &-title {
         font-size: 18px;
+        font-family: "Arial Rounded MT Bold";
         line-height: 28px;
         letter-spacing: -0.55px;
         font-weight: normal;
@@ -133,7 +134,7 @@
       }
 
       &-value {
-        flex: 1;
+        font-family: Arial Rounded MT Bold;
         font-size: 12px;
         line-height: 18px;
         margin: 0;
