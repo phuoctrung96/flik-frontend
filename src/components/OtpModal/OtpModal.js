@@ -9,7 +9,7 @@ export const OtpModal = ({
   isVisibled,
   onClose,
   title,
-  label = 'phone',
+  label = "phone",
   value,
   onChange,
   ...rest
@@ -50,7 +50,13 @@ export const OtpModal = ({
   };
 
   return (
-    <Modal isVisibled={isVisibled} onClose={onClose} {...rest}>
+    <Modal
+      isVisibled={isVisibled}
+      onClose={onClose}
+      isBack
+      fullScreen
+      {...rest}
+    >
       <Box className="otpModal">
         <h4 className="otpModal__title">Confirm OTP</h4>
         <p className="otpModal__description">

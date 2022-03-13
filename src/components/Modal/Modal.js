@@ -7,6 +7,8 @@ import "./styles.scss";
 export const Modal = ({
   children,
   onClose,
+  isClose,
+  isBack,
   isVisibled,
   className,
   ...rest
@@ -18,9 +20,17 @@ export const Modal = ({
       className={classNames("modal", className)}
       {...rest}
     >
-      <div className="modal__closeIcon" onClick={onClose}>
-        <LibraryIcons.CloseIcon />
-      </div>
+      {isBack && (
+        <div className="modal__closeIconBack" onClick={onClose}>
+          <LibraryIcons.ArrowBackIosNewIcon fontSize="24px" />
+          <p className="modal__closeIconBack-text">Back</p>
+        </div>
+      )}
+      {isClose && (
+        <div className="modal__closeIcon" onClick={onClose}>
+          <LibraryIcons.CloseIcon />
+        </div>
+      )}
       {children}
     </Dialog>
   );

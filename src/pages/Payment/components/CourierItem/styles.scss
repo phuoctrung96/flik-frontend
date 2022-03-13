@@ -1,10 +1,31 @@
 @import "../../../../assets/styles/_global.scss";
 
 .courierItem {
-  border-bottom: 1px solid $grey-005;
   display: flex;
   justify-content: space-between;
   margin-bottom: 12px;
+  padding: 8px;
+
+  &.active {
+    background-color: rgba(0, 133, 255, 0.08);
+  }
+
+  &__tagContainer {
+    padding: 4px 8px;
+    background-color: rgba(6, 179, 186, 0.1);
+    margin-top: 6px;
+    border-radius: 4px;
+
+    &-text {
+      font-family: "Arial";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 11px;
+      color: $tosca;
+      margin: 0px;
+    }
+  }
 
   &__image {
     margin-right: 17px;
@@ -16,6 +37,7 @@
     color: $black;
     font-weight: bold;
     margin-bottom: 2px;
+    margin-top: 0px;
   }
 
   &__description {
@@ -23,6 +45,7 @@
     color: $grey-002;
     font-size: 13px;
     line-height: 15px;
+    margin-bottom: 0px;
   }
 
   &__price {

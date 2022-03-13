@@ -8,4 +8,22 @@
     top: 24px;
     right: 18px;
   }
+
+  &__closeIconBack {
+    position: absolute;
+    z-index: 10;
+    top: 24px;
+    left: 18px;
+    display: flex;
+    align-items: center;
+
+    &-text {
+      font-size: 14px;
+      line-height: 18px;
+      font-family: "Arial Rounded MT Bold";
+      color: $black;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+  }
 }

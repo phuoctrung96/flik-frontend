@@ -13,6 +13,11 @@ export const PaymentItem = ({ data, onActiveClick }) => {
       <Box className="paymentItem__infoContainer">
         <h5 className="paymentItem__title">{data.title}</h5>
         <p className="paymentItem__description">{data.description}</p>
+        {!!data.tag && (
+          <Box className="paymentItem__tagContainer">
+            <p className="paymentItem__tagContainer-text">{data.tag}</p>
+          </Box>
+        )}
       </Box>
       <Button buttonClassName="paymentItem__button" onClick={onActiveClick}>
         Activate

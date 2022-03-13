@@ -141,6 +141,7 @@ export const courierList = [
     price: 17.0,
     isChecked: true,
     image: Images.anterAja,
+    currencyType: "Rp",
   },
   {
     id: 1,
@@ -149,6 +150,7 @@ export const courierList = [
     price: 40.0,
     isChecked: false,
     image: Images.gosend,
+    currencyType: "Rp",
   },
   {
     id: 2,
@@ -157,6 +159,7 @@ export const courierList = [
     price: 17.0,
     isChecked: false,
     image: Images.jne,
+    currencyType: "Rp",
   },
 ];
 
@@ -175,6 +178,7 @@ export const cardList = [
     image: Images.goPay,
     voucher: "50k",
     phone: "123 123",
+    tag: "Voucher 50k",
   },
   {
     id: 2,
@@ -190,6 +194,7 @@ export const cardList = [
     image: Images.ovo,
     promo: "10%",
     phone: "123 123",
+    tag: "Promo 10%",
   },
   {
     id: 4,
@@ -197,5 +202,24 @@ export const cardList = [
     description: "Link your DANA Account",
     image: Images.dana,
     phone: "123 123",
+  },
+];
+
+export const cardListActivated = [
+  {
+    id: 0,
+    title: "BCA",
+    description: "",
+    image: Images.bca,
+    tag: "Promo 10%",
+    isChecked: true,
+  },
+  {
+    id: 1,
+    title: "Mandiri",
+    description: "",
+    image: Images.mandiri,
+    tag: "",
+    isChecked: false,
   },
 ];

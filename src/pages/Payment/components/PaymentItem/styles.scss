@@ -2,7 +2,6 @@
 
 .paymentItem {
   padding-bottom: 16px;
-  border-bottom: 1px solid $grey-005;
   margin-bottom: 16px;
   &__image {
   }
@@ -14,6 +13,24 @@
     line-height: 16px !important;
     width: 95px;
     height: 28px;
+  }
+
+  &__tagContainer {
+    padding: 4px 8px;
+    background-color: rgba(6, 179, 186, 0.1);
+    margin-top: 6px;
+    border-radius: 4px;
+    width: fit-content;
+
+    &-text {
+      font-family: "Arial";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 11px;
+      color: $tosca;
+      margin: 0px;
+    }
   }
 
   &__infoContainer {

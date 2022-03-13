@@ -7,16 +7,16 @@ import "./styles.scss";
 
 const useStyles = makeStyles({
   root: {
-    '& .MuiFilledInput-underline': {
-      borderRadius: '4px'
+    "& .MuiFilledInput-underline": {
+      borderRadius: "4px",
     },
-    '& .MuiFilledInput-underline:before': {
-      borderBottom: 'none'
+    "& .MuiFilledInput-underline:before": {
+      borderBottom: "none",
     },
-    '& .MuiFilledInput-underline:hover:not(.Mui-disabled):before': {
-      borderBottom: 'none'
-    }  
-  }
+    "& .MuiFilledInput-underline:hover:not(.Mui-disabled):before": {
+      borderBottom: "none",
+    },
+  },
 });
 
 export const Input = ({
@@ -26,6 +26,7 @@ export const Input = ({
   inputClass,
   endInput,
   value,
+  variant = "filled",
   label,
   size = "small",
   inputComponent,
@@ -51,9 +52,9 @@ export const Input = ({
         label={checkLabel()}
         value={value}
         size={size}
+        variant={variant}
         className={classNames("item", inputClass, classes.root)}
         inputProps={inputProps}
-        variant="filled"
         InputProps={{
           startAdornment: startInput && (
             <InputAdornment position="start" sx={{ marginRight: "16px" }}>
