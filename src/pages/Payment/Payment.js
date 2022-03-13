@@ -17,6 +17,7 @@ import { debounce } from "lodash";
 import {
   addressListData,
   cardList,
+  cardListActivated,
   courierList,
   mockAddressData,
   orderSummaryData,
@@ -290,6 +291,12 @@ export default function Payment() {
                   isEdit={formik.values.payment}
                   isChoose={!formik.values.payment}
                 />
+
+                <Box sx={{ mb: "32px" }}>
+                  {cardListActivated.map((item) => (
+                    <CourierItem data={item} key={item.id} />
+                  ))}
+                </Box>
 
                 {cardList.map((item) => (
                   <PaymentItem

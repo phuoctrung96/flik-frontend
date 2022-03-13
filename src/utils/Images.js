@@ -13,6 +13,9 @@ import masterCard from "../assets/images/payment/card/mastercard-logo.png";
 import visa from "../assets/images/payment/card/visa.png";
 import visa2x from "../assets/images/payment/card/visa-2x.png";
 import logo from "../assets/images/logo.png";
+import bca from "../assets/images/payment/card/bca.png";
+import bca2x from "../assets/images/payment/card/bca-2x.png";
+import mandiri from "../assets/images/payment/card/mandiri.png";
 
 export const Images = {
   bodyShopIcon,
@@ -30,4 +33,7 @@ export const Images = {
   visa,
   visa2x,
   logo,
+  bca,
+  bca2x,
+  mandiri,
 };

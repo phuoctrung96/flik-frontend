@@ -11,6 +11,7 @@ export const Input = ({
   inputClass,
   endInput,
   value,
+  variant = "filled",
   label,
   size = "small",
   inputComponent,
@@ -34,6 +35,7 @@ export const Input = ({
         label={checkLabel()}
         value={value}
         size={size}
+        variant={variant}
         className={classNames("item", inputClass)}
         inputProps={inputProps}
         InputProps={{

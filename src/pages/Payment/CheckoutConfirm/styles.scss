@@ -1,8 +1,6 @@
 @import "../../../assets/styles/_global.scss";
 
 .checkoutConfirm {
-  background-color: $primary;
-
   &__container {
     padding-top: 24px;
   }
@@ -52,14 +50,45 @@
 
   &__formInfor {
     background-color: $grey-006;
-    border-radius: 32px 32px 0px 0px;
+
+    &-howToPay {
+      font-family: "Arial";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 28px;
+    }
 
     &-cardInfoContainer {
       text-align: center;
       padding: 32px 20px 16px 20px;
       background-color: $white;
-      border-radius: 32px 32px 0px 0px;
       margin-bottom: 12px;
+
+      &-copyContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+
+        &-text {
+          margin: 0;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 20px;
+          font-family: Open Sans;
+          margin-left: 4px;
+        }
+      }
+
+      &-minorText {
+        font-size: 12px;
+        line-height: 14px;
+        font-family: Arial;
+        font-weight: 400;
+        color: $grey-002;
+        margin: 8px;
+      }
 
       &-title {
         font-size: 18px;
@@ -95,18 +124,19 @@
     &-detailContainer {
       padding: 16px 20px;
       background-color: $white;
-      padding-bottom: 200px;
+
+      &-title {
+        margin-top: 0px;
+      }
 
       &-label {
         color: $black;
         font-size: 12px;
         line-height: 18px;
-        flex: 1;
         margin: 0;
       }
 
       &-value {
-        flex: 1;
         font-family: Arial Rounded MT Bold;
         font-size: 12px;
         line-height: 18px;

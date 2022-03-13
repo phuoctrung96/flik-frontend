@@ -11,6 +11,8 @@ import shoppingCart from "../assets/icons/payment/shopping-cart.svg";
 
 //library
 import CloseIcon from "@mui/icons-material/Close";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 export const Icons = {
   chevronDown,
@@ -27,4 +29,6 @@ export const Icons = {
 
 export const LibraryIcons = {
   CloseIcon,
+  ArrowBackIosNewIcon,
+  ContentCopyIcon,
 };
