@@ -1,39 +1,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useState, useEffect } from "react";
-import { Images, Icons, RootStyles } from "../../utils";
-import "./styles.scss";
-import { Button, CheckBox, Input, InputMask, Loading } from "../../components";
 import { Box } from "@mui/material";
+import { useFormik } from "formik";
+import { debounce } from "lodash";
+import React, { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, CheckBox, Input, InputMask, Loading } from "../../components";
+import { OtpModal } from "../../components/OtpModal";
+import { MainRoute } from "../../router/constants";
+import { Icons, Images, RootStyles } from "../../utils";
 import {
   AddCardBottomSheet,
-  AddPaymentBottomSheet,
-  AddressBottomSheet,
-  CourierBottomSheet,
   CourierItem,
   RowInfo,
   Summary,
 } from "./components";
-import { debounce } from "lodash";
+import { PaymentItem } from "./components/PaymentItem";
 import {
-  addressListData,
   cardList,
   cardListActivated,
   courierList,
-  mockAddressData,
-  orderSummaryData,
-} from "./Payment.data";
-import { OtpModal } from "../../components/OtpModal";
-import { AddressModal } from "./components/AddressModal/AddressModal";
-import { useFormik } from "formik";
-import {
-  initialValues,
-  validationSchema,
-  fieldPlaceholders,
   fieldNames,
+  fieldPlaceholders,
+  initialValues,
+  orderSummaryData,
+  validationSchema,
 } from "./Payment.data";
-import { useNavigate } from "react-router-dom";
-import { MainRoute } from "../../router/constants";
-import { PaymentItem } from "./components/PaymentItem";
+import "./styles.scss";
+import { requestOTP, verifyToken } from "../../utils/ApiManage";
 
 const PHONE_OTP = "PHONE_MODAL";
 const EMAIL_OTP = "EMAIL_OTP";
@@ -112,7 +105,57 @@ export default function Payment() {
     const otp = e.reduce((prev, next) => prev + "" + next);
     if (otp.length === 6) {
       formik.setFieldValue(fieldNames.phoneOtp, otp);
-      setIsPhoneModal(false);
+      // otp = 696062
+      verifyToken({
+        app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
+        email: "shopper1@gmail.com",
+        phone: "+6282110075629",
+        device_id: "testdevice",
+        otp: otp,
+      })
+        .then((result) => {
+          console.log(result);
+          setIsPhoneModal(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const handleBlurPhone = () => {
+    setIsPhoneModal(true);
+    if (!!!formik.errors.phone) {
+      requestOTP({
+        app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
+        email: "shopper1@gmail.com",
+        phone: "+6282110075629",
+        device_id: "testdevice",
+      })
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const handleBlurEmail = () => {
+    if (!formik.errors.email) {
+      setIsEmailModal(true);
+      requestOTP({
+        app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
+        email: "shopper1@gmail.com",
+        phone: "+6282110075629",
+        device_id: "testdevice",
+      })
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -120,7 +163,21 @@ export default function Payment() {
     const otp = e.reduce((prev, next) => prev + "" + next);
     if (otp.length === 6) {
       formik.setFieldValue(fieldNames.emailOtp, otp);
-      setIsEmailModal(false);
+      // otp = 696062
+      verifyToken({
+        app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
+        email: "shopper1@gmail.com",
+        phone: "+6282110075629",
+        device_id: "testdevice",
+        otp: otp,
+      })
+        .then((result) => {
+          console.log(result);
+          setIsEmailModal(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -198,7 +255,7 @@ export default function Payment() {
                   startInput={renderStartPhoneInput()}
                   name={fieldNames.phone}
                   onChange={handleChangePhone}
-                  onBlur={() => !!!formik.errors.phone && setIsPhoneModal(true)}
+                  onBlur={handleBlurPhone}
                   value={formik.values.phone}
                   placeholder={fieldPlaceholders.phone}
                   inputComponent={InputMask}
@@ -209,11 +266,7 @@ export default function Payment() {
                   sx={{ mt: "16px" }}
                   name={fieldNames.email}
                   onChange={handleChangeEmail}
-                  onBlur={() => {
-                    if (!formik.errors.email) {
-                      setIsEmailModal(true);
-                    }
-                  }}
+                  onBlur={handleBlurEmail}
                   value={formik.values.email}
                 />
 

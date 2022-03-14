@@ -34,6 +34,16 @@ export const generateTokenWithOTP = (body) => {
 /**
  *
  * @param {*} body
+ * refresh_token
+ * @returns
+ */
+export const refreshToken = (body) => {
+  return axios.post("v1/authentication/refresh", body);
+};
+
+/**
+ *
+ * @param {*} body
  * access_token
  * @returns
  */
