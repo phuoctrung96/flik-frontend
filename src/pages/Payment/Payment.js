@@ -381,33 +381,6 @@ export default function Payment() {
             label="email"
             value={formik.values.email}
           />
-          {/* /* <AddressModal
-            isVisibled={isAddressModal}
-            data={addressListData}
-            onClose={() => handleClose(ADDRESS_MODAL)}
-            onClick={handleClickAddressModalItem}
-          />
-
-          <AddressBottomSheet
-            isVisibled={isAddressBottomSheet}
-            onClose={() => handleClose(ADDRESS_BOTTOM_SHEET)}
-            form={formik}
-            onSave={handleSaveAddressModal}
-          />
-
-          <CourierBottomSheet
-            isVisibled={isCourierBottomSheet}
-            onClose={() => handleClose(COURIER_BOTTOM_SHEET)}
-            courierList={courierList}
-            onSave={handleOnSaveCourierBottomSheet}
-          /> */}
-          {/* <AddPaymentBottomSheet
-            isVisibled={isAddPaymentBottomSheet}
-            onClose={() => handleClose(ADD_PAYMENT_BOTTOM_SHEET)}
-            data={cardList}
-            onSave={() => {}}
-            onActiveClick={handleActiveClickPaymentCard}
-          /> */}
           <AddCardBottomSheet
             isVisibled={isAddCardBottomSheet}
             onClose={() => handleClose(ADD_CARD_BOTTOM_SHEET)}
