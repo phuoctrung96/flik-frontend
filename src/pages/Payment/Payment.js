@@ -2,14 +2,15 @@
 import { Box } from "@mui/material";
 import { useFormik } from "formik";
 import { debounce } from "lodash";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, CheckBox, Input, InputMask, Loading } from "../../components";
 import { OtpModal } from "../../components/OtpModal";
 import { MainRoute } from "../../router/constants";
-import { Icons, Images, RootStyles } from "../../utils";
+import { Icons, Images, LibraryIcons, RootStyles } from "../../utils";
 import {
   AddCardBottomSheet,
+  AddressModal,
   CourierItem,
   RowInfo,
   Summary,
@@ -18,11 +19,14 @@ import { PaymentItem } from "./components/PaymentItem";
 import {
   cardList,
   cardListActivated,
+  cityList as cityListData,
   courierList,
   fieldNames,
   fieldPlaceholders,
   initialValues,
   orderSummaryData,
+  postalCodeList as postalCodeListData,
+  provinceList as provinceListData,
   validationSchema,
 } from "./Payment.data";
 import "./styles.scss";
@@ -30,24 +34,29 @@ import { requestOTP, verifyToken } from "../../utils/ApiManage";
 
 const PHONE_OTP = "PHONE_MODAL";
 const EMAIL_OTP = "EMAIL_OTP";
-const ADDRESS_MODAL = "ADDRESS_MODAL";
-const ADDRESS_BOTTOM_SHEET = "ADDRESS_BOTTOM_SHEET";
-const COURIER_BOTTOM_SHEET = "COURIER_BOTTOM_SHEET";
-const ADD_PAYMENT_BOTTOM_SHEET = "ADD_PAYMENT_BOTTOM_SHEET";
+const PROVINCE_MODAL = "PROVINCE_MODAL";
+const CITY_MODAL = "CITY_MODAL";
+const POSTAL_CODE_MODAL = "POSTAL_CODE_MODAL";
 const ADD_CARD_BOTTOM_SHEET = "ADD_CARD_BOTTOM_SHEET";
 
 export default function Payment() {
   const [isPhoneModal, setIsPhoneModal] = useState(false);
   const [isEmailModal, setIsEmailModal] = useState(false);
-  const [isAddressModal, setIsAddressModal] = useState(false);
-  const [isAddressBottomSheet, setIsAddressBottomSheet] = useState(false);
-  const [isCourierBottomSheet, setIsCourierBottomSheet] = useState(false);
-  const [isAddPaymentBottomSheet, setIsAddPaymentBottomSheet] = useState(false);
   const [isAddCardBottomSheet, setIsAddCardBottomSheet] = useState(false);
   const [isEditOtherSummary, setIsEditOtherSummary] = useState(false);
   const [isSplashScreen, setIsSplashScreen] = useState(true);
   const [isChoosePayment, setIsChoosePayment] = useState(false);
   const [isChooseCourier, setIsChooseCourier] = useState(false);
+
+  const [isProvinceModal, setIsProvinceModal] = useState(false);
+  const [isCityModal, setIsCityModal] = useState(false);
+  const [isPostalCodeModal, setIsPostalCodeModal] = useState(false);
+  const [courier, setCourier] = useState({});
+  const [paymentMethod, setPaymentMethod] = useState({});
+
+  const [provinceList, setProvinceList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [postalCodeList, setPostalCodeList] = useState([]);
 
   const [isShipToMe, setIsShipToMe] = useState(true);
 
@@ -76,10 +85,10 @@ export default function Payment() {
   const handleClose = (type) => {
     type === PHONE_OTP && setIsPhoneModal(false);
     type === EMAIL_OTP && setIsEmailModal(false);
-    type === ADDRESS_MODAL && setIsAddressModal(false);
-    type === ADDRESS_BOTTOM_SHEET && setIsAddressBottomSheet(false);
-    type === COURIER_BOTTOM_SHEET && setIsCourierBottomSheet(false);
-    type === ADD_PAYMENT_BOTTOM_SHEET && setIsAddPaymentBottomSheet(false);
+    type === ADD_CARD_BOTTOM_SHEET && setIsAddCardBottomSheet(false);
+    type === PROVINCE_MODAL && setIsProvinceModal(false);
+    type === CITY_MODAL && setIsCityModal(false);
+    type === POSTAL_CODE_MODAL && setIsPostalCodeModal(false);
     type === ADD_CARD_BOTTOM_SHEET && setIsAddCardBottomSheet(false);
   };
 
@@ -181,29 +190,8 @@ export default function Payment() {
     }
   };
 
-  const handleClickAddressModalItem = (item) => {
-    setIsAddressModal(false);
-
-    setTimeout(() => {
-      formik.setFieldValue(
-        fieldNames.shippingAddress,
-        item.title + ", " + item.address
-      );
-      setIsAddressBottomSheet(true);
-    }, 500);
-  };
-
-  const handleSaveAddressModal = () => {
-    setIsAddressBottomSheet(false);
-  };
-
-  const handleOnSaveCourierBottomSheet = () => {
-    formik.setFieldValue(fieldNames.courier, true);
-    setIsCourierBottomSheet(false);
-  };
-
   const handleActiveClickPaymentCard = (item) => {
-    setIsAddPaymentBottomSheet(false);
+    // setIsAddPaymentBottomSheet(false);
     setIsAddCardBottomSheet(true);
   };
 
@@ -220,10 +208,42 @@ export default function Payment() {
     setIsEditOtherSummary(true);
   };
 
+  //Item in modal province click after save
+  const handleOnProvinceSaveClick = (itemSelected, newData) => {
+    formik.setFieldValue(fieldNames.province, itemSelected.title);
+    setProvinceList(newData);
+    setIsProvinceModal(false);
+  };
+
+  //Item in modal city click after save
+  const handleOnCitySaveClick = (itemSelected, newData) => {
+    formik.setFieldValue(fieldNames.city, itemSelected.title);
+    setCityList(newData);
+    setIsCityModal(false);
+  };
+
+  //Item in modal postalCode click after save
+  const handleOnPostalCodeSaveClick = (itemSelected, newData) => {
+    formik.setFieldValue(fieldNames.postalCode, itemSelected.title);
+    setPostalCodeList(newData);
+    setIsPostalCodeModal(false);
+  };
+
+  //Courier Item Click Function
+  const handleCardItemClick = item => {
+    // courierLi
+  }
+
   useState(() => {
     setTimeout(() => {
       setIsSplashScreen(false);
     }, 2000);
+  }, []);
+
+  useEffect(() => {
+    setCityList(cityListData);
+    setProvinceList(provinceListData);
+    setPostalCodeList(postalCodeListData);
   }, []);
 
   return (
@@ -263,14 +283,14 @@ export default function Payment() {
                 <Input
                   label="Email"
                   inputClass="payment__mt-16"
-                  sx={{ mt: "16px" }}
+                  sx={{ mt: "8px" }}
                   name={fieldNames.email}
                   onChange={handleChangeEmail}
                   onBlur={handleBlurEmail}
                   value={formik.values.email}
                 />
 
-                <Box sx={{ mt: "16px", ...RootStyles.rowBetween }}>
+                <Box sx={{ mt: "8px", ...RootStyles.rowBetween }}>
                   <Input
                     label="First Name"
                     name={fieldNames.firstName}
@@ -332,11 +352,32 @@ export default function Payment() {
 
                 {!!formik.values.shippingAddress && (
                   <Box sx={{ flex: 1, ...RootStyles.rowBetween, mt: "8px" }}>
-                    <Input label="City" containerStyle={{ flex: 0.32 }} />
-                    <Input label="Province" containerStyle={{ flex: 0.32 }} />
+                    <Input
+                      label="Province"
+                      containerStyle={{ flex: 0.32 }}
+                      onClick={() => setIsProvinceModal(true)}
+                      endInput={<LibraryIcons.ArrowDropDownIcon />}
+                      name={fieldNames.province}
+                      value={formik.values.province}
+                      readOnly
+                    />
+                    <Input
+                      label="City"
+                      containerStyle={{ flex: 0.32 }}
+                      onClick={() => setIsCityModal(true)}
+                      endInput={<LibraryIcons.ArrowDropDownIcon />}
+                      readOnly
+                      name={fieldNames.city}
+                      value={formik.values.city}
+                    />
                     <Input
                       label="Postal Code"
                       containerStyle={{ flex: 0.32 }}
+                      onClick={() => setIsPostalCodeModal(true)}
+                      endInput={<LibraryIcons.ArrowDropDownIcon />}
+                      readOnly
+                      name={fieldNames.postalCode}
+                      value={formik.values.postalCode}
                     />
                   </Box>
                 )}
@@ -345,9 +386,13 @@ export default function Payment() {
               <div className="payment__formInfor-courier">
                 <RowInfo
                   label="Courier"
-                  buttonText="Choose Courier"
-                  sx={{ mt: "16px" }}
-                  onButtonClick={() => setIsChooseCourier(true)}
+                  buttonText={
+                    formik.values.shippingAddress ? "Choose Courier" : ""
+                  }
+                  onButtonClick={() => {
+                    setIsChooseCourier(true);
+                    formik.setFieldValue(fieldNames.courier, true);
+                  }}
                 />
 
                 {isChooseCourier && (
@@ -362,15 +407,18 @@ export default function Payment() {
               <div className="payment__formInfor-courier">
                 <RowInfo
                   label="Payment"
-                  buttonText="Choose Payment"
-                  sx={{ mt: "16px" }}
+                  buttonText={formik.values.courier && "Choose Payment"}
                   onButtonClick={() => setIsChoosePayment(true)}
                 />
 
                 {isChoosePayment && (
                   <Box sx={{ mb: "32px" }}>
                     {cardListActivated.map((item) => (
-                      <CourierItem data={item} key={item.id} />
+                      <CourierItem
+                        data={item}
+                        key={item.id}
+                        onClick={() => handleCardItemClick(item)}
+                      />
                     ))}
                   </Box>
                 )}
@@ -434,6 +482,34 @@ export default function Payment() {
             label="email"
             value={formik.values.email}
           />
+
+          {/* Province Modal */}
+          <AddressModal
+            data={provinceList}
+            isVisibled={isProvinceModal}
+            searchPlaceholder="Search Province"
+            onClose={() => setIsProvinceModal(false)}
+            onSaveClick={handleOnProvinceSaveClick}
+          />
+
+          {/* City Modal */}
+          <AddressModal
+            data={cityList}
+            isVisibled={isCityModal}
+            searchPlaceholder="Search City"
+            onClose={() => setIsCityModal(false)}
+            onSaveClick={handleOnCitySaveClick}
+          />
+
+          {/* Postal Code Modal */}
+          <AddressModal
+            data={postalCodeList}
+            isVisibled={isPostalCodeModal}
+            searchPlaceholder="Search Postal Code"
+            onClose={() => setIsPostalCodeModal(false)}
+            onSaveClick={handleOnPostalCodeSaveClick}
+          />
+
           <AddCardBottomSheet
             isVisibled={isAddCardBottomSheet}
             onClose={() => handleClose(ADD_CARD_BOTTOM_SHEET)}

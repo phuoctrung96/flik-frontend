@@ -139,7 +139,7 @@ export const courierList = [
     title: "AnterAja",
     description: "Pengirman (2-3 hari)",
     price: 17.0,
-    isChecked: true,
+    isChecked: false,
     image: Images.anterAja,
     currencyType: "Rp",
   },
@@ -220,6 +220,165 @@ export const cardListActivated = [
     description: "",
     image: Images.mandiri,
     tag: "",
+    isChecked: false,
+  },
+];
+
+export const provinceList = [
+  {
+    id: 0,
+    title: "Bali",
+    isChecked: true,
+  },
+  {
+    id: 1,
+    title: "Bangka Belitung",
+    isChecked: false,
+  },
+  {
+    id: 2,
+    title: "Banten",
+    isChecked: false,
+  },
+  {
+    id: 3,
+    title: "Bengkulu",
+    isChecked: false,
+  },
+  {
+    id: 4,
+    title: "Daerah Istimewa Yogyakarta",
+    isChecked: false,
+  },
+  {
+    id: 5,
+    title: "Gorontalo",
+    isChecked: false,
+  },
+  {
+    id: 6,
+    title: "DKI Jakarta",
+    isChecked: false,
+  },
+  {
+    id: 7,
+    title: "Jambi",
+    isChecked: false,
+  },
+  {
+    id: 8,
+    title: "Jawa Barat",
+    isChecked: false,
+  },
+  {
+    id: 9,
+    title: "Jawa Tengah",
+    isChecked: false,
+  },
+  {
+    id: 10,
+    title: "Jawa Timur",
+    isChecked: false,
+  },
+  {
+    id: 11,
+    title: "Kalimantan Barat",
+    isChecked: false,
+  },
+  {
+    id: 12,
+    title: "Kalimantan Selatan",
+    isChecked: false,
+  },
+];
+
+export const cityList = [
+  {
+    id: 0,
+    title: "Jakarta Barat",
+    isChecked: true,
+  },
+  {
+    id: 1,
+    title: "Jakarta Pusat",
+    isChecked: false,
+  },
+  {
+    id: 2,
+    title: "Jakarta Selatan",
+    isChecked: false,
+  },
+  {
+    id: 3,
+    title: "Jakarta Timur",
+    isChecked: false,
+  },
+];
+
+export const postalCodeList = [
+  {
+    id: 0,
+    title: "12560 - Cilandak Timur",
+    isChecked: true,
+  },
+  {
+    id: 1,
+    title: "12540 - Jati Padang",
+    isChecked: false,
+  },
+  {
+    id: 2,
+    title: "12520 - Kebagusan",
+    isChecked: false,
+  },
+  {
+    id: 3,
+    title: "12345 - Pasar Minggu",
+    isChecked: false,
+  },
+  {
+    id: 4,
+    title: "12510 - Pejaten Barat",
+    isChecked: false,
+  },
+  {
+    id: 5,
+    title: "12510 - Pejaten Timur",
+    isChecked: false,
+  },
+  {
+    id: 6,
+    title: "12550 - Ragunan",
+    isChecked: false,
+  },
+  {
+    id: 7,
+    title: "12840 - Bukit Duri",
+    isChecked: false,
+  },
+  {
+    id: 8,
+    title: "12830 - Kebon Baru",
+    isChecked: false,
+  },
+  {
+    id: 9,
+    title: "12850 - Manggarai",
+    isChecked: false,
+  },
+  {
+    id: 10,
+    title: "12860 - Manggarai Selatan",
+    isChecked: false,
+  },
+  {
+    id: 11,
+    title: "12870 - Menteng Dalam",
+    isChecked: false,
+  },
+  {
+    id: 12,
+    title: "12810 - Tebet Barat",
     isChecked: false,
   },
 ];

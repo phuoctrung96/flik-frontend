@@ -1,5 +1,6 @@
-import { Box } from "@mui/material";
-import React from "react";
+import { Box, Radio } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Button, CheckBox, Input } from "../../../../components";
 import { Modal } from "../../../../components/Modal";
 import { LibraryIcons } from "../../../../utils";
 import "./styles.scss";
@@ -8,31 +9,75 @@ export const AddressModal = ({
   isVisibled,
   onClose,
   data,
-  onClick,
+  textBackButtonm,
+  searchPlaceholder,
+  onSaveClick,
   ...rest
 }) => {
+  const [dataState, setDataState] = useState(data);
+  const [itemChecked, setItemChecked] = useState({});
+
+  const handleCheck = (item) => {
+    const newData = dataState.map((dataItem) => {
+      if (dataItem.id === item.id) {
+        dataItem.isChecked = true;
+      } else {
+        dataItem.isChecked = false;
+      }
+
+      return dataItem;
+    });
+
+    setDataState(newData);
+    setItemChecked(item);
+  };
+
+  const handleSaveClick = () => {
+    onSaveClick?.(itemChecked, dataState);
+  };
+
+  useEffect(() => {
+    setDataState(data);
+  }, [data]);
+
   return (
     <Modal
       isVisibled={isVisibled}
       onClose={onClose}
-      className="addressModalContainer"
+      fullScreen
+      isBack
+      textBackButton={textBackButtonm}
       {...rest}
     >
       <Box className="addressModal">
-        <Box>
-          {data.map((item) => (
+        <Input
+          label={searchPlaceholder}
+          startInput={<LibraryIcons.SearchIcon />}
+          variant={"outlined"}
+          placeholder={searchPlaceholder}
+        />
+        <Box className="addressModal__container">
+          {dataState.map((item) => (
             <Box
               className="addressModal__addressItem"
               key={item.id}
-              onClick={() => onClick(item)}
+              onClick={() => handleCheck(item)}
             >
               <p className="addressModal__addressItem-title">{item.title}</p>
-              <p className="addressModal__addressItem-description">
-                {item.address}
-              </p>
+              <Radio checked={item.isChecked} />
             </Box>
           ))}
         </Box>
+
+        <div className="addressModal__buttonContainer">
+          <Button
+            isPrimary
+            buttonClassName="addressModal__buttonContainer-button"
+            onClick={handleSaveClick}
+          >
+            Save
+          </Button>
+        </div>
       </Box>
     </Modal>
   );

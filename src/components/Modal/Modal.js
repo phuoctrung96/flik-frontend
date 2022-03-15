@@ -9,6 +9,7 @@ export const Modal = ({
   onClose,
   isClose,
   isBack,
+  textBackButton = "Back",
   isVisibled,
   className,
   ...rest
@@ -23,7 +24,7 @@ export const Modal = ({
       {isBack && (
         <div className="modal__closeIconBack" onClick={onClose}>
           <LibraryIcons.ArrowBackIosNewIcon fontSize="24px" />
-          <p className="modal__closeIconBack-text">Back</p>
+          <p className="modal__closeIconBack-text">{textBackButton}</p>
         </div>
       )}
       {isClose && (
