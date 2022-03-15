@@ -13,6 +13,8 @@ import shoppingCart from "../assets/icons/payment/shopping-cart.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import SearchIcon from "@mui/icons-material/Search";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 export const Icons = {
   chevronDown,
@@ -31,4 +33,6 @@ export const LibraryIcons = {
   CloseIcon,
   ArrowBackIosNewIcon,
   ContentCopyIcon,
+  SearchIcon,
+  ArrowDropDownIcon,
 };

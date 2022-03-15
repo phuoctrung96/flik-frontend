@@ -32,6 +32,7 @@ export const Input = ({
   inputComponent,
   containerStyle,
   inputProps,
+  readOnly = false,
   ...rest
 }) => {
   const classes = useStyles();
@@ -65,6 +66,7 @@ export const Input = ({
             <InputAdornment position="end">{endInput}</InputAdornment>
           ),
           inputComponent: inputComponent,
+          readOnly,
         }}
       />
     </div>

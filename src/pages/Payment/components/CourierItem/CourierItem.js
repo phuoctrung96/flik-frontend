@@ -4,9 +4,12 @@ import React from "react";
 import { RootStyles } from "../../../../utils";
 import "./styles.scss";
 
-export const CourierItem = ({ data }) => {
+export const CourierItem = ({ data, onClick }) => {
   return (
-    <Box className={classNames("courierItem", { active: data.isChecked })}>
+    <Box
+      className={classNames("courierItem", { active: data.isChecked })}
+      onClick={onClick}
+    >
       <Box sx={{ ...RootStyles.row }}>
         <img
           src={data.image}
