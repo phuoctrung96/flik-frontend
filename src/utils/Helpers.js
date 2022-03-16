@@ -11,3 +11,7 @@ export function splitName(name) {
     ? newName
     : newName[0] + newName[newName.length - 1];
 }
+
+export function checkObjectEmpty(data) {
+  return Object.keys(data).length === 0;
+}

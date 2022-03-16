@@ -25,12 +25,19 @@ import {
   fieldPlaceholders,
   initialValues,
   orderSummaryData,
+  paymentMethodList,
   postalCodeList as postalCodeListData,
   provinceList as provinceListData,
   validationSchema,
 } from "./Payment.data";
 import "./styles.scss";
-import { requestOTP, verifyToken } from "../../utils/ApiManage";
+import {
+  generateTokenWithOTP,
+  requestOTP,
+  verifyToken,
+} from "../../utils/ApiManage";
+import { checkObjectEmpty } from "../../utils/Helpers";
+import AuthHelper from "../../utils/AuthHelpers";
 
 const PHONE_OTP = "PHONE_MODAL";
 const EMAIL_OTP = "EMAIL_OTP";
@@ -51,8 +58,15 @@ export default function Payment() {
   const [isProvinceModal, setIsProvinceModal] = useState(false);
   const [isCityModal, setIsCityModal] = useState(false);
   const [isPostalCodeModal, setIsPostalCodeModal] = useState(false);
-  const [courier, setCourier] = useState({});
-  const [paymentMethod, setPaymentMethod] = useState({});
+  const [courierSelected, setCourierSelected] = useState({});
+  const [paymentMethodSelected, setPaymentMethodSelected] = useState({});
+
+  const [couriers, setCouriers] = useState(courierList);
+  const [paymentMethods, setPaymentMethods] = useState(cardList);
+
+  const [isVerifyToken, setIsVerifyToken] = useState(false);
+
+  const accessToken = AuthHelper.getAccessToken();
 
   const [provinceList, setProvinceList] = useState([]);
   const [cityList, setCityList] = useState([]);
@@ -115,7 +129,7 @@ export default function Payment() {
     if (otp.length === 6) {
       formik.setFieldValue(fieldNames.phoneOtp, otp);
       // otp = 696062
-      verifyToken({
+      generateTokenWithOTP({
         app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
         email: "shopper1@gmail.com",
         phone: "+6282110075629",
@@ -123,27 +137,28 @@ export default function Payment() {
         otp: otp,
       })
         .then((result) => {
-          console.log(result);
-          setIsPhoneModal(false);
+          // const res = JSON.parse(result);
+          // console.log(res);
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
+          setIsPhoneModal(false);
         });
     }
   };
 
   const handleBlurPhone = () => {
-    setIsPhoneModal(true);
     if (!!!formik.errors.phone) {
+      setIsPhoneModal(true);
       requestOTP({
         app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
         email: "shopper1@gmail.com",
         phone: "+6282110075629",
         device_id: "testdevice",
       })
-        .then((result) => {
-          console.log(result);
-        })
+        .then((result) => {})
         .catch((err) => {
           console.log(err);
         });
@@ -159,9 +174,7 @@ export default function Payment() {
         phone: "+6282110075629",
         device_id: "testdevice",
       })
-        .then((result) => {
-          console.log(result);
-        })
+        .then((result) => {})
         .catch((err) => {
           console.log(err);
         });
@@ -173,7 +186,7 @@ export default function Payment() {
     if (otp.length === 6) {
       formik.setFieldValue(fieldNames.emailOtp, otp);
       // otp = 696062
-      verifyToken({
+      generateTokenWithOTP({
         app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
         email: "shopper1@gmail.com",
         phone: "+6282110075629",
@@ -181,11 +194,13 @@ export default function Payment() {
         otp: otp,
       })
         .then((result) => {
-          console.log(result);
-          setIsEmailModal(false);
+          // AuthHelper.storeAccessToken()
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
+          setIsEmailModal(false);
         });
     }
   };
@@ -230,9 +245,26 @@ export default function Payment() {
   };
 
   //Courier Item Click Function
-  const handleCardItemClick = item => {
+  const handleCardItemClick = (item) => {
     // courierLi
-  }
+  };
+
+  const handleOnClickCourierItem = (item) => {
+    setCourierSelected({ ...item, isChecked: true });
+  };
+
+  const verifyAccessToken = async () => {
+    try {
+      const res = await verifyToken({ access_token: accessToken });
+      if (res.success) {
+        setIsVerifyToken(true);
+      } else {
+        setIsVerifyToken(false);
+      }
+    } catch (error) {
+      setIsVerifyToken(false);
+    }
+  };
 
   useState(() => {
     setTimeout(() => {
@@ -244,6 +276,15 @@ export default function Payment() {
     setCityList(cityListData);
     setProvinceList(provinceListData);
     setPostalCodeList(postalCodeListData);
+  }, []);
+
+  useEffect(() => {
+    if (accessToken) {
+      setIsVerifyToken(true);
+      verifyAccessToken();
+    } else {
+      setIsVerifyToken(false);
+    }
   }, []);
 
   return (
@@ -297,12 +338,14 @@ export default function Payment() {
                     onChange={formik.handleChange}
                     value={formik.values.firstName}
                     className="payment__mr-5"
+                    containerStyle={{ flex: 0.5 }}
                   />
                   <Input
                     label="Last Name"
                     name={fieldNames.lastName}
                     onChange={formik.handleChange}
                     value={formik.values.lastName}
+                    containerStyle={{ flex: 0.5 }}
                   />
                 </Box>
               </div>
@@ -391,45 +434,60 @@ export default function Payment() {
                   }
                   onButtonClick={() => {
                     setIsChooseCourier(true);
-                    formik.setFieldValue(fieldNames.courier, true);
+                    setCourierSelected({});
+                    setCouriers(courierList);
                   }}
                 />
 
                 {isChooseCourier && (
                   <Box>
-                    {courierList?.map((item) => (
-                      <CourierItem data={item} key={item.id} />
+                    {(Object.keys(courierSelected).length > 0
+                      ? [courierSelected]
+                      : couriers
+                    )?.map((item) => (
+                      <CourierItem
+                        data={item}
+                        key={item.id}
+                        onClick={() => handleOnClickCourierItem(item)}
+                      />
                     ))}
                   </Box>
                 )}
               </div>
 
-              <div className="payment__formInfor-courier">
+              <div className="payment__formInfor-payment">
                 <RowInfo
                   label="Payment"
-                  buttonText={formik.values.courier && "Choose Payment"}
+                  buttonText={
+                    !checkObjectEmpty(courierSelected) && "Choose Payment"
+                  }
                   onButtonClick={() => setIsChoosePayment(true)}
                 />
 
-                {isChoosePayment && (
-                  <Box sx={{ mb: "32px" }}>
-                    {cardListActivated.map((item) => (
-                      <CourierItem
-                        data={item}
-                        key={item.id}
-                        onClick={() => handleCardItemClick(item)}
-                      />
-                    ))}
-                  </Box>
-                )}
-
                 {isChoosePayment &&
-                  cardList.map((item) => (
-                    <PaymentItem
-                      key={item.id}
-                      data={item}
-                      onActiveClick={() => handleActiveClickPaymentCard(item)}
-                    />
+                  paymentMethodList.map((item) => (
+                    <Box key={item.id} sx={{ mb: "32px" }}>
+                      <p className="payment__formInfor-payment-title">
+                        {item.title}
+                      </p>
+                      {item.children.map((paymentItem) =>
+                        paymentItem.isActivated ? (
+                          <CourierItem
+                            data={paymentItem}
+                            key={paymentItem.id}
+                            onClick={() => handleCardItemClick(paymentItem)}
+                          />
+                        ) : (
+                          <PaymentItem
+                            key={paymentItem.id}
+                            data={paymentItem}
+                            onActiveClick={() =>
+                              handleActiveClickPaymentCard(paymentItem)
+                            }
+                          />
+                        )
+                      )}
+                    </Box>
                   ))}
               </div>
             </div>
@@ -513,7 +571,7 @@ export default function Payment() {
           <AddCardBottomSheet
             isVisibled={isAddCardBottomSheet}
             onClose={() => handleClose(ADD_CARD_BOTTOM_SHEET)}
-            onSave={handleOnSaveCardBottomSheet}
+            onSaveClick={handleOnSaveCardBottomSheet}
             formik={formik}
           />
         </div>

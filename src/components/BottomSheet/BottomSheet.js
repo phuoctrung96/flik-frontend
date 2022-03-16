@@ -14,12 +14,14 @@ export const BottomSheet = ({
   children,
   minHeight,
   title,
+  ...rest
 }) => {
   return (
     <BottomSheetLibrary
       open={isVisibled}
       className="bottomSheet"
       onDismiss={onClose}
+      {...rest}
     >
       <LibraryIcons.CloseIcon
         className="bottomSheet__closeIcon"

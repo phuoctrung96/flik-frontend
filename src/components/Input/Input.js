@@ -50,7 +50,7 @@ export const Input = ({
       <TextField
         {...rest}
         fullWidth
-        label={checkLabel()}
+        label={label}
         value={value}
         size={size}
         variant={variant}

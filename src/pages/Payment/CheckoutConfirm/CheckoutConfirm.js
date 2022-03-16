@@ -1,8 +1,8 @@
-import { Box, Link } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../../../components";
-import { Icons, Images, LibraryIcons, RootStyles } from "../../../utils";
+import { Icons, Images, RootStyles } from "../../../utils";
 import "./styles.scss";
 
 const CheckoutConfirm = () => {
@@ -32,99 +32,82 @@ const CheckoutConfirm = () => {
 
         <div className="checkoutConfirm__formInfor">
           <Box className="checkoutConfirm__formInfor-cardInfoContainer">
+            <img
+              src={Images.visa2x}
+              alt=""
+              className="checkoutConfirm__formInfor-cardInfoContainer-image"
+            />
             <h2 className="checkoutConfirm__formInfor-cardInfoContainer-title">
-              Please Complete Your Payment
+              Authenticate Using One Time Password (OTP)
             </h2>
-
-            <div style={{ marginTop: 24 }}>
-              <p className="checkoutConfirm__formInfor-cardInfoContainer-minorText">
-                Transfer to
+            <Box className="checkoutConfirm__formInfor-cardInfoContainer-descriptionContainer">
+              <p className="checkoutConfirm__formInfor-cardInfoContainer-descriptionText">
+                A verification code has been sent to your mobile phone{" "}
+                <b>+6282123456789</b>. Enter the authorization code to approve
+                this transaction before the transaction timer runs out
               </p>
-              <img
-                src={Images.bca2x}
-                alt=""
-                className="checkoutConfirm__formInfor-cardInfoContainer-image"
-              />
-            </div>
-
-            <div style={{ marginTop: 24, marginBottom: 24 }}>
-              <p className="checkoutConfirm__formInfor-cardInfoContainer-minorText">
-                Virtual Account Number
-              </p>
-
-              <h2
-                className="checkoutConfirm__formInfor-cardInfoContainer-title"
-                style={{ margin: 0 }}
-              >
-                8870889650872228
-              </h2>
-
-              <div className="checkoutConfirm__formInfor-cardInfoContainer-copyContainer">
-                <LibraryIcons.ContentCopyIcon fontSize="18px" />
-                <p className="checkoutConfirm__formInfor-cardInfoContainer-copyContainer-text">
-                  Copy
-                </p>
-              </div>
-            </div>
-
-            <div style={{ marginBottom: 32 }}>
-              <p className="checkoutConfirm__formInfor-cardInfoContainer-minorText">
-                Total Payment
-              </p>
-
-              <h2
-                className="checkoutConfirm__formInfor-cardInfoContainer-title"
-                style={{ margin: 0 }}
-              >
-                Rp 270.600
-              </h2>
-
-              <div className="checkoutConfirm__formInfor-cardInfoContainer-copyContainer">
-                <LibraryIcons.ContentCopyIcon fontSize="18px" />
-                <p className="checkoutConfirm__formInfor-cardInfoContainer-copyContainer-text">
-                  Copy
-                </p>
-              </div>
-            </div>
-
-            <Link href="#" className="checkoutConfirm__formInfor-howToPay">
-              How to Pay
-            </Link>
+            </Box>
+            <p className="checkoutConfirm__formInfor-cardInfoContainer-confirmText">
+              Confirm your transaction in{" "}
+              <span style={{ color: "#0085FF" }}>04:50</span>
+            </p>
           </Box>
 
           <Box className="checkoutConfirm__formInfor-detailContainer">
-            <h5 className="checkoutConfirm__formInfor-detailContainer-title">
-              Order Details
-            </h5>
-
             <Box
-              sx={{
-                ...RootStyles.rowBetween,
-                mb: "10px",
-                alignItems: "flex-start",
-              }}
+              sx={{ ...RootStyles.row, mb: "10px", alignItems: "flex-start" }}
             >
               <p className="checkoutConfirm__formInfor-detailContainer-label">
-                Transaction ID
+                Merchant Name
               </p>
               <p className="checkoutConfirm__formInfor-detailContainer-value">
-                #FC12345
+                Flik
               </p>
             </Box>
 
             <Box
-              sx={{
-                ...RootStyles.rowBetween,
-                mb: "10px",
-                alignItems: "flex-start",
-              }}
+              sx={{ ...RootStyles.row, mb: "10px", alignItems: "flex-start" }}
             >
               <p className="checkoutConfirm__formInfor-detailContainer-label">
-                Total Payment
+                Amount
               </p>
               <p className="checkoutConfirm__formInfor-detailContainer-value">
                 Rp 377.300
               </p>
+            </Box>
+
+            <Box
+              sx={{ ...RootStyles.row, mb: "10px", alignItems: "flex-start" }}
+            >
+              <p className="checkoutConfirm__formInfor-detailContainer-label">
+                Transaction Date
+              </p>
+              <p className="checkoutConfirm__formInfor-detailContainer-value">
+                Fri, Feb 18 2022 12:45:35 GMT +8
+              </p>
+            </Box>
+
+            <Box
+              sx={{ ...RootStyles.row, mb: "10px", alignItems: "flex-start" }}
+            >
+              <p className="checkoutConfirm__formInfor-detailContainer-label">
+                Visa Number
+              </p>
+              <p className="checkoutConfirm__formInfor-detailContainer-value">
+                4321 5678 9012 0488
+              </p>
+            </Box>
+
+            <Box sx={{ ...RootStyles.row }}>
+              <p className="checkoutConfirm__formInfor-detailContainer-label">
+                Merchant Name
+              </p>
+              <Input
+                variant="outlined"
+                size="small"
+                fullWidth
+                className="checkoutConfirm__formInfor-detailContainer-input"
+              />
             </Box>
 
             <p className="checkoutConfirm__formInfor-detailContainer-tag">
@@ -132,7 +115,7 @@ const CheckoutConfirm = () => {
             </p>
           </Box>
 
-          {/* <Box
+          <Box
             sx={{ ...RootStyles.row, borderBottom: 0 }}
             className="checkoutConfirm__buttonContainer"
           >
@@ -152,7 +135,7 @@ const CheckoutConfirm = () => {
             >
               Proceed
             </Button>
-          </Box> */}
+          </Box>
         </div>
       </div>
     </div>
