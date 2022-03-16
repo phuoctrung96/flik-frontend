@@ -16,6 +16,9 @@ const useStyles = makeStyles({
     "& .MuiFilledInput-underline:hover:not(.Mui-disabled):before": {
       borderBottom: "none",
     },
+    "& .css-1cwr821-MuiInputBase-input-MuiFilledInput-input": {
+      paddingBottom: "12px",
+    },
   },
 });
 
@@ -50,7 +53,7 @@ export const Input = ({
       <TextField
         {...rest}
         fullWidth
-        label={label}
+        label={checkLabel()}
         value={value}
         size={size}
         variant={variant}
@@ -58,7 +61,10 @@ export const Input = ({
         inputProps={inputProps}
         InputProps={{
           startAdornment: startInput && (
-            <InputAdornment position="start" sx={{ marginRight: "16px" }}>
+            <InputAdornment
+              position="start"
+              sx={{ marginRight: "16px", marginBottom: "4px" }}
+            >
               {startInput}
             </InputAdornment>
           ),

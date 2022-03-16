@@ -128,7 +128,7 @@ export default function Payment() {
     const otp = e.reduce((prev, next) => prev + "" + next);
     if (otp.length === 6) {
       formik.setFieldValue(fieldNames.phoneOtp, otp);
-      // otp = 696062
+      // otp = 389477
       generateTokenWithOTP({
         app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
         email: "shopper1@gmail.com",
@@ -150,7 +150,7 @@ export default function Payment() {
   };
 
   const handleBlurPhone = () => {
-    if (!!!formik.errors.phone) {
+    if (!!!formik.errors.phone && formik.values.phone) {
       setIsPhoneModal(true);
       requestOTP({
         app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",

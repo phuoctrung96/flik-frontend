@@ -2,7 +2,7 @@ import { Images } from "../../utils";
 import * as yup from "yup";
 
 export const initialValues = {
-  phone: "821 2345 6789",
+  phone: "",
   email: "",
   phoneOtp: "",
   emailOtp: "",
@@ -70,7 +70,7 @@ export const fieldNames = {
 };
 
 export const validationSchema = yup.object().shape({
-  phone: yup.string().required().min(11),
+  phone: yup.string().required(),
   email: yup.string().required().email(),
   phoneOtp: yup.string().required().min(6),
   emailOtp: yup.string().required().min(6),
