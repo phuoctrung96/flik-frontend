@@ -31,7 +31,11 @@ import {
   validationSchema,
 } from "./Payment.data";
 import "./styles.scss";
-import { requestOTP, verifyToken } from "../../utils/ApiManage";
+import {
+  generateTokenWithOTP,
+  requestOTP,
+  verifyToken,
+} from "../../utils/ApiManage";
 import { checkObjectEmpty } from "../../utils/Helpers";
 import AuthHelper from "../../utils/AuthHelpers";
 
@@ -59,6 +63,10 @@ export default function Payment() {
 
   const [couriers, setCouriers] = useState(courierList);
   const [paymentMethods, setPaymentMethods] = useState(cardList);
+
+  const [isVerifyToken, setIsVerifyToken] = useState(false);
+
+  const accessToken = AuthHelper.getAccessToken();
 
   const [provinceList, setProvinceList] = useState([]);
   const [cityList, setCityList] = useState([]);
@@ -121,7 +129,7 @@ export default function Payment() {
     if (otp.length === 6) {
       formik.setFieldValue(fieldNames.phoneOtp, otp);
       // otp = 696062
-      verifyToken({
+      generateTokenWithOTP({
         app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
         email: "shopper1@gmail.com",
         phone: "+6282110075629",
@@ -129,13 +137,14 @@ export default function Payment() {
         otp: otp,
       })
         .then((result) => {
-          console.log(result);
           // const res = JSON.parse(result);
           // console.log(res);
-          setIsPhoneModal(false);
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
+          setIsPhoneModal(false);
         });
     }
   };
@@ -149,9 +158,7 @@ export default function Payment() {
         phone: "+6282110075629",
         device_id: "testdevice",
       })
-        .then((result) => {
-          console.log(result);
-        })
+        .then((result) => {})
         .catch((err) => {
           console.log(err);
         });
@@ -167,9 +174,7 @@ export default function Payment() {
         phone: "+6282110075629",
         device_id: "testdevice",
       })
-        .then((result) => {
-          console.log(result);
-        })
+        .then((result) => {})
         .catch((err) => {
           console.log(err);
         });
@@ -181,7 +186,7 @@ export default function Payment() {
     if (otp.length === 6) {
       formik.setFieldValue(fieldNames.emailOtp, otp);
       // otp = 696062
-      verifyToken({
+      generateTokenWithOTP({
         app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
         email: "shopper1@gmail.com",
         phone: "+6282110075629",
@@ -189,14 +194,13 @@ export default function Payment() {
         otp: otp,
       })
         .then((result) => {
-          console.log(result);
-          const res = JSON.parse(result);
-          console.log(res);
           // AuthHelper.storeAccessToken()
-          setIsEmailModal(false);
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
+          setIsEmailModal(false);
         });
     }
   };
@@ -249,6 +253,19 @@ export default function Payment() {
     setCourierSelected({ ...item, isChecked: true });
   };
 
+  const verifyAccessToken = async () => {
+    try {
+      const res = await verifyToken({ access_token: accessToken });
+      if (res.success) {
+        setIsVerifyToken(true);
+      } else {
+        setIsVerifyToken(false);
+      }
+    } catch (error) {
+      setIsVerifyToken(false);
+    }
+  };
+
   useState(() => {
     setTimeout(() => {
       setIsSplashScreen(false);
@@ -259,6 +276,15 @@ export default function Payment() {
     setCityList(cityListData);
     setProvinceList(provinceListData);
     setPostalCodeList(postalCodeListData);
+  }, []);
+
+  useEffect(() => {
+    if (accessToken) {
+      setIsVerifyToken(true);
+      verifyAccessToken();
+    } else {
+      setIsVerifyToken(false);
+    }
   }, []);
 
   return (
