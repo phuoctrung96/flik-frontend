@@ -85,6 +85,16 @@
       padding: 20px 20px;
       background-color: $white;
       margin-top: 8px;
+
+      &-title {
+        color: $grey-002;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 16px;
+        letter-spacing: -0.155556px;
+        margin-bottom: 16px;
+        margin-top: 0px;
+      }
     }
 
     &-group {

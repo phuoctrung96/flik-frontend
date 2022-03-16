@@ -70,6 +70,7 @@ export const OtpModal = ({
               name={`otp${index}`}
               ref={otpItem.ref}
               value={otp[index]}
+              type="number"
               onChange={(e) => handleChangeText(e, index)}
               onKeyUp={(e) => handleChangeOtp(e, otpItem.ref)}
               variant="outlined"

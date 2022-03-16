@@ -28,7 +28,7 @@ instance.interceptors.request.use(
 // Add a response interceptor
 instance.interceptors.response.use(
   function (response) {
-    return response?.data?.data;
+    return response?.data;
   },
   function (error) {
     console.log(error.response);

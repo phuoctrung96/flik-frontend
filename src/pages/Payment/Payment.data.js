@@ -205,6 +205,100 @@ export const cardList = [
   },
 ];
 
+export const paymentMethodList = [
+  {
+    id: 0,
+    title: "Credit/Debit Card",
+    children: [
+      {
+        id: 0,
+        title: "Debit/Credit Card",
+        description: "Link your Credit Card Account",
+        image: Images.creditCard,
+        phone: "123 123",
+        isActivated: false,
+        isChecked: false,
+      },
+    ],
+  },
+  {
+    id: 1,
+    title: "BCA Debit Card",
+    children: [
+      {
+        id: 0,
+        title: "Debit Card",
+        description: "Link your Debit Card Account",
+        image: Images.bca,
+        phone: "123 123",
+        isActivated: false,
+        isChecked: false,
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "E-Wallet",
+    children: [
+      {
+        id: 0,
+        title: "GoPay",
+        description: "Link your GoPay Account",
+        image: Images.goPay,
+        voucher: "50k",
+        phone: "123 123",
+        tag: "Voucher 50k",
+        isActivated: false,
+        isChecked: false,
+      },
+      {
+        id: 1,
+        title: "ShopeePay",
+        description: "Link your ShopeePay Account",
+        image: Images.shopeePay,
+        phone: "123 123",
+        isActivated: false,
+        isChecked: false,
+      },
+      {
+        id: 2,
+        title: "OVO",
+        description: "Link your OVO Account",
+        image: Images.ovo,
+        promo: "10%",
+        phone: "123 123",
+        tag: "Promo 10%",
+        isActivated: false,
+        isChecked: false,
+      },
+      {
+        id: 3,
+        title: "DANA",
+        description: "Link your DANA Account",
+        image: Images.dana,
+        phone: "123 123",
+        isActivated: false,
+        isChecked: false,
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "Kredivo",
+    children: [
+      {
+        id: 0,
+        title: "Debit Card",
+        description: "Link your Kredivo Account",
+        image: Images.creditCard,
+        phone: "123 123",
+        isActivated: false,
+        isChecked: false,
+      },
+    ],
+  },
+];
+
 export const cardListActivated = [
   {
     id: 0,
