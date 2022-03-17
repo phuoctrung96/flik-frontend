@@ -105,9 +105,15 @@ export const Summary = ({ data, className, isEdit, onEditClick }) => {
         </Box>
       </Box>
 
-      <Link>Cancel Order</Link>
+      <div className="summary__cancelButtonContainer">
+        <Link className="summary__cancelButtonContainer-cancelButton">
+          Cancel Order
+        </Link>
+      </div>
 
-      <p className="summary__checkoutText">Checkou Powered by Flik</p>
+      <p className="summary__checkoutText">
+        Checkou Powered by <a href="$" className="summary__checkoutText-link">Flik</a>
+      </p>
     </div>
   );
 };
