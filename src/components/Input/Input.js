@@ -7,6 +7,9 @@ import "./styles.scss";
 
 const useStyles = makeStyles({
   root: {
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: '#000000'
+    },
     "& .MuiFilledInput-underline": {
       borderRadius: "4px",
     },
@@ -15,10 +18,7 @@ const useStyles = makeStyles({
     },
     "& .MuiFilledInput-underline:hover:not(.Mui-disabled):before": {
       borderBottom: "none",
-    },
-    "& .css-1cwr821-MuiInputBase-input-MuiFilledInput-input": {
-      paddingBottom: "12px",
-    },
+    }
   },
 });
 
@@ -53,7 +53,8 @@ export const Input = ({
       <TextField
         {...rest}
         fullWidth
-        label={checkLabel()}
+        // label={checkLabel()}
+        label={label}
         value={value}
         size={size}
         variant={variant}

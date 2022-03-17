@@ -57,3 +57,23 @@ body,
 .lock-scroll {
   overflow: hidden;
 }
+
+.custom-input {
+  display: flex;
+  align-items: center;
+  background-color: #0000000f;
+  border-radius: 4px;
+  padding-left: 12px;
+
+  .input {
+    width: 100%;
+  }
+
+  .MuiFilledInput-root {
+    background-color: transparent;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
