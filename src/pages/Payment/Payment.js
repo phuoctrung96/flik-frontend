@@ -18,11 +18,9 @@ import {
 import { PaymentItem } from "./components/PaymentItem";
 import {
   cardList,
-  cardListActivated,
   cityList as cityListData,
   courierList,
   fieldNames,
-  fieldPlaceholders,
   initialValues,
   orderSummaryData,
   paymentMethodList,
@@ -77,24 +75,6 @@ export default function Payment() {
   const navigation = useNavigate();
 
   const formik = useFormik({ initialValues, validationSchema });
-
-  const renderStartPhoneInput = () => {
-    return (
-      <Box sx={{ ...RootStyles.row, mb: "5px" }}>
-        <img src={Images.flat} width={24} height={24} alt="" />
-        <img src={Icons.chevronDown} width={18} height={18} alt="" />
-      </Box>
-    );
-  };
-
-  const renderShippingAddress = () => {
-    return (
-      <Box sx={{ ...RootStyles.row, mb: "5px" }}>
-        <img src={Images.flat} width={24} height={24} alt="" />
-        <img src={Icons.chevronDown} width={18} height={18} alt="" />
-      </Box>
-    );
-  };
 
   const handleClose = (type) => {
     type === PHONE_OTP && setIsPhoneModal(false);
@@ -300,17 +280,27 @@ export default function Payment() {
 
             <div className="payment__formInfor">
               <div className="payment__formInfor-personal">
-                <Input
-                  label={fieldPlaceholders.phone}
-                  type="phone"
-                  startInput={renderStartPhoneInput()}
-                  name={fieldNames.phone}
-                  onChange={handleChangePhone}
-                  onBlur={handleBlurPhone}
-                  value={formik.values.phone}
-                  placeholder={fieldPlaceholders.phone}
-                  inputComponent={InputMask}
-                />
+                <Box className="custom-input">
+                  <Box sx={{ ...RootStyles.row }}>
+                    <img src={Images.flat} width={24} height={24} alt="" />
+                    <img
+                      src={Icons.chevronDown}
+                      width={18}
+                      height={18}
+                      alt=""
+                    />
+                  </Box>
+                  <Input
+                    label="Phone Number"
+                    type="phone"
+                    name={fieldNames.phone}
+                    onChange={handleChangePhone}
+                    onBlur={handleBlurPhone}
+                    value={formik.values.phone}
+                    placeholder="0821 2345 6789"
+                    inputComponent={InputMask}
+                  />
+                </Box>
                 <Input
                   label="Email"
                   inputClass="payment__mt-16"
@@ -327,7 +317,7 @@ export default function Payment() {
                     name={fieldNames.firstName}
                     onChange={formik.handleChange}
                     value={formik.values.firstName}
-                    className="payment__mr-5"
+                    className="payment__mr-8"
                     containerStyle={{ flex: 0.5 }}
                   />
                   <Input
@@ -366,15 +356,25 @@ export default function Payment() {
                   </Box>
                 )}
 
-                <Input
-                  label={fieldPlaceholders.shippingAddress}
-                  type="text"
-                  startInput={renderShippingAddress()}
-                  name={fieldNames.shippingAddress}
-                  onChange={formik.handleChange}
-                  value={formik.values.shippingAddress}
-                  placeholder={fieldPlaceholders.shippingAddress}
-                />
+                <Box className="custom-input">
+                  <Box sx={{ ...RootStyles.row }}>
+                    <img src={Images.flat} width={24} height={24} alt="" />
+                    <img
+                      src={Icons.chevronDown}
+                      width={18}
+                      height={18}
+                      alt=""
+                    />
+                  </Box>
+                  <Input
+                    label="Shipping Address"
+                    type="text"
+                    name={fieldNames.shippingAddress}
+                    onChange={formik.handleChange}
+                    value={formik.values.shippingAddress}
+                    placeholder="Shipping Address"
+                  />
+                </Box>
 
                 {!!formik.values.shippingAddress && (
                   <Input
