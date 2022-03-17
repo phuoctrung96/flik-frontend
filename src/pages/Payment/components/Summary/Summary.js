@@ -5,7 +5,13 @@ import { Button } from "../../../../components";
 import { RootStyles } from "../../../../utils";
 import "./styles.scss";
 
-export const Summary = ({ data, className, isEdit, onEditClick }) => {
+export const Summary = ({
+  data,
+  className,
+  isEdit,
+  onEditClick,
+  onCancelOrder,
+}) => {
   return (
     <div className={classNames("summary", className)}>
       <Box sx={{ ...RootStyles.rowBetween }}>
@@ -105,14 +111,22 @@ export const Summary = ({ data, className, isEdit, onEditClick }) => {
         </Box>
       </Box>
 
-      <div className="summary__cancelButtonContainer">
-        <Link className="summary__cancelButtonContainer-cancelButton">
-          Cancel Order
-        </Link>
-      </div>
+      {onCancelOrder && (
+        <div className="summary__cancelButtonContainer">
+          <Link
+            className="summary__cancelButtonContainer-cancelButton"
+            onClick={onCancelOrder}
+          >
+            Cancel Order
+          </Link>
+        </div>
+      )}
 
       <p className="summary__checkoutText">
-        Checkou Powered by <a href="$" className="summary__checkoutText-link">Flik</a>
+        Checkou Powered by{" "}
+        <a href="$" className="summary__checkoutText-link">
+          Flik
+        </a>
       </p>
     </div>
   );
