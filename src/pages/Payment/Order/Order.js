@@ -1,17 +1,54 @@
 import React, { useState } from "react";
 import { Icons, Images, LibraryIcons } from "../../../utils";
-import { Summary } from "../components";
-import { orderSummaryData } from "../Payment.data";
+import {
+  AddCardBottomSheet,
+  AddPaymentBottomSheet,
+  Summary,
+} from "../components";
+import { orderSummaryData, paymentMethodList } from "../Payment.data";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import "./styles.scss";
 import { convertSecondToMinute } from "../../../utils/Helpers";
 import { Link } from "@mui/material";
 import { Button } from "../../../components";
+import { useFormik } from "formik";
+import { initialValues, validationSchema } from "../Payment.data";
+import { useNavigate } from "react-router-dom";
+import { MainRoute } from "../../../router/constants";
 
 const Order = () => {
   const [isEditOtherSummary, setIsEditOtherSummary] = useState(false);
+  const [isModalPaymentMethod, setIsModalPaymentMedthod] = useState(false);
+  const [isModalAddCard, setIsModalAddCard] = useState(false);
+  const navigation = useNavigate();
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: (values) => {},
+  });
 
   const handleEditSummary = () => {};
+
+  const handleOpenEditPaymentModal = () => {
+    setIsModalPaymentMedthod(true);
+  };
+
+  const handleOnSaveChangePayment = () => {
+    setIsModalPaymentMedthod(false);
+  };
+
+  const handleActiveCardPayment = (item) => {
+    setIsModalAddCard(true);
+  };
+
+  const handleOnSaveAddCard = () => {
+    setIsModalAddCard(false);
+  };
+
+  const handleNavigateToConfirm = () => {
+    navigation(MainRoute.CheckoutConfirm);
+  };
 
   return (
     <div className="order">
@@ -64,7 +101,10 @@ const Order = () => {
                 to finalize your order.
               </p>
 
-              <Link className="order__orderInformation-extraTimeContainer-right-link">
+              <Link
+                className="order__orderInformation-extraTimeContainer-right-link"
+                onClick={handleNavigateToConfirm}
+              >
                 Verify Payment Now
               </Link>
             </div>
@@ -98,7 +138,10 @@ const Order = () => {
                 Selatan, DKI Jakarta 12345{" "}
               </p>
             </div>
-            <Button buttonClassName="order__orderInformation-addressContainer-button">
+            <Button
+              buttonClassName="order__orderInformation-addressContainer-button"
+              onClick={() => {}}
+            >
               Edit
             </Button>
           </div>
@@ -118,7 +161,10 @@ const Order = () => {
                 </p>
               </div>
             </div>
-            <Button buttonClassName="order__orderInformation-courierContainer-button">
+            <Button
+              buttonClassName="order__orderInformation-courierContainer-button"
+              onClick={() => {}}
+            >
               Edit
             </Button>
           </div>
@@ -138,7 +184,10 @@ const Order = () => {
                 </p>
               </div>
             </div>
-            <Button buttonClassName="order__orderInformation-paymentContainer-button">
+            <Button
+              buttonClassName="order__orderInformation-paymentContainer-button"
+              onClick={handleOpenEditPaymentModal}
+            >
               Edit
             </Button>
           </div>
@@ -152,6 +201,21 @@ const Order = () => {
           />
         </div>
       </div>
+
+      <AddPaymentBottomSheet
+        isVisibled={isModalPaymentMethod}
+        onClose={() => setIsModalPaymentMedthod(false)}
+        onSaveClick={handleOnSaveChangePayment}
+        data={paymentMethodList}
+        onActiveClickPaymentCard={handleActiveCardPayment}
+      />
+
+      <AddCardBottomSheet
+        formik={formik}
+        isVisibled={isModalAddCard}
+        onClose={() => setIsModalAddCard(false)}
+        onSaveClick={handleOnSaveAddCard}
+      />
     </div>
   );
 };

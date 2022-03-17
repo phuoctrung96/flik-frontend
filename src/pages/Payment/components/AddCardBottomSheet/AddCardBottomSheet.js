@@ -8,7 +8,6 @@ import "./styles.scss";
 export const AddCardBottomSheet = ({
   isVisibled,
   onClose,
-  onSave,
   formik,
   onSaveClick,
 }) => {
@@ -24,7 +23,6 @@ export const AddCardBottomSheet = ({
       onClose={onClose}
       title="Add Debit/Credit Card"
       className="addCardBottomSheet"
-      onSave={onSave}
       fullScreen
       isBack
     >

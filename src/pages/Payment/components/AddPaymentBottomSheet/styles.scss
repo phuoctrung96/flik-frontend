@@ -1,4 +1,39 @@
 @import "../../../../assets/styles/_global.scss";
 
-.addPaymentBottom {
+.addPaymentBottomSheet {
+  flex: 1;
+  &__container {
+    flex: 1;
+    margin-top: 50px;
+    padding: 20px;
+
+    &-title {
+      font-size: 20px;
+      line-height: 23px;
+      letter-spacing: -0.55px;
+      color: $black;
+    }
+  }
+
+  &__buttonContainer {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 24px;
+
+    &-button {
+      width: 70%;
+    }
+  }
+
+  &__formInfor {
+    &-title {
+      color: $grey-002;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 16px;
+      letter-spacing: -0.155556px;
+      margin-bottom: 16px;
+      margin-top: 0px;
+    }
+  }
 }
