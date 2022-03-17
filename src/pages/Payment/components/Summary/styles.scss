@@ -120,6 +120,11 @@
     font-size: 12px;
     line-height: 18px;
     color: $grey-002;
+
+    &-link {
+      color: $blue;
+      text-decoration: unset;
+    }
   }
 
   &__voucherCode {
@@ -152,6 +157,20 @@
       height: 34px !important;
       border-radius: 4px !important ;
       margin-right: 7px !important;
+    }
+  }
+
+  &__cancelButtonContainer {
+    margin-top: 22px;
+    text-align: center;
+    width: 100%;
+
+    &-cancelButton {
+      color: $primary !important;
+      font-weight: 700 !important;
+      font-size: 14px !important;
+      line-height: 20px !important;
+      text-decoration-color: $primary !important;
     }
   }
 }

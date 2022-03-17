@@ -15,6 +15,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import SearchIcon from "@mui/icons-material/Search";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import CheckIcon from "@mui/icons-material/Check";
 
 export const Icons = {
   chevronDown,
@@ -35,4 +36,5 @@ export const LibraryIcons = {
   ContentCopyIcon,
   SearchIcon,
   ArrowDropDownIcon,
+  CheckIcon,
 };
