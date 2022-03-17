@@ -108,6 +108,8 @@ export default function Payment() {
       })
         .then((result) => {
           // const res = JSON.parse(result);
+          AuthHelper.storeAccessToken(result.data.access_token);
+          AuthHelper.storeRefreshToken(result.data.refresh_token);
           // console.log(res);
         })
         .catch((err) => {
@@ -164,7 +166,8 @@ export default function Payment() {
         otp: otp,
       })
         .then((result) => {
-          // AuthHelper.storeAccessToken()
+          AuthHelper.storeAccessToken(result.data.access_token);
+          AuthHelper.storeRefreshToken(result.data.refresh_token);
         })
         .catch((err) => {
           console.log(err);
@@ -223,17 +226,20 @@ export default function Payment() {
     setCourierSelected({ ...item, isChecked: true });
   };
 
-  const verifyAccessToken = async () => {
-    try {
-      const res = await verifyToken({ access_token: accessToken });
-      if (res.success) {
-        setIsVerifyToken(true);
-      } else {
-        setIsVerifyToken(false);
-      }
-    } catch (error) {
-      setIsVerifyToken(false);
-    }
+  const verifyAccessToken = () => {
+    verifyToken({ access_token: accessToken })
+      .then((result) => {
+        // const newResult = JSON.parse(result);
+        console.log(result);
+        if (result.status === "Success") {
+          setIsVerifyToken(true);
+        } else {
+          setIsVerifyToken(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useState(() => {
@@ -256,6 +262,8 @@ export default function Payment() {
       setIsVerifyToken(false);
     }
   }, []);
+
+  console.log(isVerifyToken);
 
   return (
     <>
@@ -518,13 +526,13 @@ export default function Payment() {
             </div>
           </div>
           <OtpModal
-            isVisibled={isPhoneModal}
+            isVisibled={!isVerifyToken && isPhoneModal}
             onClose={() => handleClose(PHONE_OTP)}
             onChange={handleChangeOTPPhone}
             value={formik.values.phone}
           />
           <OtpModal
-            isVisibled={isEmailModal}
+            isVisibled={!isVerifyToken && isEmailModal}
             onClose={() => handleClose(EMAIL_OTP)}
             onChange={handleChangeOTPEmail}
             label="email"

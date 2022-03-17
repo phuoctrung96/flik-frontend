@@ -16,6 +16,7 @@ import logo from "../assets/images/logo.png";
 import bca from "../assets/images/payment/card/bca.png";
 import bca2x from "../assets/images/payment/card/bca-2x.png";
 import mandiri from "../assets/images/payment/card/mandiri.png";
+import congratulation from "../assets/images/congratulation.gif";
 
 export const Images = {
   bodyShopIcon,
@@ -36,4 +37,5 @@ export const Images = {
   bca,
   bca2x,
   mandiri,
+  congratulation,
 };

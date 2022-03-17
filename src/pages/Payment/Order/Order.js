@@ -198,6 +198,7 @@ const Order = () => {
             isEdit={isEditOtherSummary}
             data={orderSummaryData}
             onEditClick={handleEditSummary}
+            onCancelOrder={() => navigation(-1)}
           />
         </div>
       </div>
