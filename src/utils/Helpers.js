@@ -15,3 +15,9 @@ export function splitName(name) {
 export function checkObjectEmpty(data) {
   return Object.keys(data).length === 0;
 }
+
+export function convertSecondToMinute(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const newSeconds = seconds - minutes * 60;
+  return minutes + ":" + newSeconds;
+}

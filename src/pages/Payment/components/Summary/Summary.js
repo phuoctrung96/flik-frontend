@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Link } from "@mui/material";
 import classNames from "classnames";
 import React from "react";
 import { Button } from "../../../../components";
@@ -85,27 +85,15 @@ export const Summary = ({ data, className, isEdit, onEditClick }) => {
       <Box className="summary__paymentInfo">
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text">Subtotal</p>
-          <p
-            className="summary__paymentInfo-text"
-          >
-            Rp {data.subtotal}
-          </p>
+          <p className="summary__paymentInfo-text">Rp {data.subtotal}</p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text">Shipping Costs</p>
-          <p
-            className="summary__paymentInfo-text"
-          >
-            Rp {data.shippingCosts}
-          </p>
+          <p className="summary__paymentInfo-text">Rp {data.shippingCosts}</p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text">Admin Fee</p>
-          <p
-            className="summary__paymentInfo-text"
-          >
-            Rp {data.adminFee}
-          </p>
+          <p className="summary__paymentInfo-text">Rp {data.adminFee}</p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text summary__paymentInfo-totalLabel">
@@ -116,6 +104,8 @@ export const Summary = ({ data, className, isEdit, onEditClick }) => {
           </p>
         </Box>
       </Box>
+
+      <Link>Cancel Order</Link>
 
       <p className="summary__checkoutText">Checkou Powered by Flik</p>
     </div>

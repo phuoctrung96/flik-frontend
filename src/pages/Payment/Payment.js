@@ -108,20 +108,10 @@ export default function Payment() {
 
   const handleChangePhone = (e) => {
     formik.handleChange(e);
-
-    // updateModal(e.target.value, () => setIsPhoneModal(true));
   };
-
-  const updateModal = useCallback(
-    debounce((text, cb) => text && cb(), 500),
-    []
-  );
 
   const handleChangeEmail = (e) => {
     formik.handleChange(e);
-    // if (!formik.errors.email) {
-    //   updateModal(e.target.value, () => setIsEmailModal(true));
-    // }
   };
 
   const handleChangeOTPPhone = (e) => {

@@ -7,6 +7,7 @@ import { lazy } from "react";
 const Payment = lazy(() => import("../pages/Payment"));
 const Home = lazy(() => import("../pages/Home"));
 const CheckoutConfirm = lazy(() => import("../pages/Payment/CheckoutConfirm"));
+const Order = lazy(() => import("../pages/Payment/Order"));
 
 export {
   //Auth
@@ -16,6 +17,7 @@ export {
   Home,
   Payment,
   CheckoutConfirm,
+  Order,
 };
 
 export const MainRoute = {
@@ -23,6 +25,7 @@ export const MainRoute = {
 
   Payment: "/payment",
   CheckoutConfirm: "/payment/confirm",
+  Order: "/payment/order",
 };
 
 export const AuthRoute = {
