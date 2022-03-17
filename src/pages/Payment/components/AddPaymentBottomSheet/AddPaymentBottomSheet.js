@@ -1,31 +1,63 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { BottomSheet } from "../../../../components";
+import { Button, Modal } from "../../../../components";
+import { CourierItem } from "../CourierItem";
 import { PaymentItem } from "../PaymentItem";
+import "./styles.scss";
 
 export const AddPaymentBottomSheet = ({
   isVisibled,
   onClose,
+  formik,
+  onSaveClick,
+  onCardItemClick,
+  onActiveClickPaymentCard,
   data,
-  onActiveClick,
-  onSave,
 }) => {
   return (
-    <BottomSheet
+    <Modal
       isVisibled={isVisibled}
       onClose={onClose}
-      onSave={onSave}
-      title="Add Payment"
+      title="Change Payment"
+      className="addPaymentBottomSheet"
+      fullScreen
+      isBack
     >
-      <Box>
-        {data.map((item) => (
-          <PaymentItem
-            key={item.id}
-            data={item}
-            onActiveClick={() => onActiveClick(item)}
-          />
+      <Box className="addPaymentBottomSheet__container">
+        <p className="addPaymentBottomSheet__container-title">Change Payment</p>
+        {data?.map((item) => (
+          <Box key={item.id} sx={{ mb: "32px" }}>
+            <p className="addPaymentBottomSheet__formInfor-title">
+              {item.title}
+            </p>
+            {item.children.map((paymentItem) =>
+              paymentItem.isActivated ? (
+                <CourierItem
+                  data={paymentItem}
+                  key={paymentItem.id}
+                  onClick={() => onCardItemClick(paymentItem)}
+                />
+              ) : (
+                <PaymentItem
+                  key={paymentItem.id}
+                  data={paymentItem}
+                  onActiveClick={() => onActiveClickPaymentCard(paymentItem)}
+                />
+              )
+            )}
+          </Box>
         ))}
       </Box>
-    </BottomSheet>
+
+      <div className="addPaymentBottomSheet__buttonContainer">
+        <Button
+          isPrimary
+          buttonClassName="addPaymentBottomSheet__buttonContainer-button"
+          onClick={onSaveClick}
+        >
+          Save
+        </Button>
+      </div>
+    </Modal>
   );
 };

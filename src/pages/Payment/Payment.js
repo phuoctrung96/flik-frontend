@@ -186,7 +186,7 @@ export default function Payment() {
   };
 
   const handleConfirmAndPay = () => {
-    navigation(MainRoute.CheckoutConfirm);
+    navigation(MainRoute.Order);
   };
 
   const handleEditSummary = () => {
