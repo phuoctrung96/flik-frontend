@@ -1,0 +1,46 @@
+@import "../../../assets/styles/_global.scss";
+
+.paymentSuccess {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100vh;
+  padding: 24px 20px;
+  background-color: $primary;
+
+  &__information {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: $white;
+
+    &-title {
+      font-size: 24px;
+      line-height: 32px;
+      max-width: 206px;
+    }
+
+    &-description {
+      max-width: 320px;
+      font-size: 14px;
+      line-height: 20px;
+      margin-bottom: 0;
+      font-family: Arial;
+    }
+  }
+
+  &__buttonContainer {
+    text-align: center;
+
+    &-button {
+      background-color: $white !important;
+      color: $primary !important;
+      font-weight: 700 !important;
+      width: 70% !important;
+      border-radius: 4px !important;
+    }
+  }
+}

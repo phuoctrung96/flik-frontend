@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../../../components";
+import { MainRoute } from "../../../router/constants";
 import { Icons, Images, RootStyles } from "../../../utils";
 import "./styles.scss";
 
@@ -10,6 +11,10 @@ const CheckoutConfirm = () => {
 
   const handleCancel = () => {
     navigation(-1);
+  };
+
+  const handleNavigateToPaymentSuccess = () => {
+    navigation(MainRoute.PaymentSuccess);
   };
 
   return (
@@ -100,7 +105,7 @@ const CheckoutConfirm = () => {
 
             <Box sx={{ ...RootStyles.row }}>
               <p className="checkoutConfirm__formInfor-detailContainer-label">
-                Merchant Name
+                Authorization Code
               </p>
               <Input
                 variant="outlined"
@@ -132,6 +137,7 @@ const CheckoutConfirm = () => {
               isPrimary
               fullWidth
               className="checkoutConfirm__buttonContainer-button"
+              onClick={handleNavigateToPaymentSuccess}
             >
               Proceed
             </Button>
