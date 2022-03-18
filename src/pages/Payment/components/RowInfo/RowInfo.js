@@ -27,7 +27,7 @@ export const RowInfo = ({
         <Button
           variant="text"
           onClick={onButtonClick}
-          style={{ padding: 0, fontSize: 12 }}
+          buttonClassName="rowInfo__button"
         >
           {buttonText}
         </Button>

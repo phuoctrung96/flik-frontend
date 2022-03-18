@@ -76,6 +76,8 @@ export default function Payment() {
 
   const formik = useFormik({ initialValues, validationSchema });
 
+  const merchantCartId = "746977d6-3909-42a9-93bd-ea1ab46e44aa";
+
   const handleClose = (type) => {
     type === PHONE_OTP && setIsPhoneModal(false);
     type === EMAIL_OTP && setIsEmailModal(false);
@@ -263,8 +265,6 @@ export default function Payment() {
     }
   }, []);
 
-  console.log(isVerifyToken);
-
   return (
     <>
       {isSplashScreen ? (
@@ -437,6 +437,12 @@ export default function Payment() {
                   }}
                 />
 
+                {!isChooseCourier && (
+                  <p className="payment__formInfor-courier-defaultText">
+                    AnterAja, GoSend, Grab, JNE, J&T, SiCepat, Ninja, Lion ...
+                  </p>
+                )}
+
                 {isChooseCourier && (
                   <Box>
                     {(Object.keys(courierSelected).length > 0
@@ -461,6 +467,12 @@ export default function Payment() {
                   }
                   onButtonClick={() => setIsChoosePayment(true)}
                 />
+
+                {!isChoosePayment && (
+                  <p className="payment__formInfor-payment-defaultText">
+                    Virtual Account, Credit Card, GoPay, OVO, ShopeePay ...
+                  </p>
+                )}
 
                 {isChoosePayment &&
                   paymentMethodList.map((item) => (
