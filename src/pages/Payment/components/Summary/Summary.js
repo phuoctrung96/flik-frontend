@@ -16,7 +16,7 @@ export const Summary = ({
     <div className={classNames("summary", className)}>
       <Box sx={{ ...RootStyles.rowBetween }}>
         <p className="summary__header">Order Summary</p>
-        <Button onClick={onEditClick}>Edit</Button>
+        <Button onClick={onEditClick} buttonClassName="summary__button">Edit</Button>
       </Box>
       <Box className="summary__productContainer">
         {data?.products.map((item) => (
