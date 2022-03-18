@@ -31,7 +31,9 @@ import {
 import "./styles.scss";
 import {
   generateTokenWithOTP,
+  getCartData,
   requestOTP,
+  updateCartItem,
   verifyToken,
 } from "../../utils/ApiManage";
 import { checkObjectEmpty } from "../../utils/Helpers";
@@ -71,6 +73,8 @@ export default function Payment() {
   const [postalCodeList, setPostalCodeList] = useState([]);
 
   const [isShipToMe, setIsShipToMe] = useState(true);
+
+  const [cartDetail, setCartDetail] = useState({});
 
   const navigation = useNavigate();
 
@@ -244,6 +248,42 @@ export default function Payment() {
       });
   };
 
+  const getCartWithMerchantCartId = async () => {
+    try {
+      const appId = "601886d6-44f5-3112-92b4-be1d89fb0f2b";
+      const res = await getCartData(appId, merchantCartId);
+
+      if (res.status === "success") {
+        setCartDetail(res.data);
+      }
+
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleOnIncreaseCartItem = async (item) => {
+    try {
+      const appId = "601886d6-44f5-3112-92b4-be1d89fb0f2b";
+      const res = await updateCartItem(appId, { item, qty: item.qty + 1 });
+      await getCartData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleOnDecreaseCartItem = async (item) => {
+    try {
+      if (item.qty === 0) return;
+      const appId = "601886d6-44f5-3112-92b4-be1d89fb0f2b";
+      const res = await updateCartItem(appId, { item, qty: item.qty - 1 });
+      await getCartData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useState(() => {
     setTimeout(() => {
       setIsSplashScreen(false);
@@ -263,6 +303,10 @@ export default function Payment() {
     } else {
       setIsVerifyToken(false);
     }
+  }, []);
+
+  useEffect(() => {
+    getCartWithMerchantCartId();
   }, []);
 
   return (
@@ -505,8 +549,10 @@ export default function Payment() {
             <div className="payment__orderSummary">
               <Summary
                 isEdit={isEditOtherSummary}
-                data={orderSummaryData}
+                data={cartDetail}
                 onEditClick={handleEditSummary}
+                onIncreaseItem={handleOnIncreaseCartItem}
+                onDecreaseItem={handleOnDecreaseCartItem}
               />
             </div>
           </div>
