@@ -28,10 +28,11 @@ const CheckoutConfirm = () => {
             </p>
           </div>
           <div className="checkoutConfirm__shopContainer-right">
+            <img src={Icons.shoppingCart} width={16} height={16} alt="" />
             <p className="checkoutConfirm__shopContainer-right-title">
               Rp 270.600
             </p>
-            <img src={Icons.chevronDown} alt="" width={24} height={24} />
+            {/* <img src={Icons.chevronDown} alt="" width={24} height={24} /> */}
           </div>
         </div>
 

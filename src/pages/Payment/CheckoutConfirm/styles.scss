@@ -16,21 +16,23 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0px 20px 24px 20px;
+    margin: 24px 8px;
     background-color: $white;
     border-radius: 16px;
     padding: 0px 16px;
+
     &-left {
       display: flex;
       align-items: center;
 
       &-title {
-        font-size: 12px;
-        font-weight: 400;
+        font-size: 14px;
         line-height: 18px;
         color: $black;
+        font-weight: 400;
         text-transform: uppercase;
         margin-left: 12px;
+        font-weight: bold;
       }
     }
 
@@ -39,11 +41,13 @@
       align-items: center;
 
       &-title {
-        font-size: 12px;
+        font-size: 14px;
         line-height: 18px;
-        color: $black;
-        margin-right: 12px;
         font-weight: 400;
+        color: $black;
+        margin-right: 8px;
+        margin-left: 8px;
+        font-weight: bold;
       }
     }
   }

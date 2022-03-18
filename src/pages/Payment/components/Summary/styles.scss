@@ -7,6 +7,14 @@
     margin: 20px 0px 20px 0px;
     font-size: 14px;
     line-height: 18px;
+    font-weight: 700;
+  }
+
+  &__button {
+    padding: 0 !important;
+    font-size: 12px !important;
+    line-height: 16px !important;
+    color: $blue !important;
   }
 
   &__productContainer {
@@ -105,12 +113,13 @@
     &-totalLabel {
       font-size: 14px;
       color: $black;
+      font-weight: 700;
     }
 
     &-totalValue {
       font-size: 14px;
       color: $black;
-      font-weight: 400;
+      font-weight: 700;
     }
   }
 
