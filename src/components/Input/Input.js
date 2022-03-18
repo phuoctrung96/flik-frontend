@@ -8,7 +8,7 @@ import "./styles.scss";
 const useStyles = makeStyles({
   root: {
     "& .MuiInputLabel-root.Mui-focused": {
-      color: '#000000'
+      color: "#000000",
     },
     "& .MuiFilledInput-underline": {
       borderRadius: "4px",
@@ -18,7 +18,13 @@ const useStyles = makeStyles({
     },
     "& .MuiFilledInput-underline:hover:not(.Mui-disabled):before": {
       borderBottom: "none",
-    }
+    },
+    "& .css-10i04qz-MuiInputBase-root-MuiFilledInput-root:after": {
+      borderBottom: "none",
+    },
+    "& .css-10i04qz-MuiInputBase-root-MuiFilledInput-root:focus-visible": {
+      border: "2px solid #1976d2",
+    },
   },
 });
 

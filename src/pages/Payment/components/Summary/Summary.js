@@ -16,7 +16,9 @@ export const Summary = ({
     <div className={classNames("summary", className)}>
       <Box sx={{ ...RootStyles.rowBetween }}>
         <p className="summary__header">Order Summary</p>
-        <Button onClick={onEditClick} buttonClassName="summary__button">Edit</Button>
+        <Button onClick={onEditClick} buttonClassName="summary__editButton">
+          Edit
+        </Button>
       </Box>
       <Box className="summary__productContainer">
         {data?.products.map((item) => (
@@ -74,7 +76,7 @@ export const Summary = ({
         ))}
       </Box>
 
-      <p className="summary__transactionText">TRANSACTION ID #FC12345</p>
+      {/* <p className="summary__transactionText">TRANSACTION ID #FC12345</p> */}
 
       {isEdit && (
         <Box>
@@ -91,15 +93,21 @@ export const Summary = ({
       <Box className="summary__paymentInfo">
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text">Subtotal</p>
-          <p className="summary__paymentInfo-text">Rp {data.subtotal}</p>
+          <p className="summary__paymentInfo-text">
+            <b>Rp {data.subtotal}</b>
+          </p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text">Shipping Costs</p>
-          <p className="summary__paymentInfo-text">Rp {data.shippingCosts}</p>
+          <p className="summary__paymentInfo-text">
+            <b>Rp {data.shippingCosts}</b>
+          </p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text">Admin Fee</p>
-          <p className="summary__paymentInfo-text">Rp {data.adminFee}</p>
+          <p className="summary__paymentInfo-text">
+            <b>Rp {data.adminFee}</b>
+          </p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text summary__paymentInfo-totalLabel">

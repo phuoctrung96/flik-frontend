@@ -81,6 +81,17 @@
       padding: 20px 20px;
       background-color: $white;
       margin-top: 8px;
+
+      &-defaultText {
+        font-family: "Arial";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+        margin: 0;
+        color: $grey-placeholder;
+        margin-top: -10px;
+      }
     }
 
     &-payment {
@@ -96,6 +107,17 @@
         letter-spacing: -0.155556px;
         margin-bottom: 16px;
         margin-top: 0px;
+      }
+
+      &-defaultText {
+        font-family: "Arial";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+        margin: 0;
+        color: $grey-placeholder;
+        margin-top: -10px;
       }
     }
 
@@ -145,16 +167,18 @@
     }
 
     &-info {
-      margin: 0px 20px 16px 20px;
+      margin: 0px 20px 0px 20px;
       padding: 0px 30px;
-      font-size: 10px;
-      line-height: 12px;
+      font-size: 12px;
+      line-height: 16px;
       color: $grey-003;
       padding: 0px 65px;
+      font-weight: 400;
 
       a {
         text-decoration: none;
-        color: $cornflowerBlue;
+        color: $blue;
+        font-size: 13px;
       }
     }
   }

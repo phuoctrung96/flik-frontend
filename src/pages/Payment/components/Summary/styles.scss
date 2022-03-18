@@ -10,11 +10,13 @@
     font-weight: 700;
   }
 
-  &__button {
+  &__editButton {
     padding: 0 !important;
     font-size: 12px !important;
     line-height: 16px !important;
     color: $blue !important;
+    font-weight: 700 !important;
+    
   }
 
   &__productContainer {
@@ -91,6 +93,7 @@
     color: $black;
     font-size: 14px;
     line-height: 18px;
+    font-weight: 700;
   }
 
   &__transactionText {
