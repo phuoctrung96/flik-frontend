@@ -10,6 +10,8 @@ export const Summary = ({
   className,
   isEdit,
   onEditClick,
+  onIncreaseItem,
+  onDecreaseItem,
   onCancelOrder,
 }) => {
   return (
@@ -21,14 +23,14 @@ export const Summary = ({
         </Button>
       </Box>
       <Box className="summary__productContainer">
-        {data?.products.map((item) => (
+        {data?.items.map((item, index) => (
           <Box
             sx={{ ...RootStyles.row, alignItems: "flex-start" }}
             className="summary__productInfo"
-            key={item.id}
+            key={index.toString()}
           >
             <img
-              src={item.image}
+              src={item?.image_url}
               alt=""
               width={48}
               height={48}
@@ -40,26 +42,32 @@ export const Summary = ({
             >
               <Box className="summary__productInfo-product">
                 <p className="summary__productInfo-product-title">
-                  {item.name}
+                  {item?.name}
                 </p>
                 <p className="summary__productInfo-product-amount">
-                  ({item.amount}
-                  {item.type}, {item.category})
+                  ({item?.weight}
+                  {item?.weight_unit}, {item?.category})
                 </p>
                 {!isEdit && (
                   <p className="summary__productInfo-product-quantity">
-                    Quantity: {item.quantity}
+                    Quantity: {item?.qty}
                   </p>
                 )}
                 {isEdit && (
                   <Box className="summary__productInfo-product-buttonGroupContainer">
-                    <div className="summary__productInfo-product-buttonGroupContainer-minus">
+                    <div
+                      className="summary__productInfo-product-buttonGroupContainer-minus"
+                      onClick={() => onDecreaseItem?.(item)}
+                    >
                       -
                     </div>
                     <p className="summary__productInfo-product-buttonGroupContainer-quantity">
-                      {item.quantity}
+                      {item?.qty}
                     </p>
-                    <div className="summary__productInfo-product-buttonGroupContainer-plus">
+                    <div
+                      className="summary__productInfo-product-buttonGroupContainer-plus"
+                      onClick={() => onIncreaseItem?.(item)}
+                    >
                       +
                     </div>
                     <p className="summary__productInfo-product-stock">
@@ -69,7 +77,7 @@ export const Summary = ({
                 )}
               </Box>
               <p style={{ margin: 0 }} className="summary__price">
-                Rp {item.price}
+                Rp {item?.unit_price}
               </p>
             </Box>
           </Box>
@@ -94,19 +102,19 @@ export const Summary = ({
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text">Subtotal</p>
           <p className="summary__paymentInfo-text">
-            <b>Rp {data.subtotal}</b>
+            <b>Rp {data?.subtotal_amount}</b>
           </p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text">Shipping Costs</p>
           <p className="summary__paymentInfo-text">
-            <b>Rp {data.shippingCosts}</b>
+            <b>Rp {data?.shippingCosts || 0}</b>
           </p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
           <p className="summary__paymentInfo-text">Admin Fee</p>
           <p className="summary__paymentInfo-text">
-            <b>Rp {data.adminFee}</b>
+            <b>Rp {data?.tax_amount}</b>
           </p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
@@ -114,7 +122,7 @@ export const Summary = ({
             Total
           </p>
           <p className="summary__paymentInfo-text summary__paymentInfo-totalValue">
-            Rp {data.total}
+            Rp {data?.total_amount}
           </p>
         </Box>
       </Box>

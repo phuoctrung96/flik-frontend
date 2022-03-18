@@ -50,3 +50,19 @@ export const refreshToken = (body) => {
 export const verifyToken = (body) => {
   return axios.post("v1/authentication/verify", body);
 };
+
+export const getCartData = (appId, merchantCartId) => {
+  return axios.get(`v1/cart?merchant_cart_id=${merchantCartId}`, {
+    headers: { "X-App-ID": appId },
+  });
+};
+
+export const updateCartItem = (appId, body) => {
+  return axios.get(
+    `v1/cart/984d697f-33ea-3829-bb39-90f26fab7148`,
+    {
+      headers: { "X-App-ID": appId },
+    },
+    body
+  );
+};
