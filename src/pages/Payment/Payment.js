@@ -122,7 +122,7 @@ export default function Payment() {
   };
 
   const handleBlurPhone = () => {
-    if (!!!formik.errors.phone && formik.values.phone) {
+    if (!isVerifyToken && !!!formik.errors.phone && formik.values.phone) {
       setIsPhoneModal(true);
       requestOTP({
         app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
@@ -138,7 +138,7 @@ export default function Payment() {
   };
 
   const handleBlurEmail = () => {
-    if (!formik.errors.email) {
+    if (!isVerifyToken && !formik.errors.email) {
       setIsEmailModal(true);
       requestOTP({
         app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
@@ -526,13 +526,13 @@ export default function Payment() {
             </div>
           </div>
           <OtpModal
-            isVisibled={!isVerifyToken && isPhoneModal}
+            isVisibled={isPhoneModal}
             onClose={() => handleClose(PHONE_OTP)}
             onChange={handleChangeOTPPhone}
             value={formik.values.phone}
           />
           <OtpModal
-            isVisibled={!isVerifyToken && isEmailModal}
+            isVisibled={isEmailModal}
             onClose={() => handleClose(EMAIL_OTP)}
             onChange={handleChangeOTPEmail}
             label="email"
