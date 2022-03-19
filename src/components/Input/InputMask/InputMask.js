@@ -3,14 +3,17 @@ import { IMaskInput } from "react-imask";
 import PropTypes from "prop-types";
 
 export const InputMask = React.forwardRef(function InputMask(props, ref) {
-  const { onChange, mask = "#00 0000 0000", ...other } = props;
+  const {
+    onChange,
+    mask = "#00 0000 0000",
+    definitions = { "#": /[1-9]/ },
+    ...other
+  } = props;
   return (
     <IMaskInput
       {...other}
       mask={mask}
-      definitions={{
-        "#": /[1-9]/,
-      }}
+      definitions={definitions}
       inputRef={ref}
       onAccept={(value) => onChange({ target: { name: props.name, value } })}
       overwrite

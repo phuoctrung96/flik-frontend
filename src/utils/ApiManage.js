@@ -51,6 +51,12 @@ export const verifyToken = (body) => {
   return axios.post("v1/authentication/verify", body);
 };
 
+export const generateCart = (appId) => {
+  return axios.post(`v1/cart`, {
+    headers: { "X-App-ID": appId },
+  });
+};
+
 export const getCartData = (appId, merchantCartId) => {
   return axios.get(`v1/cart?merchant_cart_id=${merchantCartId}`, {
     headers: { "X-App-ID": appId },

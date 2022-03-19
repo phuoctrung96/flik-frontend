@@ -30,6 +30,7 @@ import {
 } from "./Payment.data";
 import "./styles.scss";
 import {
+  generateCart,
   generateTokenWithOTP,
   getCartData,
   requestOTP,
@@ -80,7 +81,9 @@ export default function Payment() {
 
   const formik = useFormik({ initialValues, validationSchema });
 
-  const merchantCartId = "746977d6-3909-42a9-93bd-ea1ab46e44aa";
+  const [merchantCartId, setMerchantCartId] = useState(
+    "746977d6-3909-42a9-93bd-ea1ab46e44aa"
+  );
 
   const handleClose = (type) => {
     type === PHONE_OTP && setIsPhoneModal(false);
@@ -116,7 +119,8 @@ export default function Payment() {
           // const res = JSON.parse(result);
           AuthHelper.storeAccessToken(result.data.access_token);
           AuthHelper.storeRefreshToken(result.data.refresh_token);
-          // console.log(res);
+
+          handleGenerateCart();
         })
         .catch((err) => {
           console.log(err);
@@ -125,6 +129,17 @@ export default function Payment() {
           setIsPhoneModal(false);
         });
     }
+  };
+
+  const handleGenerateCart = () => {
+    const appId = "601886d6-44f5-3112-92b4-be1d89fb0f2b";
+    generateCart(appId)
+      .then((res) => {
+        // console.log("res generate cart => ", res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleBlurPhone = () => {
