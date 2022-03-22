@@ -23,7 +23,7 @@ export const Summary = ({
         </Button>
       </Box>
       <Box className="summary__productContainer">
-        {data?.items.map((item, index) => (
+        {data?.map((item, index) => (
           <Box
             sx={{ ...RootStyles.row, alignItems: "flex-start" }}
             className="summary__productInfo"

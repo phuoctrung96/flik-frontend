@@ -30,6 +30,7 @@ import {
 } from "./Payment.data";
 import "./styles.scss";
 import {
+  generateCart,
   generateTokenWithOTP,
   getCartData,
   requestOTP,
@@ -39,6 +40,8 @@ import {
 import { checkObjectEmpty } from "../../utils/Helpers";
 import AuthHelper from "../../utils/AuthHelpers";
 
+import { useLocation } from "react-router-dom";
+
 const PHONE_OTP = "PHONE_MODAL";
 const EMAIL_OTP = "EMAIL_OTP";
 const PROVINCE_MODAL = "PROVINCE_MODAL";
@@ -47,6 +50,8 @@ const POSTAL_CODE_MODAL = "POSTAL_CODE_MODAL";
 const ADD_CARD_BOTTOM_SHEET = "ADD_CARD_BOTTOM_SHEET";
 
 export default function Payment() {
+  const search = useLocation().search;
+
   const [isPhoneModal, setIsPhoneModal] = useState(false);
   const [isEmailModal, setIsEmailModal] = useState(false);
   const [isAddCardBottomSheet, setIsAddCardBottomSheet] = useState(false);
@@ -66,7 +71,14 @@ export default function Payment() {
 
   const [isVerifyToken, setIsVerifyToken] = useState(false);
 
-  const accessToken = AuthHelper.getAccessToken();
+  const [accessToken, setAccessToken] = useState(
+    new URLSearchParams(search).get("access_token")
+  );
+
+  const [appId, setAppId] = useState(new URLSearchParams(search).get("app_id"));
+  const [passedData, setPassedData] = useState(
+    JSON.parse(decodeURIComponent(new URLSearchParams(search).get("body")))
+  );
 
   const [provinceList, setProvinceList] = useState([]);
   const [cityList, setCityList] = useState([]);
@@ -80,7 +92,9 @@ export default function Payment() {
 
   const formik = useFormik({ initialValues, validationSchema });
 
-  const merchantCartId = "746977d6-3909-42a9-93bd-ea1ab46e44aa";
+  const [merchantCartId, setMerchantCartId] = useState(
+    "746977d6-3909-42a9-93bd-ea1ab46e44aa"
+  );
 
   const handleClose = (type) => {
     type === PHONE_OTP && setIsPhoneModal(false);
@@ -116,7 +130,6 @@ export default function Payment() {
           // const res = JSON.parse(result);
           AuthHelper.storeAccessToken(result.data.access_token);
           AuthHelper.storeRefreshToken(result.data.refresh_token);
-          // console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -125,6 +138,16 @@ export default function Payment() {
           setIsPhoneModal(false);
         });
     }
+  };
+
+  const handleGenerateCart = () => {
+    generateCart(appId)
+      .then((res) => {
+        console.log("res generate cart => ", res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleBlurPhone = () => {
@@ -306,8 +329,9 @@ export default function Payment() {
   }, []);
 
   useEffect(() => {
-    getCartWithMerchantCartId();
-  }, []);
+    // getCartWithMerchantCartId();
+    handleGenerateCart();
+  });
 
   return (
     <>
@@ -549,7 +573,7 @@ export default function Payment() {
             <div className="payment__orderSummary">
               <Summary
                 isEdit={isEditOtherSummary}
-                data={cartDetail}
+                data={[passedData]}
                 onEditClick={handleEditSummary}
                 onIncreaseItem={handleOnIncreaseCartItem}
                 onDecreaseItem={handleOnDecreaseCartItem}
