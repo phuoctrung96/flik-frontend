@@ -61,6 +61,7 @@ export const AddCardBottomSheet = ({
             value={formik.values.cardExpiry}
             inputProps={{
               mask: "#0/00",
+              definitions: { "#": /[0-9]/ },
             }}
             containerStyle={{ flex: 0.48 }}
           />
