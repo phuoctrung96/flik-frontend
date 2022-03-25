@@ -122,6 +122,10 @@ export default function Payment() {
         lastName: "Le",
         shippingAddress: "123 Test Test",
       });
+      
+      navigation(MainRoute.Order, {
+        state: { data: formik.values, passedData },
+      });
 
       // otp = 389477
       generateTokenWithOTP({
@@ -336,7 +340,7 @@ export default function Payment() {
   useEffect(() => {
     // getCartWithMerchantCartId();
     handleGenerateCart();
-  });
+  }, []);
 
   return (
     <>
