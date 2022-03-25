@@ -13,7 +13,7 @@ import { Link } from "@mui/material";
 import { Button } from "../../../components";
 import { useFormik } from "formik";
 import { initialValues, validationSchema } from "../Payment.data";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { MainRoute } from "../../../router/constants";
 
 const Order = () => {
@@ -21,6 +21,7 @@ const Order = () => {
   const [isModalPaymentMethod, setIsModalPaymentMedthod] = useState(false);
   const [isModalAddCard, setIsModalAddCard] = useState(false);
   const navigation = useNavigate();
+  const { passedData } = useLocation().state || {};
 
   const formik = useFormik({
     initialValues,
@@ -83,16 +84,21 @@ const Order = () => {
           <div className="order__orderInformation-extraTimeContainer">
             <CountdownCircleTimer
               isPlaying
-              duration={60 * 5}
+              duration={30 * 1}
               colors={["#0085FF"]}
               size={48}
               strokeWidth={2}
             >
-              {({ remainingTime }) => (
-                <p className="order__orderInformation-extraTimeContainer-counterText">
-                  {convertSecondToMinute(remainingTime)}
-                </p>
-              )}
+              {({ remainingTime }) => {
+                if (remainingTime === 0) {
+                  navigation(MainRoute.PaymentSuccess);
+                }
+                return (
+                  <p className="order__orderInformation-extraTimeContainer-counterText">
+                    {convertSecondToMinute(remainingTime)}
+                  </p>
+                );
+              }}
             </CountdownCircleTimer>
 
             <div className="order__orderInformation-extraTimeContainer-right">
@@ -196,7 +202,7 @@ const Order = () => {
         <div className="order__orderSummary">
           <Summary
             isEdit={isEditOtherSummary}
-            data={orderSummaryData}
+            data={[passedData]}
             onEditClick={handleEditSummary}
             onCancelOrder={() => navigation(-1)}
           />

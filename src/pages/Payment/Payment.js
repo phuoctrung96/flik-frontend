@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { useFormik } from "formik";
 import { debounce } from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button, CheckBox, Input, InputMask, Loading } from "../../components";
 import { OtpModal } from "../../components/OtpModal";
 import { MainRoute } from "../../router/constants";
@@ -40,8 +40,6 @@ import {
 import { checkObjectEmpty } from "../../utils/Helpers";
 import AuthHelper from "../../utils/AuthHelpers";
 
-import { useLocation } from "react-router-dom";
-
 const PHONE_OTP = "PHONE_MODAL";
 const EMAIL_OTP = "EMAIL_OTP";
 const PROVINCE_MODAL = "PROVINCE_MODAL";
@@ -71,9 +69,7 @@ export default function Payment() {
 
   const [isVerifyToken, setIsVerifyToken] = useState(false);
 
-  const [accessToken, setAccessToken] = useState(
-    new URLSearchParams(search).get("access_token")
-  );
+  const [accessToken, setAccessToken] = useState(AuthHelper.getAccessToken());
 
   const [appId, setAppId] = useState(new URLSearchParams(search).get("app_id"));
   const [passedData, setPassedData] = useState(
@@ -118,6 +114,15 @@ export default function Payment() {
     const otp = e.reduce((prev, next) => prev + "" + next);
     if (otp.length === 6) {
       formik.setFieldValue(fieldNames.phoneOtp, otp);
+
+      formik.setValues({
+        ...formik.values,
+        email: "shopper1@gmail.com",
+        firstName: "Tung",
+        lastName: "Le",
+        shippingAddress: "123 Test Test",
+      });
+
       // otp = 389477
       generateTokenWithOTP({
         app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
@@ -218,7 +223,7 @@ export default function Payment() {
   };
 
   const handleConfirmAndPay = () => {
-    navigation(MainRoute.Order);
+    navigation(MainRoute.Order, { state: { passedData } });
   };
 
   const handleEditSummary = () => {
