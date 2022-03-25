@@ -21,7 +21,7 @@ const Order = () => {
   const [isModalPaymentMethod, setIsModalPaymentMedthod] = useState(false);
   const [isModalAddCard, setIsModalAddCard] = useState(false);
   const navigation = useNavigate();
-  const { passedData } = useLocation().state || {};
+  const { passedData, data } = useLocation().state || {};
 
   const formik = useFormik({
     initialValues,
@@ -84,7 +84,7 @@ const Order = () => {
           <div className="order__orderInformation-extraTimeContainer">
             <CountdownCircleTimer
               isPlaying
-              duration={30 * 1}
+              duration={60 * 5}
               colors={["#0085FF"]}
               size={48}
               strokeWidth={2}
