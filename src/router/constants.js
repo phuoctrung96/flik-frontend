@@ -9,6 +9,7 @@ const Home = lazy(() => import("../pages/Home"));
 const CheckoutConfirm = lazy(() => import("../pages/Payment/CheckoutConfirm"));
 const Order = lazy(() => import("../pages/Payment/Order"));
 const PaymentSuccess = lazy(() => import("../pages/Payment/PaymentSuccess"));
+const PayCreditCard = lazy(() => import("../pages/Payment/PayCreditCard"));
 
 export {
   //Auth
@@ -20,6 +21,7 @@ export {
   CheckoutConfirm,
   Order,
   PaymentSuccess,
+  PayCreditCard
 };
 
 export const MainRoute = {
@@ -29,6 +31,7 @@ export const MainRoute = {
   CheckoutConfirm: "/payment/confirm",
   Order: "/payment/order",
   PaymentSuccess: "/payment/success",
+  PayCreditCard: "/payment/credit-card",
 };
 
 export const AuthRoute = {

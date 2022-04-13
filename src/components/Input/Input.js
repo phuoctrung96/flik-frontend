@@ -61,6 +61,8 @@ export const Input = ({
         fullWidth
         // label={checkLabel()}
         label={label}
+        // error
+        // helperText="Incorrect entry."
         value={value}
         size={size}
         variant={variant}

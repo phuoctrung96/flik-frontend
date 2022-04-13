@@ -58,4 +58,20 @@
     line-height: 18px;
     color: $grey-002;
   }
+
+  &__text {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  &__link {
+    color: $blue-002;
+
+    &.with-click {
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
 }

@@ -10,13 +10,17 @@
     font-weight: 700;
   }
 
-  &__editButton {
-    padding: 0 !important;
-    font-size: 12px !important;
-    line-height: 16px !important;
-    color: $blue !important;
-    font-weight: 700 !important;
-    
+  &__editButtonContainer {
+    .button {
+      .item {
+        min-width: unset;
+        padding: 2px !important;
+        font-size: 12px !important;
+        line-height: 16px !important;
+        color: $blue !important;
+        font-weight: 700 !important;
+      }
+    }
   }
 
   &__productContainer {
@@ -59,6 +63,10 @@
           background-color: $primary;
           color: $white;
           border-radius: 4px;
+          cursor: pointer;
+          &.disabled {
+            opacity: 0.5;
+          }
         }
 
         &-quantity {
@@ -77,6 +85,10 @@
           background-color: $primary;
           color: $white;
           border-radius: 4px;
+          cursor: pointer;
+          &.disabled {
+            opacity: 0.5;
+          }
         }
       }
 

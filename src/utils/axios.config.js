@@ -1,14 +1,13 @@
-import axios from "axios";
-import AuthHelpers from "./AuthHelpers";
+import axios from 'axios';
+import AuthHelpers from './AuthHelpers';
 
 // export const signalRUrl = process.env.REACT_APP_API_URL || "http://localhost:4000";
-export const signalRUrl =
-  "https://70900c7a-77e1-4fe4-a7fa-f8bf440d0adb.mock.pstmn.io";
+export const signalRUrl = 'https://api.dev.useflik.com';
 export const baseUrl = signalRUrl;
 
 // Set config defaults when creating the instance
 const instance = axios.create({
-  baseURL: baseUrl,
+  baseURL: baseUrl
 });
 
 instance.interceptors.request.use(
@@ -31,7 +30,6 @@ instance.interceptors.response.use(
     return response?.data;
   },
   function (error) {
-    console.log(error.response);
     return Promise.reject(error?.response?.data);
   }
 );

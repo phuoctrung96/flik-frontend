@@ -1,258 +1,138 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box } from "@mui/material";
-import { useFormik } from "formik";
-import { debounce } from "lodash";
-import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { Button, CheckBox, Input, InputMask, Loading } from "../../components";
-import { OtpModal } from "../../components/OtpModal";
-import { MainRoute } from "../../router/constants";
-import { Icons, Images, LibraryIcons, RootStyles } from "../../utils";
+import { Box } from '@mui/material';
+import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import * as _ from '../../redux/actions';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Button, CheckBox, Input, Loading } from '../../components';
+import { OtpModal } from '../../components/OtpModal';
+import { MainRoute } from '../../router/constants';
+import { Icons, Images, RootStyles } from '../../utils';
 import {
   AddCardBottomSheet,
-  AddressModal,
   CourierItem,
   RowInfo,
   Summary,
-} from "./components";
-import { PaymentItem } from "./components/PaymentItem";
+  FormUserData,
+  FormUserAddress,
+} from './components';
+import { PaymentItem } from './components/PaymentItem';
 import {
-  cardList,
-  cityList as cityListData,
   courierList,
   fieldNames,
   initialValues,
-  orderSummaryData,
   paymentMethodList,
   postalCodeList as postalCodeListData,
-  provinceList as provinceListData,
   validationSchema,
-} from "./Payment.data";
-import "./styles.scss";
-import {
-  generateCart,
-  generateTokenWithOTP,
-  getCartData,
-  requestOTP,
-  updateCartItem,
-  verifyToken,
-} from "../../utils/ApiManage";
-import { checkObjectEmpty } from "../../utils/Helpers";
-import AuthHelper from "../../utils/AuthHelpers";
+  dummyItems,
+} from './Payment.data';
+import { checkObjectEmpty } from '../../utils/Helpers';
+import getDeiviceId from '../../utils/getDeviceId';
+import { useTimer } from '../../hooks';
+import './styles.scss';
 
-const PHONE_OTP = "PHONE_MODAL";
-const EMAIL_OTP = "EMAIL_OTP";
-const PROVINCE_MODAL = "PROVINCE_MODAL";
-const CITY_MODAL = "CITY_MODAL";
-const POSTAL_CODE_MODAL = "POSTAL_CODE_MODAL";
-const ADD_CARD_BOTTOM_SHEET = "ADD_CARD_BOTTOM_SHEET";
+const PHONE_OTP = 'PHONE_OTP';
+const EMAIL_OTP = 'EMAIL_OTP';
+const ADD_CARD_BOTTOM_SHEET = 'ADD_CARD_BOTTOM_SHEET';
+const EDIT_OTHER_SUMMARY = 'EDIT_OTHER_SUMMARY';
+const SPLASH_SCREEN = 'SPLASH_SCREEN';
 
 export default function Payment() {
+  // QUERY STRING
   const search = useLocation().search;
+  const MERCHANT_ID = new URLSearchParams(search).get('merchant_id');
+  const APP_ID = new URLSearchParams(search).get('app_id');
+  const passedData = JSON.parse(decodeURIComponent(new URLSearchParams(search).get('body')));
+  const DEVICE_ID = getDeiviceId();
 
-  const [isPhoneModal, setIsPhoneModal] = useState(false);
-  const [isEmailModal, setIsEmailModal] = useState(false);
-  const [isAddCardBottomSheet, setIsAddCardBottomSheet] = useState(false);
-  const [isEditOtherSummary, setIsEditOtherSummary] = useState(false);
-  const [isSplashScreen, setIsSplashScreen] = useState(true);
+  // HOOKS
+  const { timer, timeClock, handlePause, handleResume, handleReset } = useTimer(300);
+
+  // REDUX
+  const dispatch = useDispatch();
+  const { sendOtp, submitOTP, userData, isVerify, cartData } = useSelector((state) => {
+    return {
+      sendOtp: state?.authentication?.sendOtp,
+      submitOTP: state?.authentication?.submitOTP,
+      userData: state?.authentication?.userData?.data,
+      isVerify: state?.authentication?.verify?.isVerify,
+      cartData: state?.cart?.cartData,
+    };
+  });
+
+  const [
+    {
+      IS_PHONE_OTP,
+      IS_EMAIL_OTP,
+      IS_ADD_CARD_BOTTOM_SHEET,
+      IS_EDIT_OTHER_SUMMARY,
+      IS_SPLASH_SCREEN,
+    },
+    setConfigurationModal,
+  ] = useState({
+    IS_PHONE_OTP: false,
+    IS_SPLASH_SCREEN: true,
+    IS_EDIT_OTHER_SUMMARY: false,
+    IS_EMAIL_OTP: false,
+    IS_ADD_CARD_BOTTOM_SHEET: false,
+  });
+
   const [isChoosePayment, setIsChoosePayment] = useState(false);
   const [isChooseCourier, setIsChooseCourier] = useState(false);
-
-  const [isProvinceModal, setIsProvinceModal] = useState(false);
-  const [isCityModal, setIsCityModal] = useState(false);
-  const [isPostalCodeModal, setIsPostalCodeModal] = useState(false);
   const [courierSelected, setCourierSelected] = useState({});
-  const [paymentMethodSelected, setPaymentMethodSelected] = useState({});
-
   const [couriers, setCouriers] = useState(courierList);
-  const [paymentMethods, setPaymentMethods] = useState(cardList);
-
-  const [isVerifyToken, setIsVerifyToken] = useState(false);
-
-  const [accessToken, setAccessToken] = useState(AuthHelper.getAccessToken());
-
-  const [appId, setAppId] = useState(new URLSearchParams(search).get("app_id"));
-  const [passedData, setPassedData] = useState(
-    JSON.parse(decodeURIComponent(new URLSearchParams(search).get("body")))
-  );
-
-  const [provinceList, setProvinceList] = useState([]);
-  const [cityList, setCityList] = useState([]);
-  const [postalCodeList, setPostalCodeList] = useState([]);
-
-  const [isShipToMe, setIsShipToMe] = useState(true);
-
-  const [cartDetail, setCartDetail] = useState({});
 
   const navigation = useNavigate();
 
   const formik = useFormik({ initialValues, validationSchema });
 
-  const [merchantCartId, setMerchantCartId] = useState(
-    "746977d6-3909-42a9-93bd-ea1ab46e44aa"
-  );
-
   const handleClose = (type) => {
-    type === PHONE_OTP && setIsPhoneModal(false);
-    type === EMAIL_OTP && setIsEmailModal(false);
-    type === ADD_CARD_BOTTOM_SHEET && setIsAddCardBottomSheet(false);
-    type === PROVINCE_MODAL && setIsProvinceModal(false);
-    type === CITY_MODAL && setIsCityModal(false);
-    type === POSTAL_CODE_MODAL && setIsPostalCodeModal(false);
-    type === ADD_CARD_BOTTOM_SHEET && setIsAddCardBottomSheet(false);
+    setConfigurationModal((prevState) => {
+      return {
+        ...prevState,
+        [`IS_${type}`]: false,
+      };
+    });
   };
 
-  const handleChangePhone = (e) => {
-    formik.handleChange(e);
-  };
-
-  const handleChangeEmail = (e) => {
-    formik.handleChange(e);
+  const handleOpenModal = (type) => {
+    setConfigurationModal((prevState) => {
+      return {
+        ...prevState,
+        [`IS_${type}`]: true,
+      };
+    });
   };
 
   const handleChangeOTPPhone = (e) => {
-    const otp = e.reduce((prev, next) => prev + "" + next);
+    const { values } = formik;
+    const otp = e.reduce((prev, next) => prev + '' + next);
     if (otp.length === 6) {
-      formik.setFieldValue(fieldNames.phoneOtp, otp);
-
-      formik.setValues({
-        ...formik.values,
-        email: "shopper1@gmail.com",
-        firstName: "Tung",
-        lastName: "Le",
-        shippingAddress: "123 Test Test",
-      });
-      
-      navigation(MainRoute.Order, {
-        state: { data: formik.values, passedData },
-      });
-
-      // otp = 389477
-      generateTokenWithOTP({
-        app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
-        email: "shopper1@gmail.com",
-        phone: "+6282110075629",
-        device_id: "testdevice",
-        otp: otp,
-      })
-        .then((result) => {
-          // const res = JSON.parse(result);
-          AuthHelper.storeAccessToken(result.data.access_token);
-          AuthHelper.storeRefreshToken(result.data.refresh_token);
+      dispatch(
+        _.submitOTPCreator(_.REQUEST_SUBMIT_OTP, {
+          app_id: '',
+          merchant_id: MERCHANT_ID,
+          email: values.email || '',
+          phone: `+62${values.phone}`,
+          device_id: DEVICE_ID,
+          otp: otp,
         })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setIsPhoneModal(false);
-        });
-    }
-  };
-
-  const handleGenerateCart = () => {
-    generateCart(appId)
-      .then((res) => {
-        console.log("res generate cart => ", res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const handleBlurPhone = () => {
-    if (!isVerifyToken && !!!formik.errors.phone && formik.values.phone) {
-      setIsPhoneModal(true);
-      requestOTP({
-        app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
-        email: "shopper1@gmail.com",
-        phone: "+6282110075629",
-        device_id: "testdevice",
-      })
-        .then((result) => {})
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
-
-  const handleBlurEmail = () => {
-    if (!isVerifyToken && !formik.errors.email) {
-      setIsEmailModal(true);
-      requestOTP({
-        app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
-        email: "shopper1@gmail.com",
-        phone: "+6282110075629",
-        device_id: "testdevice",
-      })
-        .then((result) => {})
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
-
-  const handleChangeOTPEmail = (e) => {
-    const otp = e.reduce((prev, next) => prev + "" + next);
-    if (otp.length === 6) {
-      formik.setFieldValue(fieldNames.emailOtp, otp);
-      // otp = 696062
-      generateTokenWithOTP({
-        app_id: "601886d6-44f5-3112-92b4-be1d89fb0f2b",
-        email: "shopper1@gmail.com",
-        phone: "+6282110075629",
-        device_id: "testdevice",
-        otp: otp,
-      })
-        .then((result) => {
-          AuthHelper.storeAccessToken(result.data.access_token);
-          AuthHelper.storeRefreshToken(result.data.refresh_token);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setIsEmailModal(false);
-        });
+      );
     }
   };
 
   const handleActiveClickPaymentCard = (item) => {
-    // setIsAddPaymentBottomSheet(false);
-    setIsAddCardBottomSheet(true);
+    handleOpenModal(IS_ADD_CARD_BOTTOM_SHEET);
   };
 
   const handleOnSaveCardBottomSheet = () => {
-    setIsAddCardBottomSheet(false);
+    handleClose(IS_ADD_CARD_BOTTOM_SHEET);
     formik.setFieldValue(fieldNames.payment, true);
   };
 
   const handleConfirmAndPay = () => {
     navigation(MainRoute.Order, { state: { passedData } });
-  };
-
-  const handleEditSummary = () => {
-    setIsEditOtherSummary(true);
-  };
-
-  //Item in modal province click after save
-  const handleOnProvinceSaveClick = (itemSelected, newData) => {
-    formik.setFieldValue(fieldNames.province, itemSelected.title);
-    setProvinceList(newData);
-    setIsProvinceModal(false);
-  };
-
-  //Item in modal city click after save
-  const handleOnCitySaveClick = (itemSelected, newData) => {
-    formik.setFieldValue(fieldNames.city, itemSelected.title);
-    setCityList(newData);
-    setIsCityModal(false);
-  };
-
-  //Item in modal postalCode click after save
-  const handleOnPostalCodeSaveClick = (itemSelected, newData) => {
-    formik.setFieldValue(fieldNames.postalCode, itemSelected.title);
-    setPostalCodeList(newData);
-    setIsPostalCodeModal(false);
   };
 
   //Courier Item Click Function
@@ -264,87 +144,171 @@ export default function Payment() {
     setCourierSelected({ ...item, isChecked: true });
   };
 
-  const verifyAccessToken = () => {
-    verifyToken({ access_token: accessToken })
-      .then((result) => {
-        // const newResult = JSON.parse(result);
-        console.log(result);
-        if (result.status === "Success") {
-          setIsVerifyToken(true);
-        } else {
-          setIsVerifyToken(false);
-        }
+  const updateCartItem = (item) => {
+    const { merchant_cart_id } = cartData?.data;
+    dispatch(
+      _.cartAction(_.CART_REQUEST_UPDATE, {
+        params: {
+          id: merchant_cart_id,
+        },
+        body: item,
       })
-      .catch((err) => {
-        console.log(err);
-      });
+    );
   };
 
-  const getCartWithMerchantCartId = async () => {
-    try {
-      const appId = "601886d6-44f5-3112-92b4-be1d89fb0f2b";
-      const res = await getCartData(appId, merchantCartId);
+  const handleOnIncreaseCartItem = (item) => {
+    item.qty = 1;
+    updateCartItem(item);
+  };
 
-      if (res.status === "success") {
-        setCartDetail(res.data);
+  const handleOnDecreaseCartItem = (item) => {
+    item.qty = -1;
+    updateCartItem(item);
+  };
+
+  const onGetOTP = () => {
+    const { errors, values } = formik;
+    if (!isVerify && !!!errors.phone && values.phone) {
+      dispatch(
+        _.authenticationCreator(_.REQUEST_SEND_OTP_REQUEST, {
+          app_id: '',
+          email: values.email || '',
+          phone: `+62${values.phone}`,
+          device_id: DEVICE_ID,
+          merchant_id: MERCHANT_ID,
+        })
+      );
+    }
+  };
+
+  const handleOnBlur = (e) => {
+    const { name } = e.target;
+    const { errors, values } = formik;
+    if (name === 'phone') {
+      onGetOTP();
+    }
+    if (isVerify) {
+      if (name === 'email' || name === 'firstName' || name === 'lastName') {
+        // check validation firstName email last name done
+        if (!errors.firstName && !errors.lastName && !errors.email) {
+          dispatch(
+            _.userAction(_.UPDATE_DATA_USER, {
+              email: values.email,
+              first_name: values.firstName,
+              last_name: values.lastName,
+              status: 'SHOPPER_STATUS_ACTIVE',
+            })
+          );
+        }
       }
-
-      console.log(res);
-    } catch (error) {
-      console.log(error);
     }
   };
 
-  const handleOnIncreaseCartItem = async (item) => {
-    try {
-      const appId = "601886d6-44f5-3112-92b4-be1d89fb0f2b";
-      const res = await updateCartItem(appId, { item, qty: item.qty + 1 });
-      await getCartData();
-    } catch (error) {
-      console.log(error);
+  const handleOnBlurAddress = () => {
+    const { errors, values } = formik;
+    if (!errors.province && !errors.regency && !errors.postalCode) {
+      const data = {
+        address_label: 'Address',
+        name: `${values.firstName} ${values.lastName}`,
+        email: values.email,
+        phone: `+62${values.phone}`,
+        address_1: values.shippingAddress,
+        address_2: values.addressOptional,
+        address_3: '',
+        address_4: '',
+        city: values.regency,
+        district: values.district,
+        village: values.village,
+        state_province: values.province,
+        country_code: 'IDN',
+        postal_code: values.postalCode,
+        address_note: '',
+        lat: '',
+        long: '',
+      };
+      dispatch(_.userAction(_.UPDATE_DATA_USER_ADDRESS, data));
     }
   };
 
-  const handleOnDecreaseCartItem = async (item) => {
-    try {
-      if (item.qty === 0) return;
-      const appId = "601886d6-44f5-3112-92b4-be1d89fb0f2b";
-      const res = await updateCartItem(appId, { item, qty: item.qty - 1 });
-      await getCartData();
-    } catch (error) {
-      console.log(error);
+  const handleOnResendOTP = () => {
+    onGetOTP();
+  };
+
+  useEffect(() => {
+    if (timer === 0) {
+      handlePause();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timer]);
+
+  // BEGIN REQUEST OTP RESPONSE
+  useEffect(() => {
+    const { loading, status, errors } = sendOtp;
+    if (status === 'success' && loading === false) {
+      handleOpenModal(PHONE_OTP);
+      handleReset();
+      handleResume();
+    }
+    if (status === 'error') {
+      if (errors.length > 0) {
+        dispatch(_.toastAction(_.TOAST_DISPLAY_FAILED, { message: errors[0] }));
+      }
+    }
+  }, [sendOtp]);
+  // END REQUEST OTP RESPONSE
+
+  // BEGIN SUBMIT OTP RESPONSE
+  useEffect(() => {
+    const { loading, status, errors } = submitOTP;
+    if (status === 'success' && loading === false) {
+      handleReset();
+      handlePause();
+      handleClose(PHONE_OTP);
+    }
+    if (status === 'error') {
+      if (errors.length > 0) {
+        dispatch(_.toastAction(_.TOAST_DISPLAY_FAILED, { message: errors[0] }));
+      }
+    }
+  }, [submitOTP]);
+  // BEGIN SUBMIT OTP RESPONSE
+
+  const onSetValueDataUser = () => {
+    if (userData && userData?.account) {
+      formik.setFieldValue('phone', userData?.account?.phone.replace('+62', ''));
+      formik.setFieldValue('email', userData?.account?.email);
+      formik.setFieldValue('firstName', userData?.account?.first_name);
+      formik.setFieldValue('lastName', userData?.account?.last_name);
     }
   };
+
+  useEffect(() => {
+    onSetValueDataUser();
+  }, [userData]);
+
+  useEffect(() => {
+    if (isVerify) {
+      setTimeout(() => {
+        dispatch(
+          _.cartAction(_.CART_REQUEST_GENERETE, {
+            body: {
+              items: dummyItems,
+            },
+          })
+        );
+      }, 750);
+    }
+  }, [isVerify]);
 
   useState(() => {
     setTimeout(() => {
-      setIsSplashScreen(false);
+      handleClose(SPLASH_SCREEN);
     }, 2000);
-  }, []);
-
-  useEffect(() => {
-    setCityList(cityListData);
-    setProvinceList(provinceListData);
-    setPostalCodeList(postalCodeListData);
-  }, []);
-
-  useEffect(() => {
-    if (accessToken) {
-      setIsVerifyToken(true);
-      verifyAccessToken();
-    } else {
-      setIsVerifyToken(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    // getCartWithMerchantCartId();
-    handleGenerateCart();
   }, []);
 
   return (
     <>
-      {isSplashScreen ? (
+      {IS_SPLASH_SCREEN ? (
         <Loading />
       ) : (
         <div className="payment">
@@ -352,9 +316,7 @@ export default function Payment() {
             <div className="payment__shopContainer">
               <div className="payment__shopContainer-left">
                 <img src={Images.bodyShopIcon} alt="" width={24} height={24} />
-                <p className="payment__shopContainer-left-title">
-                  THE BODY SHOP
-                </p>
+                <p className="payment__shopContainer-left-title">THE BODY SHOP</p>
               </div>
               <div className="payment__shopContainer-right">
                 <img src={Icons.shoppingCart} width={16} height={16} alt="" />
@@ -364,149 +326,17 @@ export default function Payment() {
             </div>
 
             <div className="payment__formInfor">
-              <div className="payment__formInfor-personal">
-                <Box className="custom-input">
-                  <Box sx={{ ...RootStyles.row }}>
-                    <img src={Images.flat} width={24} height={24} alt="" />
-                    <img
-                      src={Icons.chevronDown}
-                      width={18}
-                      height={18}
-                      alt=""
-                    />
-                  </Box>
-                  <Input
-                    label="Phone Number"
-                    type="phone"
-                    name={fieldNames.phone}
-                    onChange={handleChangePhone}
-                    onBlur={handleBlurPhone}
-                    value={formik.values.phone}
-                    placeholder="0821 2345 6789"
-                    inputComponent={InputMask}
-                  />
-                </Box>
-                <Input
-                  label="Email"
-                  inputClass="payment__mt-16"
-                  sx={{ mt: "8px" }}
-                  name={fieldNames.email}
-                  onChange={handleChangeEmail}
-                  onBlur={handleBlurEmail}
-                  value={formik.values.email}
-                />
-
-                <Box sx={{ mt: "8px", ...RootStyles.rowBetween }}>
-                  <Input
-                    label="First Name"
-                    name={fieldNames.firstName}
-                    onChange={formik.handleChange}
-                    value={formik.values.firstName}
-                    className="payment__mr-8"
-                    containerStyle={{ flex: 0.5 }}
-                  />
-                  <Input
-                    label="Last Name"
-                    name={fieldNames.lastName}
-                    onChange={formik.handleChange}
-                    value={formik.values.lastName}
-                    containerStyle={{ flex: 0.5 }}
-                  />
-                </Box>
-              </div>
-
-              <div className="payment__formInfor-shippingAddress">
-                <Box sx={{ ...RootStyles.rowBetween }}>
-                  <p className="payment__formInfor-shippingAddress-title">
-                    Shipping Address
-                  </p>
-                  <CheckBox
-                    isLabelFirst
-                    label="Ship to me"
-                    onChange={setIsShipToMe}
-                    isChecked={isShipToMe}
-                  />
-                </Box>
-
-                {!isShipToMe && (
-                  <Box sx={{ flex: 1, ...RootStyles.rowBetween, mb: "8px" }}>
-                    <Input
-                      label="Recipient's Name"
-                      containerStyle={{ flex: 0.49 }}
-                    />
-                    <Input
-                      label="Phone Number"
-                      containerStyle={{ flex: 0.49 }}
-                    />
-                  </Box>
-                )}
-
-                <Box className="custom-input">
-                  <Box sx={{ ...RootStyles.row }}>
-                    <img src={Images.flat} width={24} height={24} alt="" />
-                    <img
-                      src={Icons.chevronDown}
-                      width={18}
-                      height={18}
-                      alt=""
-                    />
-                  </Box>
-                  <Input
-                    label="Shipping Address"
-                    type="text"
-                    name={fieldNames.shippingAddress}
-                    onChange={formik.handleChange}
-                    value={formik.values.shippingAddress}
-                    placeholder="Shipping Address"
-                  />
-                </Box>
-
-                {!!formik.values.shippingAddress && (
-                  <Input
-                    label="Apartment, Unit, Floor, etc. (Optional)"
-                    containerStyle={{ marginTop: 8 }}
-                  />
-                )}
-
-                {!!formik.values.shippingAddress && (
-                  <Box sx={{ flex: 1, ...RootStyles.rowBetween, mt: "8px" }}>
-                    <Input
-                      label="Province"
-                      containerStyle={{ flex: 0.32 }}
-                      onClick={() => setIsProvinceModal(true)}
-                      endInput={<LibraryIcons.ArrowDropDownIcon />}
-                      name={fieldNames.province}
-                      value={formik.values.province}
-                      readOnly
-                    />
-                    <Input
-                      label="City"
-                      containerStyle={{ flex: 0.32 }}
-                      onClick={() => setIsCityModal(true)}
-                      endInput={<LibraryIcons.ArrowDropDownIcon />}
-                      readOnly
-                      name={fieldNames.city}
-                      value={formik.values.city}
-                    />
-                    <Input
-                      label="Postal Code"
-                      containerStyle={{ flex: 0.32 }}
-                      onClick={() => setIsPostalCodeModal(true)}
-                      endInput={<LibraryIcons.ArrowDropDownIcon />}
-                      readOnly
-                      name={fieldNames.postalCode}
-                      value={formik.values.postalCode}
-                    />
-                  </Box>
-                )}
-              </div>
+              <FormUserData handleOnBlur={handleOnBlur} formik={formik}></FormUserData>
+              <FormUserAddress
+                handleOnBlurAddress={handleOnBlurAddress}
+                formik={formik}
+                fieldNames={fieldNames}
+              ></FormUserAddress>
 
               <div className="payment__formInfor-courier">
                 <RowInfo
                   label="Courier"
-                  buttonText={
-                    formik.values.shippingAddress ? "Choose Courier" : ""
-                  }
+                  buttonText={formik.values.shippingAddress ? 'Choose Courier' : ''}
                   onButtonClick={() => {
                     setIsChooseCourier(true);
                     setCourierSelected({});
@@ -522,16 +352,15 @@ export default function Payment() {
 
                 {isChooseCourier && (
                   <Box>
-                    {(Object.keys(courierSelected).length > 0
-                      ? [courierSelected]
-                      : couriers
-                    )?.map((item) => (
-                      <CourierItem
-                        data={item}
-                        key={item.id}
-                        onClick={() => handleOnClickCourierItem(item)}
-                      />
-                    ))}
+                    {(Object.keys(courierSelected).length > 0 ? [courierSelected] : couriers)?.map(
+                      (item) => (
+                        <CourierItem
+                          data={item}
+                          key={item.id}
+                          onClick={() => handleOnClickCourierItem(item)}
+                        />
+                      )
+                    )}
                   </Box>
                 )}
               </div>
@@ -539,9 +368,7 @@ export default function Payment() {
               <div className="payment__formInfor-payment">
                 <RowInfo
                   label="Payment"
-                  buttonText={
-                    !checkObjectEmpty(courierSelected) && "Choose Payment"
-                  }
+                  buttonText={!checkObjectEmpty(courierSelected) && 'Choose Payment'}
                   onButtonClick={() => setIsChoosePayment(true)}
                 />
 
@@ -553,10 +380,8 @@ export default function Payment() {
 
                 {isChoosePayment &&
                   paymentMethodList.map((item) => (
-                    <Box key={item.id} sx={{ mb: "32px" }}>
-                      <p className="payment__formInfor-payment-title">
-                        {item.title}
-                      </p>
+                    <Box key={item.id} sx={{ mb: '32px' }}>
+                      <p className="payment__formInfor-payment-title">{item.title}</p>
                       {item.children.map((paymentItem) =>
                         paymentItem.isActivated ? (
                           <CourierItem
@@ -568,9 +393,7 @@ export default function Payment() {
                           <PaymentItem
                             key={paymentItem.id}
                             data={paymentItem}
-                            onActiveClick={() =>
-                              handleActiveClickPaymentCard(paymentItem)
-                            }
+                            onActiveClick={() => handleActiveClickPaymentCard(paymentItem)}
                           />
                         )
                       )}
@@ -578,15 +401,16 @@ export default function Payment() {
                   ))}
               </div>
             </div>
-
             <div className="payment__orderSummary">
-              <Summary
-                isEdit={isEditOtherSummary}
-                data={[passedData]}
-                onEditClick={handleEditSummary}
-                onIncreaseItem={handleOnIncreaseCartItem}
-                onDecreaseItem={handleOnDecreaseCartItem}
-              />
+              {isVerify && (
+                <Summary
+                  isEdit={IS_EDIT_OTHER_SUMMARY}
+                  data={cartData?.data}
+                  onEditClick={() => handleOpenModal(EDIT_OTHER_SUMMARY)}
+                  onIncreaseItem={handleOnIncreaseCartItem}
+                  onDecreaseItem={handleOnDecreaseCartItem}
+                />
+              )}
             </div>
           </div>
           <div className="payment__confirmButtonContainer">
@@ -595,13 +419,7 @@ export default function Payment() {
               fullWidth
               className="payment__confirmButtonContainer-button"
               startIcon={
-                <img
-                  src={Icons.lock}
-                  width={18}
-                  height={18}
-                  alt=""
-                  style={{ marginBottom: 2 }}
-                />
+                <img src={Icons.lock} width={18} height={18} alt="" style={{ marginBottom: 2 }} />
               }
               buttonClassName="payment__confirmButtonContainer-buttonItem"
               onClick={handleConfirmAndPay}
@@ -610,55 +428,30 @@ export default function Payment() {
             </Button>
             <div className="payment__confirmButtonContainer-info">
               <p>
-                By clicking the button above, you agreeFlik's{" "}
-                <a href="$">Terms & Conditions</a> and{" "}
+                By clicking the button above, you agreeFlik's <a href="$">Terms & Conditions</a> and{' '}
                 <a href="$">Privacy Policy</a>
               </p>
             </div>
           </div>
           <OtpModal
-            isVisibled={isPhoneModal}
+            timeClock={timeClock}
+            onResendOTP={handleOnResendOTP}
+            isVisibled={IS_PHONE_OTP}
+            timer={timer}
             onClose={() => handleClose(PHONE_OTP)}
             onChange={handleChangeOTPPhone}
             value={formik.values.phone}
           />
           <OtpModal
-            isVisibled={isEmailModal}
+            isVisibled={IS_EMAIL_OTP}
             onClose={() => handleClose(EMAIL_OTP)}
-            onChange={handleChangeOTPEmail}
+            onChange={() => {}}
             label="email"
             value={formik.values.email}
           />
 
-          {/* Province Modal */}
-          <AddressModal
-            data={provinceList}
-            isVisibled={isProvinceModal}
-            searchPlaceholder="Search Province"
-            onClose={() => setIsProvinceModal(false)}
-            onSaveClick={handleOnProvinceSaveClick}
-          />
-
-          {/* City Modal */}
-          <AddressModal
-            data={cityList}
-            isVisibled={isCityModal}
-            searchPlaceholder="Search City"
-            onClose={() => setIsCityModal(false)}
-            onSaveClick={handleOnCitySaveClick}
-          />
-
-          {/* Postal Code Modal */}
-          <AddressModal
-            data={postalCodeList}
-            isVisibled={isPostalCodeModal}
-            searchPlaceholder="Search Postal Code"
-            onClose={() => setIsPostalCodeModal(false)}
-            onSaveClick={handleOnPostalCodeSaveClick}
-          />
-
           <AddCardBottomSheet
-            isVisibled={isAddCardBottomSheet}
+            isVisibled={IS_ADD_CARD_BOTTOM_SHEET}
             onClose={() => handleClose(ADD_CARD_BOTTOM_SHEET)}
             onSaveClick={handleOnSaveCardBottomSheet}
             formik={formik}

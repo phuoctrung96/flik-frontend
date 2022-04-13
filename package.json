@@ -15,6 +15,7 @@
     "axios": "^0.26.0",
     "classnames": "^2.3.1",
     "credit-card-type": "^9.1.0",
+    "device-uuid": "^1.0.4",
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
@@ -41,7 +42,20 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "npx prettier --write .",
+    "lint": "eslint --fix .",
+    "ci": "yarn install --frozen-lockfile",
+    "ci-check": "yarn run format",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix"
+    ],
+    "*.{json,md,html,js}": [
+      "prettier --write"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -60,5 +74,20 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.9",
+    "@babel/eslint-parser": "^7.5.4",
+    "@babel/preset-env": "^7.16.11",
+    "babel-eslint": "^10.0.2",
+    "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "prettier": "^2.6.2",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-saga-devtools": "^0.3.0"
   }
 }
