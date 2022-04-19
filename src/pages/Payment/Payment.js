@@ -124,11 +124,11 @@ export default function Payment() {
   };
 
   const handleActiveClickPaymentCard = (item) => {
-    handleOpenModal(IS_ADD_CARD_BOTTOM_SHEET);
+    handleOpenModal(ADD_CARD_BOTTOM_SHEET);
   };
 
   const handleOnSaveCardBottomSheet = () => {
-    handleClose(IS_ADD_CARD_BOTTOM_SHEET);
+    handleClose(ADD_CARD_BOTTOM_SHEET);
     formik.setFieldValue(fieldNames.payment, true);
   };
 
