@@ -1,1 +1,1 @@
-export * from "./PaymentCardModal";
+export * from './PaymentCardModal';

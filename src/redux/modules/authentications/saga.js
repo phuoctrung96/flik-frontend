@@ -145,19 +145,18 @@ export function* putDataUserSaga() {
 function* putDataUserAddress({ payload }) {
   try {
     const res = yield putShopperAddressModel(payload);
-    console.log(res, 'masuk sini res');
-    // if (res.status === 'success') {
-    //   const response = yield getShooperInfoModel();
-    //   yield put({
-    //     type: _.UPDATE_DATA_USER_SUCCESS,
-    //     payload: res,
-    //   });
+    if (res.status === 'success') {
+      const response = yield getShooperInfoModel();
+      yield put({
+        type: _.UPDATE_DATA_USER_SUCCESS,
+        payload: res,
+      });
 
-    //   yield put({
-    //     type: _.GET_DATA_USER_SUCCESS,
-    //     payload: response,
-    //   });
-    // }
+      yield put({
+        type: _.GET_DATA_USER_SUCCESS,
+        payload: response,
+      });
+    }
   } catch (err) {
     yield put({
       type: _.UPDATE_DATA_USER_FAILED,

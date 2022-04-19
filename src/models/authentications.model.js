@@ -1,6 +1,6 @@
 import axios from '../utils/axios.config';
 
-export const login = body => {
+export const login = (body) => {
   return axios.post('/auth/login', body);
 };
 
@@ -13,7 +13,7 @@ export const login = body => {
  * device_id
  * @returns
  */
-export const requestOTP = body => {
+export const requestOTP = (body) => {
   return axios.post('auth/v1/authentication/otp/send', body);
 };
 
@@ -27,7 +27,7 @@ export const requestOTP = body => {
  * otp
  * @returns
  */
-export const generateTokenWithOTP = body => {
+export const generateTokenWithOTP = (body) => {
   return axios.post('auth/v1/authentication/otp/validate', body);
 };
 
@@ -37,7 +37,7 @@ export const generateTokenWithOTP = body => {
  * refresh_token
  * @returns
  */
-export const refreshToken = body => {
+export const refreshToken = (body) => {
   return axios.post('auth/v1/authentication/refresh', body);
 };
 
@@ -47,6 +47,6 @@ export const refreshToken = body => {
  * access_token
  * @returns
  */
-export const verifyToken = body => {
+export const verifyToken = (body) => {
   return axios.post('auth/v1/authentication/verify', body);
 };

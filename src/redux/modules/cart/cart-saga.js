@@ -23,20 +23,35 @@ export function* sagaGetCart() {
 function* genereteCart({ payload }) {
   try {
     const res = yield genereteCartModel(payload);
+    console.log('genereteCartModel', payload);
     if (res.status === 'success') {
       const responseCart = yield getCartModel({
-        merchant_cart_id: res?.data?.merchant_cart_id,
+        params: {
+          merchant_cart_id: res?.data?.merchant_cart_id,
+        },
+        header: payload?.params,
       });
 
       yield put({
         type: _.CART_REQUEST_SUCCESS,
-        payload: responseCart,
+        payload: {
+          ...responseCart,
+          genereteCardId: res?.data?.merchant_cart_id,
+        },
       });
     }
   } catch (err) {
+    let result = err;
+    if (err === 'Service Unavailable ') {
+      result = {
+        data: null,
+        status: 'error',
+        errors: ['Service Unavailable'],
+      };
+    }
     yield put({
       type: _.CART_REQUEST_GENERETE_FAILED,
-      payload: err,
+      payload: result,
     });
   }
 }
@@ -50,7 +65,10 @@ function* putCartItem({ payload }) {
     const res = yield putCartItemModel(payload);
     if (res.status === 'success') {
       const responseCart = yield getCartModel({
-        merchant_cart_id: payload?.params?.id,
+        params: {
+          merchant_cart_id: payload.params.id,
+        },
+        header: payload?.headers,
       });
       yield put({
         type: _.CART_REQUEST_SUCCESS,

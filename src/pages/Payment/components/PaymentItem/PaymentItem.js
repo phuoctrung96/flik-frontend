@@ -1,8 +1,8 @@
-import { Box } from "@mui/material";
-import React from "react";
-import { Button } from "../../../../components";
-import { RootStyles } from "../../../../utils";
-import "./styles.scss";
+import { Box } from '@mui/material';
+import React from 'react';
+import { Button } from '../../../../components';
+import { RootStyles } from '../../../../utils';
+import './styles.scss';
 
 export const PaymentItem = ({ data, onActiveClick }) => {
   return (

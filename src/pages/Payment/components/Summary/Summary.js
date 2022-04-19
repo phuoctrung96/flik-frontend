@@ -31,43 +31,43 @@ export const Summary = ({
   return (
     <div className={classNames('summary', className)}>
       <Box sx={{ ...RootStyles.rowBetween }}>
-        <p className='summary__header'>Order Summary</p>
-        <div className='summary__editButtonContainer'>
+        <p className="summary__header">Order Summary</p>
+        <div className="summary__editButtonContainer">
           <Button onClick={onEditClick}>Edit</Button>
         </div>
       </Box>
-      <Box className='summary__productContainer'>
+      <Box className="summary__productContainer">
         {items &&
           items.length > 0 &&
           items?.map((item, index) => {
             return (
               <Box
                 sx={{ ...RootStyles.row, alignItems: 'flex-start' }}
-                className='summary__productInfo'
+                className="summary__productInfo"
                 key={index.toString()}
               >
                 <img
                   src={item?.image_url}
-                  alt=''
+                  alt=""
                   width={48}
                   height={48}
-                  className='summary__productInfo-image'
+                  className="summary__productInfo-image"
                 />
                 <Box
                   sx={{ ...RootStyles.rowBetween, alignItems: 'flex-start' }}
                   style={{ flex: 1 }}
                 >
-                  <Box className='summary__productInfo-product'>
-                    <p className='summary__productInfo-product-title'>{item?.name}</p>
-                    <p className='summary__productInfo-product-amount'>
+                  <Box className="summary__productInfo-product">
+                    <p className="summary__productInfo-product-title">{item?.name}</p>
+                    <p className="summary__productInfo-product-amount">
                       ({item?.weight}
                       {item?.weight_unit}, {item?.category})
                     </p>
                     {!isEdit && (
-                      <p className='summary__productInfo-product-quantity'>Quantity: {item?.qty}</p>
+                      <p className="summary__productInfo-product-quantity">Quantity: {item?.qty}</p>
                     )}
                     {isEdit && (
-                      <Box className='summary__productInfo-product-buttonGroupContainer'>
+                      <Box className="summary__productInfo-product-buttonGroupContainer">
                         <div
                           className={`summary__productInfo-product-buttonGroupContainer-minus ${
                             item.qty === 1 ? 'disabled' : ''
@@ -76,11 +76,11 @@ export const Summary = ({
                         >
                           -
                         </div>
-                        <p className='summary__productInfo-product-buttonGroupContainer-quantity'>
+                        <p className="summary__productInfo-product-buttonGroupContainer-quantity">
                           {item?.qty}
                         </p>
                         <div
-                          className='summary__productInfo-product-buttonGroupContainer-plus'
+                          className="summary__productInfo-product-buttonGroupContainer-plus"
                           onClick={() => handleUpdateQuantity?.(item, 'plus')}
                         >
                           +
@@ -92,7 +92,7 @@ export const Summary = ({
                       </Box>
                     )}
                   </Box>
-                  <p style={{ margin: 0 }} className='summary__price'>
+                  <p style={{ margin: 0 }} className="summary__price">
                     Rp {item?.unit_price}
                   </p>
                 </Box>
@@ -106,53 +106,53 @@ export const Summary = ({
       {isEdit && (
         <Box>
           <p>Enter Voucher Code</p>
-          <div className='summary__voucherCode'>
-            <input className='summary__voucherCode-input' />
-            <Button isPrimary buttonClassName='summary__voucherCode-button'>
+          <div className="summary__voucherCode">
+            <input className="summary__voucherCode-input" />
+            <Button isPrimary buttonClassName="summary__voucherCode-button">
               Apply
             </Button>
           </div>
         </Box>
       )}
 
-      <Box className='summary__paymentInfo'>
+      <Box className="summary__paymentInfo">
         <Box sx={{ ...RootStyles.rowBetween }}>
-          <p className='summary__paymentInfo-text'>Subtotal</p>
-          <p className='summary__paymentInfo-text'>
+          <p className="summary__paymentInfo-text">Subtotal</p>
+          <p className="summary__paymentInfo-text">
             <b>Rp {data?.subtotal_amount}</b>
           </p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
-          <p className='summary__paymentInfo-text'>Shipping Costs</p>
-          <p className='summary__paymentInfo-text'>
+          <p className="summary__paymentInfo-text">Shipping Costs</p>
+          <p className="summary__paymentInfo-text">
             <b>Rp {data?.shippingCosts || 0}</b>
           </p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
-          <p className='summary__paymentInfo-text'>Admin Fee</p>
-          <p className='summary__paymentInfo-text'>
+          <p className="summary__paymentInfo-text">Admin Fee</p>
+          <p className="summary__paymentInfo-text">
             <b>Rp {data?.tax_amount}</b>
           </p>
         </Box>
         <Box sx={{ ...RootStyles.rowBetween }}>
-          <p className='summary__paymentInfo-text summary__paymentInfo-totalLabel'>Total</p>
-          <p className='summary__paymentInfo-text summary__paymentInfo-totalValue'>
+          <p className="summary__paymentInfo-text summary__paymentInfo-totalLabel">Total</p>
+          <p className="summary__paymentInfo-text summary__paymentInfo-totalValue">
             Rp {data?.total_amount}
           </p>
         </Box>
       </Box>
 
       {onCancelOrder && (
-        <div className='summary__cancelButtonContainer'>
-          <Link className='summary__cancelButtonContainer-cancelButton' onClick={onCancelOrder}>
+        <div className="summary__cancelButtonContainer">
+          <Link className="summary__cancelButtonContainer-cancelButton" onClick={onCancelOrder}>
             Cancel Order
           </Link>
         </div>
       )}
 
-      <p className='summary__checkoutText'>
+      <p className="summary__checkoutText">
         Checkou Powered by{' '}
-        <a href='$' className='summary__checkoutText-link'>
+        <a href="$" className="summary__checkoutText-link">
           Flik
         </a>
       </p>

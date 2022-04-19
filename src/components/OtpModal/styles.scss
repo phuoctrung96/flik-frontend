@@ -1,4 +1,4 @@
-@import "../../assets/styles/_global.scss";
+@import '../../assets/styles/_global.scss';
 
 .otpModal {
   padding: 99px 42px 0px 42px;
@@ -20,7 +20,7 @@
   }
 
   /* Firefox */
-  input[type="number"] {
+  input[type='number'] {
     -moz-appearance: textfield;
   }
 

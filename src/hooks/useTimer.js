@@ -10,7 +10,7 @@ export const useTimer = (initialState = 0) => {
     setIsActive(true);
     setIsPaused(true);
     countRef.current = setInterval(() => {
-      setTimer(timer => timer - 1);
+      setTimer((timer) => timer - 1);
     }, 1000);
   };
 
@@ -22,7 +22,7 @@ export const useTimer = (initialState = 0) => {
   const handleResume = () => {
     setIsPaused(true);
     countRef.current = setInterval(() => {
-      setTimer(timer => timer - 1);
+      setTimer((timer) => timer - 1);
     }, 1000);
   };
 
@@ -33,7 +33,7 @@ export const useTimer = (initialState = 0) => {
     setTimer(initialState);
   };
 
-  const onGetTime = timerNow => {
+  const onGetTime = (timerNow) => {
     var sec_num = parseInt(timerNow);
     var hours = Math.floor(sec_num / 3600);
     var minutes = Math.floor((sec_num - hours * 3600) / 60);

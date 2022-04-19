@@ -17,33 +17,33 @@ const cookieSetting = {
 
 const setCookie = (name, value) => cookie.save(name, value, cookieSetting);
 
-const getCookie = name => cookie.load(name);
+const getCookie = (name) => cookie.load(name);
 
-const removeCookie = name => cookie.remove(name, cookieSetting);
+const removeCookie = (name) => cookie.remove(name, cookieSetting);
 
 const setLocalStorage = (name, value) => {
   const isString = typeof value === 'string';
   localStorage.setItem(name, isString ? value : JSON.stringify(value));
 };
 
-const getLocalStorage = name => localStorage.getItem(name);
+const getLocalStorage = (name) => localStorage.getItem(name);
 
-const removeLocalStorage = name => localStorage.removeItem(name);
+const removeLocalStorage = (name) => localStorage.removeItem(name);
 
 class AuthHelpers {
   getRefreshToken = () => getCookie(EStorage.COOKIE_REFRESH_TOKEN);
 
-  storeRefreshToken = refreshToken => setCookie(EStorage.COOKIE_REFRESH_TOKEN, refreshToken);
+  storeRefreshToken = (refreshToken) => setCookie(EStorage.COOKIE_REFRESH_TOKEN, refreshToken);
 
   getAccessToken = () => getCookie(EStorage.COOKIE_ACCESS_TOKEN);
 
-  storeAccessToken = accessToken => {
+  storeAccessToken = (accessToken) => {
     setCookie(EStorage.COOKIE_ACCESS_TOKEN, accessToken);
   };
 
   getUserInfo = () => JSON.parse(getLocalStorage(EStorage.LOCAL_STORAGE_USER_INFO));
 
-  storeUserInfo = userInfo => setLocalStorage(EStorage.LOCAL_STORAGE_USER_INFO, userInfo);
+  storeUserInfo = (userInfo) => setLocalStorage(EStorage.LOCAL_STORAGE_USER_INFO, userInfo);
 
   clearStorage = () => {
     removeCookie(EStorage.COOKIE_ACCESS_TOKEN);

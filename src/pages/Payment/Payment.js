@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as _ from '../../redux/actions';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Button, CheckBox, Input, Loading } from '../../components';
+import { Button, Loading } from '../../components';
 import { OtpModal } from '../../components/OtpModal';
 import { MainRoute } from '../../router/constants';
-import { Icons, Images, RootStyles } from '../../utils';
+import { Icons, Images } from '../../utils';
 import {
   AddCardBottomSheet,
   CourierItem,
@@ -23,9 +23,7 @@ import {
   fieldNames,
   initialValues,
   paymentMethodList,
-  postalCodeList as postalCodeListData,
   validationSchema,
-  dummyItems,
 } from './Payment.data';
 import { checkObjectEmpty } from '../../utils/Helpers';
 import getDeiviceId from '../../utils/getDeviceId';
@@ -41,8 +39,10 @@ const SPLASH_SCREEN = 'SPLASH_SCREEN';
 export default function Payment() {
   // QUERY STRING
   const search = useLocation().search;
-  const MERCHANT_ID = new URLSearchParams(search).get('merchant_id');
-  const APP_ID = new URLSearchParams(search).get('app_id');
+  const MERCHANT_ID = new URLSearchParams(search).get('mid');
+  const ITEMS_DATA = new URLSearchParams(search).getAll('items');
+
+  // const APP_ID = new URLSearchParams(search).get('app_id');
   const passedData = JSON.parse(decodeURIComponent(new URLSearchParams(search).get('body')));
   const DEVICE_ID = getDeiviceId();
 
@@ -82,6 +82,7 @@ export default function Payment() {
   const [isChooseCourier, setIsChooseCourier] = useState(false);
   const [courierSelected, setCourierSelected] = useState({});
   const [couriers, setCouriers] = useState(courierList);
+  const [isShipToMe, setIsShipToMe] = useState(true);
 
   const navigation = useNavigate();
 
@@ -151,6 +152,9 @@ export default function Payment() {
         params: {
           id: merchant_cart_id,
         },
+        headers: {
+          mid: MERCHANT_ID,
+        },
         body: item,
       })
     );
@@ -207,25 +211,35 @@ export default function Payment() {
   const handleOnBlurAddress = () => {
     const { errors, values } = formik;
     if (!errors.province && !errors.regency && !errors.postalCode) {
+      let name = ``;
+      let phone = ``;
+      if (!isShipToMe) {
+        name = values.recipientName;
+        phone = `+62${values.recipientPhone}`;
+      }
+
       const data = {
-        address_label: 'Address',
-        name: `${values.firstName} ${values.lastName}`,
+        address_label: 'MY home',
+        name: name,
         email: values.email,
-        phone: `+62${values.phone}`,
+        phone: phone,
+        status: 'active',
+        type: 'consignee',
         address_1: values.shippingAddress,
         address_2: values.addressOptional,
+        state_province: values.province,
         address_3: '',
         address_4: '',
         city: values.regency,
-        district: values.district,
-        village: values.village,
-        state_province: values.province,
+        postal_code: values.postalCode,
         country_code: 'IDN',
         postal_code: values.postalCode,
         address_note: '',
         lat: '',
         long: '',
+        is_default: true,
       };
+
       dispatch(_.userAction(_.UPDATE_DATA_USER_ADDRESS, data));
     }
   };
@@ -280,6 +294,20 @@ export default function Payment() {
       formik.setFieldValue('firstName', userData?.account?.first_name);
       formik.setFieldValue('lastName', userData?.account?.last_name);
     }
+    if (userData && userData?.shipping_address && userData?.shipping_address[0]) {
+      const { postal_code, city, address_1, address_2, phone, state_province, name } =
+        userData?.shipping_address[0];
+      if (name !== '') {
+        setIsShipToMe(false);
+        formik.setFieldValue('recipientName', name);
+        formik.setFieldValue('recipientPhone', phone?.replace('+62', ''));
+      }
+      formik.setFieldValue('province', state_province);
+      formik.setFieldValue('regency', city);
+      formik.setFieldValue('postalCode', postal_code);
+      formik.setFieldValue('shippingAddress', address_1);
+      formik.setFieldValue('addressOptional', address_2);
+    }
   };
 
   useEffect(() => {
@@ -292,7 +320,21 @@ export default function Payment() {
         dispatch(
           _.cartAction(_.CART_REQUEST_GENERETE, {
             body: {
-              items: dummyItems,
+              type: 'PRODUCT_INTERNAL',
+              items: ITEMS_DATA.map((item) => {
+                const itemSplit = item.split('|');
+                let qty = 0;
+                if (itemSplit[1]) {
+                  qty = Number(itemSplit[1]);
+                }
+                return {
+                  item_id: itemSplit[0],
+                  qty: qty,
+                };
+              }),
+            },
+            params: {
+              mid: MERCHANT_ID,
             },
           })
         );
@@ -305,6 +347,15 @@ export default function Payment() {
       handleClose(SPLASH_SCREEN);
     }, 2000);
   }, []);
+
+  useEffect(() => {
+    const { status, errors } = cartData;
+    if (status === 'error') {
+      if (errors.length > 0) {
+        dispatch(_.toastAction(_.TOAST_DISPLAY_FAILED, { message: errors[0] }));
+      }
+    }
+  }, [cartData]);
 
   return (
     <>
@@ -328,6 +379,8 @@ export default function Payment() {
             <div className="payment__formInfor">
               <FormUserData handleOnBlur={handleOnBlur} formik={formik}></FormUserData>
               <FormUserAddress
+                isShipToMe={isShipToMe}
+                setIsShipToMe={setIsShipToMe}
                 handleOnBlurAddress={handleOnBlurAddress}
                 formik={formik}
                 fieldNames={fieldNames}
@@ -402,7 +455,7 @@ export default function Payment() {
               </div>
             </div>
             <div className="payment__orderSummary">
-              {isVerify && (
+              {isVerify && cartData && cartData?.data !== null && (
                 <Summary
                   isEdit={IS_EDIT_OTHER_SUMMARY}
                   data={cartData?.data}

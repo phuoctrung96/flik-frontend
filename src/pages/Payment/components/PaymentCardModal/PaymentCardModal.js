@@ -97,27 +97,27 @@ export const PaymentCardModal = ({
   };
 
   function handleXenditInitiation() {
-    console.log("test");
+    console.log('test');
     // replace the key with Xendit account for Flik
     window.Xendit.setPublishableKey(
-      "xnd_public_development_QUIF3UOhUSOKsGQjkkfGQHeQDVa9eNZlR5CUGMoWizEt8VcjCsgb7hOQsY1OhDC"
+      'xnd_public_development_QUIF3UOhUSOKsGQjkkfGQHeQDVa9eNZlR5CUGMoWizEt8VcjCsgb7hOQsY1OhDC'
     );
   }
 
-  function handleXenditVerification(type, value, value2 = "") {
-    if (type === "card_number") {
+  function handleXenditVerification(type, value, value2 = '') {
+    if (type === 'card_number') {
       if (!window.Xendit.card.validateCardNumber(value)) {
-        console.log("Credit card number is invalid!");
+        console.log('Credit card number is invalid!');
         // return "Credit card number is invalid!";
       }
-    } else if (type === "expiry_date") {
+    } else if (type === 'expiry_date') {
       if (!window.Xendit.card.validateExpiry(value, value2)) {
-        console.log("Expiry date is invalid!");
+        console.log('Expiry date is invalid!');
         // return "Expiry date is invalid!";
       }
-    } else if (type === "cvn_number") {
+    } else if (type === 'cvn_number') {
       if (!window.Xendit.card.validateCvn(value)) {
-        console.log("CVN number is invalid!");
+        console.log('CVN number is invalid!');
         // return "CVN number is invalid!";
       }
     }
@@ -126,13 +126,9 @@ export const PaymentCardModal = ({
   }
 
   function handleXenditPayment() {
-    handleXenditVerification("card_number", cardNumber.value);
-    handleXenditVerification(
-      "expiry_date",
-      cardExpMonth.value,
-      cardExpYear.value
-    );
-    handleXenditVerification("cvn_number", cardCvn.value);
+    handleXenditVerification('card_number', cardNumber.value);
+    handleXenditVerification('expiry_date', cardExpMonth.value, cardExpYear.value);
+    handleXenditVerification('cvn_number', cardCvn.value);
 
     window.Xendit.card.createToken(
       {
@@ -141,7 +137,7 @@ export const PaymentCardModal = ({
         card_exp_month: cardExpMonth.value,
         card_exp_year: cardExpYear.value,
         card_cvn: cardCvn.value,
-        is_multiple_use: false
+        is_multiple_use: false,
       },
       xenditResponseHandler
     );
@@ -154,24 +150,21 @@ export const PaymentCardModal = ({
       return;
     }
 
-    if (creditCardCharge.status === "VERIFIED") {
-      console.log("verified triggered");
+    if (creditCardCharge.status === 'VERIFIED') {
+      console.log('verified triggered');
       const token = creditCardCharge.id;
       setCardToken(token);
-      setTokenStatus("Verified");
-    } else if (creditCardCharge.status === "IN_REVIEW") {
-      console.log("in review triggered");
+      setTokenStatus('Verified');
+    } else if (creditCardCharge.status === 'IN_REVIEW') {
+      console.log('in review triggered');
       const authenticationUrl = creditCardCharge.payer_authentication_url;
       setCardToken(authenticationUrl);
-      setTokenStatus("In Review");
-      window.open(
-        creditCardCharge.payer_authentication_url,
-        "sample-inline-frame"
-      );
-    } else if (creditCardCharge.status === "FAILED") {
-      console.log("failed triggered");
+      setTokenStatus('In Review');
+      window.open(creditCardCharge.payer_authentication_url, 'sample-inline-frame');
+    } else if (creditCardCharge.status === 'FAILED') {
+      console.log('failed triggered');
       setCardToken(creditCardCharge.failure_reason);
-      setTokenStatus("Failed");
+      setTokenStatus('Failed');
     }
   }
 

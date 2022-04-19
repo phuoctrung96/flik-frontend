@@ -1,1 +1,1 @@
-export * from "./InputMask";
+export * from './InputMask';

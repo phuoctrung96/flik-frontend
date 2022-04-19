@@ -1,18 +1,13 @@
-import { Box } from "@mui/material";
-import React from "react";
-import { Button, Input, InputMask, Modal } from "../../../../components";
-import { Icons, Images, RootStyles } from "../../../../utils";
-import { fieldNames, fieldPlaceholders } from "../../Payment.data";
-import "./styles.scss";
+import { Box } from '@mui/material';
+import React from 'react';
+import { Button, Input, InputMask, Modal } from '../../../../components';
+import { Icons, Images, RootStyles } from '../../../../utils';
+import { fieldNames, fieldPlaceholders } from '../../Payment.data';
+import './styles.scss';
 
-export const AddCardBottomSheet = ({
-  isVisibled,
-  onClose,
-  formik,
-  onSaveClick,
-}) => {
+export const AddCardBottomSheet = ({ isVisibled, onClose, formik, onSaveClick }) => {
   const renderCardIcon = () => (
-    <Box sx={{ mb: "5px" }}>
+    <Box sx={{ mb: '5px' }}>
       <img src={Icons.card} width={23} height={16} alt="" />
     </Box>
   );
@@ -27,13 +22,11 @@ export const AddCardBottomSheet = ({
       isBack
     >
       <Box className="addCardBottomSheet__container">
-        <p className="addCardBottomSheet__container-title">
-          Add Debit/Credit Card
-        </p>
+        <p className="addCardBottomSheet__container-title">Add Debit/Credit Card</p>
         <Box>
           <Input
             label="Card Number"
-            sx={{ mt: "16px" }}
+            sx={{ mt: '16px' }}
             endInput={renderCardIcon()}
             inputComponent={InputMask}
             name={fieldNames.cardNumber}
@@ -42,16 +35,16 @@ export const AddCardBottomSheet = ({
             value={formik.values.cardNumber}
             placeholder={fieldPlaceholders.cardNumber}
             inputProps={{
-              mask: "#000 0000 0000 0000",
+              mask: '#000 0000 0000 0000',
             }}
           />
         </Box>
-        <Box sx={{ mt: "12px" }}>
+        <Box sx={{ mt: '12px' }}>
           <img src={Images.masterCard} alt="" />
           <img src={Images.visa} alt="" />
         </Box>
 
-        <Box sx={{ ...RootStyles.rowBetween, mt: "16px", flex: 1 }}>
+        <Box sx={{ ...RootStyles.rowBetween, mt: '16px', flex: 1 }}>
           <Input
             label="Expiry (MM/YY)"
             inputComponent={InputMask}
@@ -60,8 +53,8 @@ export const AddCardBottomSheet = ({
             onBlur={formik.handleBlur}
             value={formik.values.cardExpiry}
             inputProps={{
-              mask: "#0/00",
-              definitions: { "#": /[0-9]/ },
+              mask: '#0/00',
+              definitions: { '#': /[0-9]/ },
             }}
             containerStyle={{ flex: 0.48 }}
           />
@@ -74,7 +67,7 @@ export const AddCardBottomSheet = ({
             onBlur={formik.handleBlur}
             value={formik.values.cardCVC}
             inputProps={{
-              mask: "#00",
+              mask: '#00',
             }}
             containerStyle={{ flex: 0.48 }}
           />

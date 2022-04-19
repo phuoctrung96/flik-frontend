@@ -1,4 +1,4 @@
-import {} from "./contansts";
+import {} from './contansts';
 
 /**
  *

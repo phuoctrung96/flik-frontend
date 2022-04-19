@@ -1,24 +1,19 @@
-import { Box, Radio, RadioGroup, FormControlLabel } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Button, CheckBox, Input } from '../../../../components';
-import { Modal } from '../../../../components/Modal';
-import { LibraryIcons, wordingLocation } from '../../../../utils';
 import debounce from 'lodash/debounce';
-import './styles.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import * as _ from '../../../../redux/actions';
 
-import InputLabel from '@mui/material/InputLabel';
+import { Box, Radio, RadioGroup, FormControlLabel } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import IconButton from '@mui/material/IconButton';
-import FilledInput from '@mui/material/FilledInput';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import FormHelperText from '@mui/material/FormHelperText';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
+import { Button } from '../../../../components';
+import { Modal } from '../../../../components/Modal';
+import { LibraryIcons, wordingLocation } from '../../../../utils';
+
+import * as _ from '../../../../redux/actions';
+
+import './styles.scss';
 
 export const AddressModal = ({
   isVisibled,

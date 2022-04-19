@@ -1,1 +1,1 @@
-export * from "./OtpModal";
+export * from './OtpModal';

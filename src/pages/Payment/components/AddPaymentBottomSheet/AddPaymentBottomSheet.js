@@ -1,9 +1,9 @@
-import { Box } from "@mui/material";
-import React from "react";
-import { Button, Modal } from "../../../../components";
-import { CourierItem } from "../CourierItem";
-import { PaymentItem } from "../PaymentItem";
-import "./styles.scss";
+import { Box } from '@mui/material';
+import React from 'react';
+import { Button, Modal } from '../../../../components';
+import { CourierItem } from '../CourierItem';
+import { PaymentItem } from '../PaymentItem';
+import './styles.scss';
 
 export const AddPaymentBottomSheet = ({
   isVisibled,
@@ -26,10 +26,8 @@ export const AddPaymentBottomSheet = ({
       <Box className="addPaymentBottomSheet__container">
         <p className="addPaymentBottomSheet__container-title">Change Payment</p>
         {data?.map((item) => (
-          <Box key={item.id} sx={{ mb: "32px" }}>
-            <p className="addPaymentBottomSheet__formInfor-title">
-              {item.title}
-            </p>
+          <Box key={item.id} sx={{ mb: '32px' }}>
+            <p className="addPaymentBottomSheet__formInfor-title">{item.title}</p>
             {item.children.map((paymentItem) =>
               paymentItem.isActivated ? (
                 <CourierItem

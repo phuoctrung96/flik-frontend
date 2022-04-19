@@ -1,20 +1,16 @@
-import React, { useState } from "react";
-import { Icons, Images, LibraryIcons } from "../../../utils";
-import {
-  AddCardBottomSheet,
-  AddPaymentBottomSheet,
-  Summary,
-} from "../components";
-import { orderSummaryData, paymentMethodList } from "../Payment.data";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import "./styles.scss";
-import { convertSecondToMinute } from "../../../utils/Helpers";
-import { Link } from "@mui/material";
-import { Button } from "../../../components";
-import { useFormik } from "formik";
-import { initialValues, validationSchema } from "../Payment.data";
-import { useNavigate, useLocation } from "react-router-dom";
-import { MainRoute } from "../../../router/constants";
+import React, { useState } from 'react';
+import { Icons, Images, LibraryIcons } from '../../../utils';
+import { AddCardBottomSheet, AddPaymentBottomSheet, Summary } from '../components';
+import { orderSummaryData, paymentMethodList } from '../Payment.data';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import './styles.scss';
+import { convertSecondToMinute } from '../../../utils/Helpers';
+import { Link } from '@mui/material';
+import { Button } from '../../../components';
+import { useFormik } from 'formik';
+import { initialValues, validationSchema } from '../Payment.data';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { MainRoute } from '../../../router/constants';
 
 const Order = () => {
   const [isEditOtherSummary, setIsEditOtherSummary] = useState(false);
@@ -69,23 +65,17 @@ const Order = () => {
         <div className="order__orderInformation">
           <div className="order__orderInformation-header">
             <div className="order__orderInformation-header-checkContainer">
-              <LibraryIcons.CheckIcon
-                style={{ color: "#ffffff", fontWeight: "bold" }}
-              />
+              <LibraryIcons.CheckIcon style={{ color: '#ffffff', fontWeight: 'bold' }} />
             </div>
-            <h3 className="order__orderInformation-header-title">
-              Order is Placed
-            </h3>
-            <p className="order__orderInformation-header-transaction">
-              TRANSACTION ID #FC12345
-            </p>
+            <h3 className="order__orderInformation-header-title">Order is Placed</h3>
+            <p className="order__orderInformation-header-transaction">TRANSACTION ID #FC12345</p>
           </div>
 
           <div className="order__orderInformation-extraTimeContainer">
             <CountdownCircleTimer
               isPlaying
               duration={60 * 5}
-              colors={["#0085FF"]}
+              colors={['#0085FF']}
               size={48}
               strokeWidth={2}
             >
@@ -103,8 +93,8 @@ const Order = () => {
 
             <div className="order__orderInformation-extraTimeContainer-right">
               <p className="order__orderInformation-extraTimeContainer-right-text">
-                You have extra time to make changes or click Verify Payment Now
-                to finalize your order.
+                You have extra time to make changes or click Verify Payment Now to finalize your
+                order.
               </p>
 
               <Link
@@ -123,15 +113,11 @@ const Order = () => {
             <p className="order__orderInformation-informationContainer-email">
               helloo.lauramartin@gmail.com
             </p>
-            <Link className="order__orderInformation-informationContainer-link">
-              Edit
-            </Link>
+            <Link className="order__orderInformation-informationContainer-link">Edit</Link>
           </div>
 
           <div className="order__orderInformation-addressContainer">
-            <p className="order__orderInformation-addressContainer-label">
-              Address
-            </p>
+            <p className="order__orderInformation-addressContainer-label">Address</p>
             <div className="order__orderInformation-addressContainer-infoBlock">
               <p className="order__orderInformation-addressContainer-infoBlock-title">
                 Laura Martin
@@ -140,8 +126,8 @@ const Order = () => {
                 (+62 821 2345 6789)
               </p>
               <p className="order__orderInformation-addressContainer-infoBlock-description">
-                The Olivia Apartments, 23, Kecamatan Pasar Minggu, Jakarta
-                Selatan, DKI Jakarta 12345{" "}
+                The Olivia Apartments, 23, Kecamatan Pasar Minggu, Jakarta Selatan, DKI Jakarta
+                12345{' '}
               </p>
             </div>
             <Button
@@ -153,9 +139,7 @@ const Order = () => {
           </div>
 
           <div className="order__orderInformation-courierContainer">
-            <p className="order__orderInformation-courierContainer-label">
-              Courier
-            </p>
+            <p className="order__orderInformation-courierContainer-label">Courier</p>
             <div className="order__orderInformation-courierContainer-infoBlock">
               <img src={Images.jne} alt="" />
               <div className="order__orderInformation-courierContainer-infoBlock-centerContainer">
@@ -176,9 +160,7 @@ const Order = () => {
           </div>
 
           <div className="order__orderInformation-paymentContainer">
-            <p className="order__orderInformation-paymentContainer-label">
-              Payment
-            </p>
+            <p className="order__orderInformation-paymentContainer-label">Payment</p>
             <div className="order__orderInformation-paymentContainer-infoBlock">
               <img src={Images.visa} alt="" />
               <div className="order__orderInformation-paymentContainer-infoBlock-centerContainer">

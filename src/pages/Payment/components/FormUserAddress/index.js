@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import React, { useState } from 'react';
-import { CheckBox, Input } from '../../../../components';
+import { CheckBox, Input, InputMask } from '../../../../components';
 import { Icons, LibraryIcons, Images, RootStyles, wordingLocation } from '../../../../utils';
 import { AddressModal } from '../index';
 
@@ -9,7 +9,13 @@ const REGENCY_MODAL = 'REGENCY_MODAL';
 const VILLAGE_MODAL = 'VILLAGE_MODAL';
 const DISTRICT_MODAL = 'DISTRICT_MODAL';
 
-export const FormUserAddress = ({ fieldNames, formik, handleOnBlurAddress }) => {
+export const FormUserAddress = ({
+  isShipToMe,
+  setIsShipToMe,
+  fieldNames,
+  formik,
+  handleOnBlurAddress,
+}) => {
   const [
     { IS_PROVINCE_MODAL, IS_REGENCY_MODAL, IS_VILLAGE_MODAL, IS_DISTRICT_MODAL },
     setConfigurationModal,
@@ -25,7 +31,6 @@ export const FormUserAddress = ({ fieldNames, formik, handleOnBlurAddress }) => 
     regency: {},
     district: {},
   });
-  const [isShipToMe, setIsShipToMe] = useState(true);
 
   const handleClose = (type) => {
     setConfigurationModal((prevState) => {
@@ -50,6 +55,9 @@ export const FormUserAddress = ({ fieldNames, formik, handleOnBlurAddress }) => 
   };
 
   const handleOnSaveLocation = (itemSelected, itemData, typeLocation) => {
+    if (typeLocation === 'province') {
+      formik.setFieldValue(fieldNames['regency'], '');
+    }
     formik.setFieldValue(fieldNames[typeLocation], itemSelected);
     setLocationSaveData((prevState) => {
       return {
@@ -69,8 +77,25 @@ export const FormUserAddress = ({ fieldNames, formik, handleOnBlurAddress }) => 
       </Box>
       {!isShipToMe && (
         <Box sx={{ flex: 1, ...RootStyles.rowBetween, mb: '8px' }}>
-          <Input label="Recipient's Name" containerStyle={{ flex: 0.49 }} />
-          <Input label="Phone Number" containerStyle={{ flex: 0.49 }} />
+          <Input
+            onBlur={handleOnBlurAddress}
+            label="Recipient's Name"
+            name={fieldNames.recipientName}
+            onChange={formik.handleChange}
+            value={formik.values.recipientName}
+            containerStyle={{ flex: 0.49 }}
+          />
+          <Input
+            onBlur={handleOnBlurAddress}
+            label="Phone Number"
+            type="phone"
+            name={fieldNames.recipientPhone}
+            onChange={formik.handleChange}
+            value={formik.values.recipientPhone}
+            placeholder="0821 2345 6789"
+            inputComponent={InputMask}
+            containerStyle={{ flex: 0.49 }}
+          />
         </Box>
       )}
       <Box className="custom-input">
@@ -88,7 +113,13 @@ export const FormUserAddress = ({ fieldNames, formik, handleOnBlurAddress }) => 
         />
       </Box>
       {!!formik.values.shippingAddress && (
-        <Input label="Apartment, Unit, Floor, etc. (Optional)" containerStyle={{ marginTop: 8 }} />
+        <Input
+          name={fieldNames.addressOptional}
+          onChange={formik.handleChange}
+          value={formik.values.addressOptional}
+          label="Apartment, Unit, Floor, etc. (Optional)"
+          containerStyle={{ marginTop: 8 }}
+        />
       )}
       {!!formik.values.shippingAddress && (
         <>

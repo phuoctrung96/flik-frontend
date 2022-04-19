@@ -1,3 +1,3 @@
-import PaymentSuccess from "./PaymentSuccess";
+import PaymentSuccess from './PaymentSuccess';
 
 export default PaymentSuccess;

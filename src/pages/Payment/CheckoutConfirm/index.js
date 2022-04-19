@@ -1,3 +1,3 @@
-import CheckoutConfirm from "./CheckoutConfirm";
+import CheckoutConfirm from './CheckoutConfirm';
 
 export default CheckoutConfirm;

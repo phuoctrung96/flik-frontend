@@ -1,1 +1,1 @@
-export * from "./RowInfo";
+export * from './RowInfo';

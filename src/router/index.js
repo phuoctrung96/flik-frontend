@@ -12,12 +12,12 @@ import {
   CheckoutConfirm,
   Order,
   PayCreditCard,
-  PaymentSuccess
+  PaymentSuccess,
 } from './constants';
 
 const AuthRouter = () => {
   return (
-    <Route path='/auth'>
+    <Route path="/auth">
       {/* <Route path={AuthRoute.Login} element={<Suspense fallback={<>...</>}><Login /></Suspense>} /> */}
     </Route>
   );
@@ -25,7 +25,7 @@ const AuthRouter = () => {
 
 const PaymentRouter = () => {
   return (
-    <Route path='/'>
+    <Route path="/">
       <Route
         path={MainRoute.Payment}
         element={
@@ -73,9 +73,9 @@ const PaymentRouter = () => {
 const Router = () => {
   const tokenUser = AuthHelper.getAccessToken();
   const dispatch = useDispatch();
-  const { toast } = useSelector(state => {
+  const { toast } = useSelector((state) => {
     return {
-      toast: state?.toast?.toast
+      toast: state?.toast?.toast,
     };
   });
   useEffect(() => {
@@ -94,7 +94,7 @@ const Router = () => {
   }, []);
   return (
     <Routes>
-      <Route path='/' element={<MainLayout />}>
+      <Route path="/" element={<MainLayout />}>
         {AuthRouter()}
         {PaymentRouter()}
         <Route
@@ -105,7 +105,7 @@ const Router = () => {
             </Suspense>
           }
         />
-        <Route path='*' element={<h1>Page not found</h1>} />
+        <Route path="*" element={<h1>Page not found</h1>} />
       </Route>
     </Routes>
   );

@@ -1,1 +1,1 @@
-export * from "./CourierItem";
+export * from './CourierItem';

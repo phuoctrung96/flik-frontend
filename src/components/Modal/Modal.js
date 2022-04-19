@@ -1,15 +1,15 @@
-import { Dialog } from "@mui/material";
-import classNames from "classnames";
-import React from "react";
-import { LibraryIcons } from "../../utils";
-import "./styles.scss";
+import { Dialog } from '@mui/material';
+import classNames from 'classnames';
+import React from 'react';
+import { LibraryIcons } from '../../utils';
+import './styles.scss';
 
 export const Modal = ({
   children,
   onClose,
   isClose,
   isBack,
-  textBackButton = "Back",
+  textBackButton = 'Back',
   isVisibled,
   className,
   ...rest
@@ -18,7 +18,7 @@ export const Modal = ({
     <Dialog
       onClose={onClose}
       open={isVisibled}
-      className={classNames("modal", className)}
+      className={classNames('modal', className)}
       {...rest}
     >
       {isBack && (

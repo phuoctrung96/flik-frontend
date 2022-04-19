@@ -9,7 +9,7 @@ const optionToast = {
   closeOnClick: false,
   pauseOnHover: true,
   draggable: true,
-  progress: undefined
+  progress: undefined,
 };
 
 function* addToastDisplayComponentSuccess({ payload }) {
@@ -19,15 +19,15 @@ function* addToastDisplayComponentSuccess({ payload }) {
       payload: {
         status: 'success',
         toastConfig: {
-          ...optionToast
+          ...optionToast,
         },
-        ...payload
-      }
+        ...payload,
+      },
     });
     yield delay(delayTimer);
     yield put({
       type: _.TOAST_RESET,
-      payload: {}
+      payload: {},
     });
   } catch (err) {}
 }
@@ -38,15 +38,15 @@ function* addToastDisplayComponentFailed({ payload }) {
       payload: {
         status: 'error',
         toastConfig: {
-          ...optionToast
+          ...optionToast,
         },
-        ...payload
-      }
+        ...payload,
+      },
     });
     yield delay(delayTimer);
     yield put({
       type: _.TOAST_RESET,
-      payload: {}
+      payload: {},
     });
   } catch (err) {}
 }

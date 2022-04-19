@@ -1,7 +1,7 @@
-import axios from "./axios.config";
+import axios from './axios.config';
 
 export const login = (body) => {
-  return axios.post("/auth/login", body);
+  return axios.post('/auth/login', body);
 };
 
 /**
@@ -14,7 +14,7 @@ export const login = (body) => {
  * @returns
  */
 export const requestOTP = (body) => {
-  return axios.post("v1/authentication/otp/send", body);
+  return axios.post('v1/authentication/otp/send', body);
 };
 
 /**
@@ -28,7 +28,7 @@ export const requestOTP = (body) => {
  * @returns
  */
 export const generateTokenWithOTP = (body) => {
-  return axios.post("v1/authentication/otp/validate", body);
+  return axios.post('v1/authentication/otp/validate', body);
 };
 
 /**
@@ -38,7 +38,7 @@ export const generateTokenWithOTP = (body) => {
  * @returns
  */
 export const refreshToken = (body) => {
-  return axios.post("v1/authentication/refresh", body);
+  return axios.post('v1/authentication/refresh', body);
 };
 
 /**
@@ -48,18 +48,18 @@ export const refreshToken = (body) => {
  * @returns
  */
 export const verifyToken = (body) => {
-  return axios.post("v1/authentication/verify", body);
+  return axios.post('v1/authentication/verify', body);
 };
 
 export const generateCart = (appId) => {
   return axios.post(`v1/cart`, {
-    headers: { "X-App-ID": appId },
+    headers: { 'X-App-ID': appId },
   });
 };
 
 export const getCartData = (appId, merchantCartId) => {
   return axios.get(`v1/cart?merchant_cart_id=${merchantCartId}`, {
-    headers: { "X-App-ID": appId },
+    headers: { 'X-App-ID': appId },
   });
 };
 
@@ -67,7 +67,7 @@ export const updateCartItem = (appId, body) => {
   return axios.get(
     `v1/cart/984d697f-33ea-3829-bb39-90f26fab7148`,
     {
-      headers: { "X-App-ID": appId },
+      headers: { 'X-App-ID': appId },
     },
     body
   );

@@ -1,6 +1,6 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
-import "./styles.scss";
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import './styles.scss';
 
 export const MainLayout = () => {
   return (

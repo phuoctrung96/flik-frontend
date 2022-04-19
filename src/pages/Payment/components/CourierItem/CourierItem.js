@@ -1,22 +1,14 @@
-import { Box, Radio } from "@mui/material";
-import classNames from "classnames";
-import React from "react";
-import { RootStyles } from "../../../../utils";
-import "./styles.scss";
+import { Box, Radio } from '@mui/material';
+import classNames from 'classnames';
+import React from 'react';
+import { RootStyles } from '../../../../utils';
+import './styles.scss';
 
 export const CourierItem = ({ data, onClick }) => {
   return (
-    <Box
-      className={classNames("courierItem", { active: data.isChecked })}
-      onClick={onClick}
-    >
+    <Box className={classNames('courierItem', { active: data.isChecked })} onClick={onClick}>
       <Box sx={{ ...RootStyles.row }}>
-        <img
-          src={data.image}
-          alt=""
-          width={36}
-          className="courierItem__image"
-        />
+        <img src={data.image} alt="" width={36} className="courierItem__image" />
         <Box>
           <p className="courierItem__title">{data.title}</p>
           <p className="courierItem__description">{data.description}</p>
@@ -30,15 +22,15 @@ export const CourierItem = ({ data, onClick }) => {
       <Box sx={{ ...RootStyles.row }}>
         {!!data.price && (
           <p className="courierItem__price">
-            {data.currencyType + " "}
+            {data.currencyType + ' '}
             {data.price}
           </p>
         )}
         <Radio
           checked={data.isChecked}
           sx={{
-            "&.Mui-checked": {
-              color: "#0085FF",
+            '&.Mui-checked': {
+              color: '#0085FF',
             },
           }}
         />

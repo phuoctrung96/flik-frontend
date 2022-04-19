@@ -1,3 +1,3 @@
-import PayCreditCard from "./PayCreditCard";
+import PayCreditCard from './PayCreditCard';
 
 export default PayCreditCard;

@@ -1,4 +1,4 @@
-@import "../../assets/styles/_global.scss";
+@import '../../assets/styles/_global.scss';
 
 .modal {
   border-radius: 16px;
@@ -23,7 +23,7 @@
     &-text {
       font-size: 14px;
       line-height: 18px;
-      font-family: "Arial Rounded MT Bold";
+      font-family: 'Arial Rounded MT Bold';
       color: $black;
       margin-left: 8px;
       cursor: pointer;
